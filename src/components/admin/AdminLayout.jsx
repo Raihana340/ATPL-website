@@ -19,7 +19,8 @@ import {
   Menu,
   X,
   LogOut,
-  FolderKanban
+  FolderKanban,
+  Globe
 } from 'lucide-react';
 import { AdminDashboard } from './AdminDashboard';
 import { AdminLeadsCRM } from './AdminLeadsCRM';
@@ -28,6 +29,7 @@ import { AdminProjects } from './AdminProjects';
 import { AdminServiceDesk } from './AdminServiceDesk';
 import { AdminFactoryControl } from './AdminFactoryControl';
 import { AdminSettings } from './AdminSettings';
+import { AdminSEOManager } from './AdminSEOManager';
 
 export const AdminLayout = () => {
   const { 
@@ -57,6 +59,7 @@ export const AdminLayout = () => {
     { id: 'products', label: 'Solutions & Products', icon: Package },
     { id: 'tickets', label: 'Service Desk & AMC', icon: Headphones, badge: criticalTicketsCount ? 'Alert' : null, badgeColor: 'badge-danger' },
     { id: 'factory-control', label: 'Factory IoT & Telemetry', icon: Cpu, badge: 'Live', badgeColor: 'badge-emerald' },
+    { id: 'seo', label: 'SEO & Keywords Master', icon: Globe, badge: 'Google Ready', badgeColor: 'badge-cyan' },
     { id: 'settings', label: 'System & CMS Settings', icon: Settings }
   ];
 
@@ -346,6 +349,7 @@ export const AdminLayout = () => {
           {adminTab === 'products' && <AdminProducts />}
           {adminTab === 'tickets' && <AdminServiceDesk />}
           {adminTab === 'factory-control' && <AdminFactoryControl />}
+          {adminTab === 'seo' && <AdminSEOManager />}
           {adminTab === 'settings' && <AdminSettings />}
         </main>
 

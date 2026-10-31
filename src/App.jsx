@@ -7,7 +7,7 @@ import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { HomeView } from './components/pages/HomeView';
 import { DynamicMovingBackground } from './components/common/DynamicMovingBackground';
 import { CookieConsent } from './components/common/CookieConsent';
-
+import {Toaster} from 'sonner';
 // Code-split interactive modals and CoPilot to keep initial mobile bundle ultra-lean
 const LeadModal = lazy(() => import('./components/common/LeadModal').then(m => ({ default: m.LeadModal })));
 const SearchModal = lazy(() => import('./components/common/SearchModal').then(m => ({ default: m.SearchModal })));
@@ -219,6 +219,7 @@ const MainAppContent = () => {
 export default function App() {
   return (
     <AppProvider>
+      <Toaster position="top-right" richColors theme="dark" closeButton />
       <MainAppContent />
     </AppProvider>
   );

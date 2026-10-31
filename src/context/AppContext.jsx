@@ -2,6 +2,8 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { INITIAL_LEADS, INITIAL_PRODUCTS, INITIAL_TICKETS, INITIAL_AUDIT_LOGS, INITIAL_PROJECTS } from '../data/initialAdminData';
 import { FACTORY_STATIONS } from '../data/stationsData';
 import { saveLeadToDatabase } from '../services/dbService';
+import { INITIAL_SEO_DATA } from '../data/initialSEOData';
+import { applyPageSEO } from '../utils/seoManager';
 
 const AppContext = createContext();
 
@@ -222,6 +224,27 @@ export const AppProvider = ({ children }) => {
     };
   });
 
+  // Persistent SEO & Keywords Metadata
+  const [seoData, setSeoData] = useState(() => {
+    try {
+      const saved = localStorage.getItem('atpl_seo_data');
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        return {
+          global: { ...INITIAL_SEO_DATA.global, ...(parsed.global || {}) },
+          pages: {
+            ...INITIAL_SEO_DATA.pages,
+            ...(parsed.pages || {})
+          }
+        };
+      }
+      return INITIAL_SEO_DATA;
+    } catch (e) {
+      console.warn('Failed reading atpl_seo_data from localStorage', e);
+      return INITIAL_SEO_DATA;
+    }
+  });
+
   // Toast Notifications
   const [toasts, setToasts] = useState([]);
 
@@ -242,6 +265,20 @@ export const AppProvider = ({ children }) => {
       console.warn('Failed saving atpl_site_settings', e);
     }
   }, [siteSettings]);
+
+  // Save SEO Data to LocalStorage
+  useEffect(() => {
+    try {
+      localStorage.setItem('atpl_seo_data', JSON.stringify(seoData));
+    } catch (e) {
+      console.warn('Failed saving atpl_seo_data', e);
+    }
+  }, [seoData]);
+
+  // Dynamic Head SEO Tag Injection
+  useEffect(() => {
+    applyPageSEO(currentView, seoData);
+  }, [currentView, seoData]);
 
   // Save to LocalStorage
   useEffect(() => {
@@ -413,6 +450,46 @@ export const AppProvider = ({ children }) => {
     addToast('Ticket Updated', `Ticket ${id} status updated.`, 'info');
   };
 
+  // SEO Management Handlers
+  const updatePageSEO = (pageId, updatedFields) => {
+    setSeoData(prev => ({
+      ...prev,
+      pages: {
+        ...prev.pages,
+        [pageId]: {
+          ...prev.pages[pageId],
+          ...updatedFields
+        }
+      }
+    }));
+  };
+
+  const updateGlobalSEO = (updatedGlobalFields) => {
+    setSeoData(prev => ({
+      ...prev,
+      global: {
+        ...prev.global,
+        ...updatedGlobalFields
+      }
+    }));
+  };
+
+  const resetPageSEO = (pageId) => {
+    if (INITIAL_SEO_DATA.pages[pageId]) {
+      setSeoData(prev => ({
+        ...prev,
+        pages: {
+          ...prev.pages,
+          [pageId]: { ...INITIAL_SEO_DATA.pages[pageId] }
+        }
+      }));
+    }
+  };
+
+  const resetAllSEO = () => {
+    setSeoData(INITIAL_SEO_DATA);
+  };
+
   // Reset to initial demo data
   const resetDemoData = () => {
     setLeads(INITIAL_LEADS);
@@ -420,12 +497,14 @@ export const AppProvider = ({ children }) => {
     setProjects(INITIAL_PROJECTS);
     setTickets(INITIAL_TICKETS);
     setAuditLogs(INITIAL_AUDIT_LOGS);
+    setSeoData(INITIAL_SEO_DATA);
     localStorage.removeItem('atpl_admin_leads');
     localStorage.removeItem('atpl_admin_products');
     localStorage.removeItem('atpl_admin_projects');
     localStorage.removeItem('atpl_admin_tickets');
     localStorage.removeItem('atpl_audit_logs');
-    addToast('Demo Data Reset', 'All records restored to factory defaults.', 'info');
+    localStorage.removeItem('atpl_seo_data');
+    addToast('Demo Data Reset', 'All records and SEO metadata restored to factory defaults.', 'info');
   };
 
   const triggerFault = (stationId) => {
@@ -482,6 +561,11 @@ export const AppProvider = ({ children }) => {
         triggerFault,
         siteSettings,
         setSiteSettings,
+        seoData,
+        updatePageSEO,
+        updateGlobalSEO,
+        resetPageSEO,
+        resetAllSEO,
         resetDemoData,
         authSession,
         loginAdmin,
