@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useApp } from '../../context/AppContext';
 import { AtplLogo } from './AtplLogo';
 import { AtplRobotAvatar } from './AtplRobotAvatar';
+import { GsapDropdown } from './GsapDropdown';
 import { 
   Boxes, 
   Cpu, 
@@ -60,6 +61,25 @@ export const Navbar = ({ onOpenSearch }) => {
   const [selectedLang, setSelectedLang] = useState('English');
   const [mobileExpandedSection, setMobileExpandedSection] = useState(null);
   const dropdownRef = useRef(null);
+  const closeTimeoutRef = useRef(null);
+
+  // Smooth hover intent handlers for GSAP dropdowns
+  const handleDropdownEnter = (name) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setActiveDropdown(name);
+  };
+
+  const handleDropdownLeave = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    closeTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 180);
+  };
 
   // Restore saved language preference on mount
   useEffect(() => {
@@ -261,10 +281,13 @@ export const Navbar = ({ onOpenSearch }) => {
           <nav className="atpl-desktop-nav" style={{ alignItems: 'center', gap: '0.2rem' }}>
 
             {/* 1. Hardware Dropdown & Direct Link */}
-            <div style={{ position: 'relative' }}>
+            <div 
+              style={{ position: 'relative' }}
+              onMouseEnter={() => handleDropdownEnter('hardware')}
+              onMouseLeave={handleDropdownLeave}
+            >
               <button
                 onClick={() => handleNavClick('hardware')}
-                onMouseEnter={() => setActiveDropdown('hardware')}
                 style={{
                   background: 'transparent',
                   border: 'none',
@@ -281,27 +304,17 @@ export const Navbar = ({ onOpenSearch }) => {
                 }}
               >
                 <span>Hardware</span>
-                <ChevronDown size={14} style={{ transform: activeDropdown === 'hardware' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
+                <ChevronDown size={14} style={{ transform: activeDropdown === 'hardware' ? 'rotate(180deg)' : 'none', transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }} />
               </button>
 
-              {activeDropdown === 'hardware' && (
-                <div 
-                  onMouseLeave={() => setActiveDropdown(null)}
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: '-20px',
-                    width: '640px',
-                    backgroundColor: '#ffffff',
-                    borderRadius: '14px',
-                    boxShadow: '0 20px 45px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.06)',
-                    padding: '1.5rem',
-                    zIndex: 1050,
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
-                    gap: '1.25rem'
-                  }}
-                >
+              <GsapDropdown
+                isOpen={activeDropdown === 'hardware'}
+                width="640px"
+                align="left"
+                style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem' }}
+                onMouseEnter={() => handleDropdownEnter('hardware')}
+                onMouseLeave={handleDropdownLeave}
+              >
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                     <div style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: '#94a3b8', letterSpacing: '0.06em', marginBottom: '0.4rem' }}>
                       AIDC, RFID & SCANNING
@@ -385,15 +398,17 @@ export const Navbar = ({ onOpenSearch }) => {
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
+                </GsapDropdown>
+              </div>
 
             {/* 2. Software Dropdown & Direct Link */}
-            <div style={{ position: 'relative' }}>
+            <div 
+              style={{ position: 'relative' }}
+              onMouseEnter={() => handleDropdownEnter('software')}
+              onMouseLeave={handleDropdownLeave}
+            >
               <button
                 onClick={() => handleNavClick('software')}
-                onMouseEnter={() => setActiveDropdown('software')}
                 style={{
                   background: 'transparent',
                   border: 'none',
@@ -410,28 +425,63 @@ export const Navbar = ({ onOpenSearch }) => {
                 }}
               >
                 <span>Software</span>
-                <ChevronDown size={14} style={{ transform: activeDropdown === 'software' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
+                <ChevronDown size={14} style={{ transform: activeDropdown === 'software' ? 'rotate(180deg)' : 'none', transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }} />
               </button>
 
-              {activeDropdown === 'software' && (
-                <div 
-                  onMouseLeave={() => setActiveDropdown(null)}
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: '-20px',
-                    width: '640px',
-                    backgroundColor: '#ffffff',
-                    borderRadius: '14px',
-                    boxShadow: '0 20px 45px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.06)',
-                    padding: '1.5rem',
-                    zIndex: 1050,
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(2, 1fr)',
-                    gap: '1.25rem'
-                  }}
-                >
+              <GsapDropdown
+                isOpen={activeDropdown === 'software'}
+                width="640px"
+                align="left"
+                style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1.25rem' }}
+                onMouseEnter={() => handleDropdownEnter('software')}
+                onMouseLeave={handleDropdownLeave}
+              >
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    <div 
+                      onClick={() => handleNavClick('software')}
+                      style={{ padding: '0.55rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', gap: '0.75rem', backgroundColor: 'rgba(56, 189, 248, 0.08)', border: '1px solid rgba(56, 189, 248, 0.25)' }}
+                      className="dropdown-hover-item"
+                    >
+                      <Smartphone size={20} color="#0071ba" style={{ marginTop: '2px', flexShrink: 0 }} />
+                      <div>
+                        <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                          <span>PerfectEdge MDM</span>
+                          <span style={{ backgroundColor: '#dc2626', color: '#ffffff', fontSize: '0.62rem', fontWeight: 800, padding: '1px 5px', borderRadius: '4px' }}>NEW</span>
+                        </div>
+                        <div style={{ fontSize: '0.78rem', color: '#64748b' }}>Smart device management & kiosk lockdown</div>
+                      </div>
+                    </div>
+
+                    <div 
+                      onClick={() => handleNavClick('software')}
+                      style={{ padding: '0.55rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', gap: '0.75rem', backgroundColor: 'rgba(245, 158, 11, 0.08)', border: '1px solid rgba(245, 158, 11, 0.25)' }}
+                      className="dropdown-hover-item"
+                    >
+                      <Printer size={20} color="#f59e0b" style={{ marginTop: '2px', flexShrink: 0 }} />
+                      <div>
+                        <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                          <span>Perfect Labeler</span>
+                          <span style={{ backgroundColor: '#f59e0b', color: '#060b14', fontSize: '0.62rem', fontWeight: 800, padding: '1px 5px', borderRadius: '4px' }}>AI</span>
+                        </div>
+                        <div style={{ fontSize: '0.78rem', color: '#64748b' }}>AI prompt cloud label design & multi-branch</div>
+                      </div>
+                    </div>
+
+                    <div 
+                      onClick={() => handleNavClick('software')}
+                      style={{ padding: '0.55rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', gap: '0.75rem', backgroundColor: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.25)' }}
+                      className="dropdown-hover-item"
+                    >
+                      <Users size={20} color="#10b981" style={{ marginTop: '2px', flexShrink: 0 }} />
+                      <div>
+                        <div style={{ fontSize: '0.9rem', fontWeight: 800, color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+                          <span>Perfect Flow 360</span>
+                          <span style={{ backgroundColor: '#10b981', color: '#ffffff', fontSize: '0.62rem', fontWeight: 800, padding: '1px 5px', borderRadius: '4px' }}>CRM</span>
+                        </div>
+                        <div style={{ fontSize: '0.78rem', color: '#64748b' }}>CRM, instant quotes, attendance & live delivery</div>
+                      </div>
+                    </div>
+
                     <div style={{ fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', color: '#94a3b8', letterSpacing: '0.06em', marginBottom: '0.4rem' }}>
                       SUPPLY CHAIN & PRODUCTION
                     </div>
@@ -521,19 +571,21 @@ export const Navbar = ({ onOpenSearch }) => {
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
-            </div>
+                </GsapDropdown>
+              </div>
 
             {/* 3. Customers Dropdown */}
-            <div style={{ position: 'relative' }}>
+            <div 
+              style={{ position: 'relative' }}
+              onMouseEnter={() => handleDropdownEnter('customers')}
+              onMouseLeave={handleDropdownLeave}
+            >
               <button
-                onClick={() => handleNavClick('about')}
-                onMouseEnter={() => setActiveDropdown('customers')}
+                onClick={() => handleNavClick('customers')}
                 style={{
                   background: 'transparent',
                   border: 'none',
-                  color: activeDropdown === 'customers' ? '#E85874' : '#334155',
+                  color: activeDropdown === 'customers' || currentView === 'customers' ? '#E85874' : '#334155',
                   padding: '0.6rem 0.75rem',
                   fontSize: '0.94rem',
                   fontWeight: 600,
@@ -546,94 +598,75 @@ export const Navbar = ({ onOpenSearch }) => {
                 }}
               >
                 <span>Customers</span>
-                <ChevronDown size={14} style={{ transform: activeDropdown === 'customers' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
+                <ChevronDown size={14} style={{ transform: activeDropdown === 'customers' ? 'rotate(180deg)' : 'none', transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }} />
               </button>
 
-              {activeDropdown === 'customers' && (
+              <GsapDropdown
+                isOpen={activeDropdown === 'customers'}
+                width="390px"
+                align="left"
+                style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+                onMouseEnter={() => handleDropdownEnter('customers')}
+                onMouseLeave={handleDropdownLeave}
+              >
                 <div 
-                  onMouseLeave={() => setActiveDropdown(null)}
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: '-20px',
-                    width: '380px',
-                    backgroundColor: '#ffffff',
-                    borderRadius: '14px',
-                    boxShadow: '0 20px 45px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.06)',
-                    padding: '1.25rem',
-                    zIndex: 1050,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.5rem'
+                  onClick={() => {
+                    handleNavClick('customers');
+                    setActiveDropdown(null);
                   }}
+                  style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
+                  className="dropdown-hover-item"
                 >
-                  <div 
-                    onClick={() => {
-                      if (currentView !== 'home') {
-                        setCurrentView('home');
-                        setTimeout(() => {
-                          const el = document.getElementById('case-studies');
-                          if (el) el.scrollIntoView({ behavior: 'smooth' });
-                        }, 100);
-                      } else {
-                        const el = document.getElementById('case-studies');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }
-                      setActiveDropdown(null);
-                    }}
-                    style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
-                    className="dropdown-hover-item"
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <Users size={16} color="#0071ba" />
-                      <span>Enterprise Case Studies & Results</span>
-                    </div>
-                    <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>Verified ROI metrics across 250+ manufacturing plants</div>
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Users size={16} color="#0071ba" />
+                    <span>Enterprise Clients & Case Studies</span>
                   </div>
-
-                  <div 
-                    onClick={() => {
-                      if (currentView !== 'home') {
-                        setCurrentView('home');
-                        setTimeout(() => {
-                          const el = document.getElementById('why-atpl-section');
-                          if (el) el.scrollIntoView({ behavior: 'smooth' });
-                        }, 100);
-                      } else {
-                        const el = document.getElementById('why-atpl-section');
-                        if (el) el.scrollIntoView({ behavior: 'smooth' });
-                      }
-                      setActiveDropdown(null);
-                    }}
-                    style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
-                    className="dropdown-hover-item"
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <Award size={16} color="#009a44" />
-                      <span>Why ATPL vs Global Giants</span>
-                    </div>
-                    <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>Siemens, Honeywell, Zebra & Rockwell comparison</div>
-                  </div>
-
-                  <div 
-                    onClick={() => openDemoModal({ solution: 'Customer Case Studies Request', notes: 'Request for enterprise case studies' })}
-                    style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer', background: 'rgba(232, 88, 116, 0.06)', border: '1px solid rgba(232, 88, 116, 0.25)' }}
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '0.86rem', color: '#E85874' }}>Request Industry Case Studies ➔</div>
-                  </div>
+                  <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>Verified production results across 200+ industry leaders</div>
                 </div>
-              )}
+
+                <div 
+                  onClick={() => {
+                    handleNavClick('customers');
+                    setTimeout(() => {
+                      const el = document.getElementById('client-roster');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                    }, 120);
+                    setActiveDropdown(null);
+                  }}
+                  style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
+                  className="dropdown-hover-item"
+                >
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Award size={16} color="#009a44" />
+                    <span>Explore 200+ Client Directory</span>
+                  </div>
+                  <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>Filter by Automotive, Heavy Engg, Pharma & FMCG</div>
+                </div>
+
+                <div 
+                  onClick={() => {
+                    openDemoModal({ solution: 'Customer Case Studies Request', notes: 'Request for enterprise case studies' });
+                    setActiveDropdown(null);
+                  }}
+                  style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer', background: 'rgba(232, 88, 116, 0.06)', border: '1px solid rgba(232, 88, 116, 0.25)' }}
+                >
+                  <div style={{ fontWeight: 700, fontSize: '0.86rem', color: '#E85874' }}>Request Industry Case Studies ➔</div>
+                </div>
+              </GsapDropdown>
             </div>
 
             {/* 4. Partners Dropdown */}
-            <div style={{ position: 'relative' }}>
+            <div 
+              style={{ position: 'relative' }}
+              onMouseEnter={() => handleDropdownEnter('partners')}
+              onMouseLeave={handleDropdownLeave}
+            >
               <button
                 onClick={() => handleNavClick('partners')}
-                onMouseEnter={() => setActiveDropdown('partners')}
                 style={{
                   background: 'transparent',
                   border: 'none',
-                  color: activeDropdown === 'partners' || currentView === 'partners' ? '#E85874' : '#334155',
+                  color: activeDropdown === 'partners' || currentView === 'partners' ? '#0071ba' : '#334155',
                   padding: '0.6rem 0.75rem',
                   fontSize: '0.94rem',
                   fontWeight: 600,
@@ -646,75 +679,67 @@ export const Navbar = ({ onOpenSearch }) => {
                 }}
               >
                 <span>Partners</span>
-                <ChevronDown size={14} style={{ transform: activeDropdown === 'partners' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
+                <ChevronDown size={14} style={{ transform: activeDropdown === 'partners' ? 'rotate(180deg)' : 'none', transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }} />
               </button>
 
-              {activeDropdown === 'partners' && (
+              <GsapDropdown
+                isOpen={activeDropdown === 'partners'}
+                width="390px"
+                align="left"
+                style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}
+                onMouseEnter={() => handleDropdownEnter('partners')}
+                onMouseLeave={handleDropdownLeave}
+              >
                 <div 
-                  onMouseLeave={() => setActiveDropdown(null)}
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    left: '-20px',
-                    width: '380px',
-                    backgroundColor: '#ffffff',
-                    borderRadius: '14px',
-                    boxShadow: '0 20px 45px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.06)',
-                    padding: '1.25rem',
-                    zIndex: 1050,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.5rem'
-                  }}
+                  onClick={() => handleNavClick('partners')}
+                  style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
+                  className="dropdown-hover-item"
                 >
-                  <div 
-                    onClick={() => handleNavClick('partners')}
-                    style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
-                    className="dropdown-hover-item"
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <Handshake size={16} color="#009a44" />
-                      <span>GS1 Global Certified Partner</span>
-                    </div>
-                    <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>Authorized GS1 barcode & RFID serialization partner</div>
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Handshake size={16} color="#009a44" />
+                    <span>GS1 Global Certified Partner</span>
                   </div>
-
-                  <div 
-                    onClick={() => handleNavClick('partners')}
-                    style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
-                    className="dropdown-hover-item"
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <Radio size={16} color="#fbb03b" />
-                      <span>Hardware OEM Partners</span>
-                    </div>
-                    <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>Zebra, Honeywell, Datalogic & Impinj alliance</div>
-                  </div>
-
-                  <div 
-                    onClick={() => handleNavClick('partners')}
-                    style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
-                    className="dropdown-hover-item"
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <Cpu size={16} color="#0071ba" />
-                      <span>ERP & Cloud Alliances</span>
-                    </div>
-                    <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>SAP S/4HANA, Oracle Cloud & Microsoft Dynamics</div>
-                  </div>
+                  <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>Authorized GS1 barcode & RFID serialization partner</div>
                 </div>
-              )}
+
+                <div 
+                  onClick={() => handleNavClick('partners')}
+                  style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
+                  className="dropdown-hover-item"
+                >
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Radio size={16} color="#fbb03b" />
+                    <span>Hardware OEM Partners</span>
+                  </div>
+                  <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>Zebra, Honeywell, Datalogic & Impinj alliance</div>
+                </div>
+
+                <div 
+                  onClick={() => handleNavClick('partners')}
+                  style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
+                  className="dropdown-hover-item"
+                >
+                  <div style={{ fontWeight: 700, fontSize: '0.9rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Cpu size={16} color="#0071ba" />
+                    <span>ERP & Cloud Alliances</span>
+                  </div>
+                  <div style={{ fontSize: '0.78rem', color: '#64748b', marginTop: '2px' }}>SAP S/4HANA, Oracle Cloud & Microsoft Dynamics</div>
+                </div>
+              </GsapDropdown>
             </div>
 
             {/* 5. Resources Dropdown */}
-            <div style={{ position: 'relative' }}>
+            <div 
+              style={{ position: 'relative' }}
+              onMouseEnter={() => handleDropdownEnter('resources')}
+              onMouseLeave={handleDropdownLeave}
+            >
               <button
                 onClick={() => handleNavClick('resources')}
-                onMouseEnter={() => setActiveDropdown('resources')}
                 style={{
                   background: 'transparent',
                   border: 'none',
-                  color: activeDropdown === 'resources' || currentView === 'resources' ? '#E85874' : '#334155',
+                  color: activeDropdown === 'resources' || currentView === 'resources' ? '#0071ba' : '#334155',
                   padding: '0.6rem 0.75rem',
                   fontSize: '0.94rem',
                   fontWeight: 600,
@@ -722,80 +747,70 @@ export const Navbar = ({ onOpenSearch }) => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.35rem',
-                  borderRadius: '6px'
+                  borderRadius: '6px',
+                  transition: 'all 0.15s ease'
                 }}
               >
                 <span>Resources</span>
-                <ChevronDown size={14} style={{ transform: activeDropdown === 'resources' ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
+                <ChevronDown size={14} style={{ transform: activeDropdown === 'resources' ? 'rotate(180deg)' : 'none', transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)' }} />
               </button>
 
-              {activeDropdown === 'resources' && (
+              <GsapDropdown
+                isOpen={activeDropdown === 'resources'}
+                width="350px"
+                align="right"
+                style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}
+                onMouseEnter={() => handleDropdownEnter('resources')}
+                onMouseLeave={handleDropdownLeave}
+              >
                 <div 
-                  onMouseLeave={() => setActiveDropdown(null)}
-                  style={{
-                    position: 'absolute',
-                    top: '100%',
-                    right: '0',
-                    width: '340px',
-                    backgroundColor: '#ffffff',
-                    borderRadius: '14px',
-                    boxShadow: '0 20px 45px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.06)',
-                    padding: '1rem',
-                    zIndex: 1050,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '0.4rem'
-                  }}
+                  onClick={() => handleNavClick('resources')}
+                  style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
+                  className="dropdown-hover-item"
                 >
-                  <div 
-                    onClick={() => handleNavClick('resources')}
-                    style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
-                    className="dropdown-hover-item"
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#0071ba', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <BookOpen size={15} />
-                      <span>Technical Whitepapers & Guides</span>
-                    </div>
-                    <div style={{ fontSize: '0.76rem', color: '#64748b' }}>Download product datasheets & standards briefs</div>
+                  <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#0071ba', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <BookOpen size={15} />
+                    <span>Technical Whitepapers & Guides</span>
                   </div>
-
-                  <div 
-                    onClick={() => handleNavClick('factory-3d')}
-                    style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
-                    className="dropdown-hover-item"
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#E85874', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <Sparkles size={15} />
-                      <span>3D Digital Twin Simulator</span>
-                    </div>
-                    <div style={{ fontSize: '0.76rem', color: '#64748b' }}>Live interactive virtual plant tour</div>
-                  </div>
-
-                  <div 
-                    onClick={() => handleNavClick('services')}
-                    style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
-                    className="dropdown-hover-item"
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <Headphones size={15} color="#0d9488" />
-                      <span>AMC & Maintenance SLAs</span>
-                    </div>
-                    <div style={{ fontSize: '0.76rem', color: '#64748b' }}>Guaranteed response tiers & vaults</div>
-                  </div>
-
-                  <div 
-                    onClick={() => handleNavClick('contact')}
-                    style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
-                    className="dropdown-hover-item"
-                  >
-                    <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                      <Building2 size={15} color="#0071ba" />
-                      <span>Contact & Helpdesk</span>
-                    </div>
-                    <div style={{ fontSize: '0.76rem', color: '#64748b' }}>Reach engineering teams directly</div>
-                  </div>
+                  <div style={{ fontSize: '0.76rem', color: '#64748b' }}>Download product datasheets & standards briefs</div>
                 </div>
-              )}
+
+                <div 
+                  onClick={() => handleNavClick('factory-3d')}
+                  style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
+                  className="dropdown-hover-item"
+                >
+                  <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#E85874', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Sparkles size={15} />
+                    <span>3D Digital Twin Simulator</span>
+                  </div>
+                  <div style={{ fontSize: '0.76rem', color: '#64748b' }}>Live interactive virtual plant tour</div>
+                </div>
+
+                <div 
+                  onClick={() => handleNavClick('services')}
+                  style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
+                  className="dropdown-hover-item"
+                >
+                  <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Headphones size={15} color="#0d9488" />
+                    <span>AMC & Maintenance SLAs</span>
+                  </div>
+                  <div style={{ fontSize: '0.76rem', color: '#64748b' }}>Guaranteed response tiers & vaults</div>
+                </div>
+
+                <div 
+                  onClick={() => handleNavClick('contact')}
+                  style={{ padding: '0.65rem 0.85rem', borderRadius: '8px', cursor: 'pointer' }}
+                  className="dropdown-hover-item"
+                >
+                  <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#0f172a', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                    <Building2 size={15} color="#0071ba" />
+                    <span>Contact & Helpdesk</span>
+                  </div>
+                  <div style={{ fontSize: '0.76rem', color: '#64748b' }}>Reach engineering teams directly</div>
+                </div>
+              </GsapDropdown>
             </div>
 
             {/* Direct 3D Digital Twin Link */}
@@ -826,6 +841,45 @@ export const Navbar = ({ onOpenSearch }) => {
             >
               <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#00f0ff', boxShadow: '0 0 8px #00f0ff', display: 'inline-block' }}></span>
               <span>3D Digital Twin</span>
+            </button>
+
+            {/* Direct 3D Hardware Deck Link */}
+            <button
+              onClick={() => {
+                if (currentView !== 'hardware') {
+                  setCurrentView('hardware');
+                }
+                setTimeout(() => {
+                  const el = document.getElementById('hardware-3d-deck');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+              style={{
+                background: 'rgba(232, 88, 116, 0.08)',
+                border: '1px solid rgba(232, 88, 116, 0.3)',
+                color: '#E85874',
+                padding: '0.45rem 0.75rem',
+                fontSize: '0.88rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                borderRadius: '8px',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(232, 88, 116, 0.16)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(232, 88, 116, 0.08)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+              title="Jump to interactive 3D Cascading Hardware Deck"
+            >
+              <Sparkles size={14} color="#E85874" />
+              <span>3D Hardware</span>
             </button>
           </nav>
 
@@ -897,73 +951,69 @@ export const Navbar = ({ onOpenSearch }) => {
                 <ChevronDown size={13} style={{ transform: languageOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }} />
               </button>
 
-              {languageOpen && (
-                <div style={{
-                  position: 'absolute',
-                  top: 'calc(100% + 6px)',
-                  right: 0,
-                  backgroundColor: '#ffffff',
-                  boxShadow: '0 15px 35px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0,0,0,0.08)',
-                  borderRadius: '10px',
-                  padding: '0.5rem',
-                  zIndex: 1060,
-                  width: '210px',
+              <GsapDropdown
+                isOpen={languageOpen}
+                width="220px"
+                align="right"
+                style={{
                   maxHeight: '340px',
                   overflowY: 'auto',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '0.2rem'
+                  gap: '0.2rem',
+                  padding: '0.6rem 0.5rem'
+                }}
+              >
+                <div style={{
+                  fontSize: '0.7rem',
+                  fontWeight: 700,
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.08em',
+                  color: '#94a3b8',
+                  padding: '0.3rem 0.5rem 0.2rem 0.5rem',
+                  borderBottom: '1px solid #f1f5f9'
                 }}>
-                  <div style={{
-                    fontSize: '0.7rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.08em',
-                    color: '#94a3b8',
-                    padding: '0.3rem 0.5rem 0.2rem 0.5rem',
-                    borderBottom: '1px solid #f1f5f9'
-                  }}>
-                    Select Language / மொழி
-                  </div>
-                  {ATPL_LANGUAGES.map(lang => {
-                    const isSelected = selectedLang === lang.native || selectedLang === lang.name;
-                    return (
-                      <button
-                        key={lang.code}
-                        onClick={() => handleLanguageChange(lang)}
-                        style={{
-                          background: isSelected ? 'rgba(0, 113, 186, 0.08)' : 'transparent',
-                          border: 'none',
-                          color: isSelected ? '#0071ba' : '#334155',
-                          fontWeight: isSelected ? 700 : 500,
-                          fontSize: '0.84rem',
-                          textAlign: 'left',
-                          padding: '0.5rem 0.65rem',
-                          borderRadius: '6px',
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          gap: '0.5rem',
-                          transition: 'background 0.15s ease'
-                        }}
-                        onMouseEnter={(e) => {
-                          if (!isSelected) e.currentTarget.style.backgroundColor = '#f8fafc';
-                        }}
-                        onMouseLeave={(e) => {
-                          if (!isSelected) e.currentTarget.style.backgroundColor = 'transparent';
-                        }}
-                      >
-                        <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                          <span style={{ fontSize: '1rem' }}>{lang.flag}</span>
-                          <span>{lang.native}</span>
-                        </span>
-                        {isSelected && <span style={{ color: '#0071ba', fontSize: '0.8rem' }}>✓</span>}
-                      </button>
-                    );
-                  })}
+                  Select Language / மொழி
                 </div>
-              )}
+                {ATPL_LANGUAGES.map(lang => {
+                  const isSelected = selectedLang === lang.native || selectedLang === lang.name;
+                  return (
+                    <button
+                      key={lang.code}
+                      onClick={() => handleLanguageChange(lang)}
+                      className="dropdown-hover-item"
+                      style={{
+                        background: isSelected ? 'rgba(0, 113, 186, 0.08)' : 'transparent',
+                        border: 'none',
+                        color: isSelected ? '#0071ba' : '#334155',
+                        fontWeight: isSelected ? 700 : 500,
+                        fontSize: '0.84rem',
+                        textAlign: 'left',
+                        padding: '0.5rem 0.65rem',
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        gap: '0.5rem',
+                        transition: 'background 0.15s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isSelected) e.currentTarget.style.backgroundColor = '#f8fafc';
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isSelected) e.currentTarget.style.backgroundColor = 'transparent';
+                      }}
+                    >
+                      <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                        <span style={{ fontSize: '1rem' }}>{lang.flag}</span>
+                        <span>{lang.native}</span>
+                      </span>
+                      {isSelected && <span style={{ color: '#0071ba', fontSize: '0.8rem' }}>✓</span>}
+                    </button>
+                  );
+                })}
+              </GsapDropdown>
             </div>
 
 
@@ -1277,12 +1327,11 @@ export const Navbar = ({ onOpenSearch }) => {
                 </button>
                 {mobileExpandedSection === 'customers' && (
                   <div style={{ padding: '0.5rem 0.5rem 0.5rem 0.85rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', borderLeft: '2px solid #0071ba', marginLeft: '0.5rem', marginTop: '0.35rem' }}>
-                    <button onClick={() => handleNavClick('about')} style={{ minHeight: '44px', background: 'none', border: 'none', textAlign: 'left', padding: '0.5rem', color: '#0071ba', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>• Automotive & EV (Ola Electric, Bosch)</button>
-                    <button onClick={() => handleNavClick('about')} style={{ minHeight: '44px', background: 'none', border: 'none', textAlign: 'left', padding: '0.5rem', color: '#E85874', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>• Pharmaceuticals (Caplin Point Laboratories)</button>
-                    <button onClick={() => handleNavClick('about')} style={{ minHeight: '44px', background: 'none', border: 'none', textAlign: 'left', padding: '0.5rem', color: '#0071ba', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>• Metals & Heavy Engg (JSW Steel, L&T, BEL)</button>
-                    <button onClick={() => handleNavClick('about')} style={{ minHeight: '44px', background: 'none', border: 'none', textAlign: 'left', padding: '0.5rem', color: '#0284c7', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>• FMCG & Dairy (HUL, Hatsun, Titan)</button>
-                    <button onClick={() => handleNavClick('about')} style={{ minHeight: '44px', background: 'rgba(0, 113, 186, 0.08)', borderRadius: '6px', border: 'none', textAlign: 'left', padding: '0.5rem 0.75rem', color: '#0071ba', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <span>Explore 250+ Enterprise Clients</span>
+                    <button onClick={() => handleNavClick('customers')} style={{ minHeight: '44px', background: 'none', border: 'none', textAlign: 'left', padding: '0.5rem', color: '#0071ba', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>• Automotive & EV (Apollo, Ola, Bosch)</button>
+                    <button onClick={() => handleNavClick('customers')} style={{ minHeight: '44px', background: 'none', border: 'none', textAlign: 'left', padding: '0.5rem', color: '#E85874', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>• Heavy Engg & Defense (L&T, ABB, BEL)</button>
+                    <button onClick={() => handleNavClick('customers')} style={{ minHeight: '44px', background: 'none', border: 'none', textAlign: 'left', padding: '0.5rem', color: '#0071ba', fontWeight: 600, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>• FMCG & Packaging (HUL, Hatsun, ITC)</button>
+                    <button onClick={() => handleNavClick('customers')} style={{ minHeight: '44px', background: 'rgba(0, 113, 186, 0.08)', borderRadius: '6px', border: 'none', textAlign: 'left', padding: '0.5rem 0.75rem', color: '#0071ba', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <span>Explore 200+ Enterprise Clients</span>
                       <span>➔</span>
                     </button>
                   </div>

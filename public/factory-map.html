@@ -33,8 +33,13 @@ html.is-embedded #ann,
 html.is-embedded #nav,
 html.is-embedded #mobNavDrawer,
 html.is-embedded #tabs,
+html.is-embedded #hud,
 html.is-embedded #openPanelBtn,
-html.is-embedded #ctl .b.red {
+html.is-embedded #panel,
+html.is-embedded #panel-handle,
+html.is-embedded #ctl .b.red,
+html.is-embedded #ctl #ab,
+html.is-embedded #ctl #q {
   display: none !important;
 }
 html.is-embedded #stage {
@@ -42,13 +47,20 @@ html.is-embedded #stage {
   width: 100% !important;
   flex: 1 1 100% !important;
 }
-html.is-embedded #hud {
-  top: 10px !important;
-  left: 10px !important;
-}
 html.is-embedded #ctl {
   top: 10px !important;
   right: 10px !important;
+  gap: 6px !important;
+  max-width: calc(100% - 20px) !important;
+  z-index: 10 !important;
+}
+html.is-embedded #ctl .b {
+  padding: 5px 10px !important;
+  font-size: 11px !important;
+  background: rgba(6, 16, 29, 0.92) !important;
+  border: 1px solid rgba(24, 224, 255, 0.4) !important;
+  backdrop-filter: blur(8px) !important;
+  border-radius: 6px !important;
 }
 
 /* =====================================================================
@@ -618,9 +630,7 @@ ul.s li:before{content:"✓";position:absolute;left:0;top:2px;width:16px;height:
     <div class="hb">
       <span class="dot"></span>
       <div>
-        <h1>SMART FACTORY DIGITAL T
-          
-          WIN</h1>
+        <h1>SMART FACTORY DIGITAL TWIN</h1>
         <small class="mono">ATPL ARCHERY TECHNOCRATS • ARCHERY ROBOT COPILOT ACTIVE</small>
       </div>
       <span class="tel mono">∿ TELEMETRY ACTIVE (60 FPS)</span>
@@ -872,9 +882,13 @@ function setPanelOpen(isOpen, isExplicitUserAction = false) {
       panel.style.removeProperty('transform');
     }
     if (openBtn) {
-      openBtn.style.setProperty('display', 'inline-flex', 'important');
-      const stName = S[cur] ? S[cur][0] : 'Station';
-      openBtn.innerHTML = '📋 Station Details [<b>#' + p2(cur) + ' ' + stName + '</b>] ▶';
+      if (document.documentElement.classList.contains('is-embedded')) {
+        openBtn.style.setProperty('display', 'none', 'important');
+      } else {
+        openBtn.style.setProperty('display', 'inline-flex', 'important');
+        const stName = S[cur] ? S[cur][0] : 'Station';
+        openBtn.innerHTML = '📋 Station Details [<b>#' + p2(cur) + ' ' + stName + '</b>] ▶';
+      }
     }
     if (hud) hud.classList.remove('panel-open');
     document.body.classList.add('panel-closed');

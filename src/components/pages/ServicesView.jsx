@@ -78,7 +78,7 @@ export const ServicesView = () => {
             Guaranteed SLAs & <span className="gradient-text">24/7 Engineering Field Services</span>
           </h1>
           <p style={{ color: '#94a3b8', fontSize: '1.02rem', lineHeight: 1.65, marginBottom: '2.25rem' }}>
-            In high-throughput manufacturing and logistics, unplanned downtime is not an option. Archery Technocrats provides comprehensive, SLA-backed Annual Maintenance Contracts (AMC) to ensure 99.9% uptime for your AIDC hardware, optical vision, and software ecosystems.
+            In the realm of technology and equipment, an AMC refers to an Annual Maintenance Contract. This is a service agreement where a service provider or manufacturer agrees to maintain and repair a product or system over a one-year period. Performance metrics and key indicators are employed to assess the effectiveness and efficiency of our service management. So our services are always top-notch quality to satisfy end customers.
           </p>
 
           {/* Submenu Topic Pills */}
@@ -110,6 +110,113 @@ export const ServicesView = () => {
                 {t.label}
               </button>
             ))}
+          </div>
+        </div>
+
+        {/* 4 Official Pillars from atplgroup.com/amc-service/ */}
+        <div style={{ marginBottom: '4.5rem' }}>
+          <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 2.5rem auto' }}>
+            <div className="badge badge-cyan" style={{ marginBottom: '0.5rem' }}>ATPL SERVICE EXCELLENCE</div>
+            <h2 style={{ fontSize: '2.1rem', color: '#ffffff', fontWeight: 800 }}>
+              The Four Pillars of ATPL Maintenance & Engineering Support
+            </h2>
+            <p style={{ color: '#94a3b8', fontSize: '0.95rem', marginTop: '0.5rem' }}>
+              From ISO-standard hardware testing to 24/7 software emergency hotlines and nationwide on-site engineer deployment.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: '1.75rem' }}>
+            {/* Pillar 1: Hardware */}
+            <div className="glass-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderTop: '3px solid #00f0ff' }}>
+              <div>
+                <div style={{ width: '46px', height: '46px', borderRadius: '10px', background: 'rgba(0, 240, 255, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+                  <Wrench size={22} color="#00f0ff" />
+                </div>
+                <div style={{ fontSize: '0.78rem', color: '#00f0ff', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+                  ISO STANDARDS & CALIBRATION
+                </div>
+                <h3 style={{ color: '#ffffff', fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.85rem' }}>
+                  Hardware Maintenance
+                </h3>
+                <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
+                  We are maintaining ISO quality standard and criteria for all our product implementation. We do conducting tests, inspections, and quality checks for all our deliverable products to the client. Our team dedicated to quality assurance and testing will handle the maintenance of our installed products, such as printers, scanners, and mobile devices, at customer locations.
+                </p>
+              </div>
+              <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <span style={{ fontSize: '0.8rem', color: '#38bdf8', fontWeight: 700 }}>
+                  ✓ Printers, Scanners &amp; Handhelds
+                </span>
+              </div>
+            </div>
+
+            {/* Pillar 2: Software */}
+            <div className="glass-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderTop: '3px solid #10b981' }}>
+              <div>
+                <div style={{ width: '46px', height: '46px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+                  <Layers size={22} color="#10b981" />
+                </div>
+                <div style={{ fontSize: '0.78rem', color: '#10b981', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+                  24/7 DEDICATED ONLINE DESK
+                </div>
+                <h3 style={{ color: '#ffffff', fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.85rem' }}>
+                  Software AMC (24/7)
+                </h3>
+                <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
+                  We offer affordable Annual Maintenance Contracts (AMCs) for both our proprietary software and existing software owned by client. Our dedicated software team is available round-the-clock, 24/7, to promptly address any customer issues online. Additionally, we meticulously document all client projects for future reference, enhancing the efficiency and effectiveness of our clients' operations.
+                </p>
+              </div>
+              <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <span style={{ fontSize: '0.8rem', color: '#34d399', fontWeight: 700 }}>
+                  ✓ Round-the-clock 24/7 Live Support
+                </span>
+              </div>
+            </div>
+
+            {/* Pillar 3: Installation & Training */}
+            <div className="glass-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderTop: '3px solid #f59e0b' }}>
+              <div>
+                <div style={{ width: '46px', height: '46px', borderRadius: '10px', background: 'rgba(245, 158, 11, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+                  <Settings size={22} color="#f59e0b" />
+                </div>
+                <div style={{ fontSize: '0.78rem', color: '#f59e0b', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+                  DEMOS, CALIBRATION & INDEPENDENCE
+                </div>
+                <h3 style={{ color: '#ffffff', fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.85rem' }}>
+                  Installation &amp; Training
+                </h3>
+                <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
+                  Our team is also tasked with delivering product demos to showcase test results at customer locations. This involves the collaboration of service engineers, quality control inspectors, and testing teams. They ensure that the equipment is properly maintained and calibrated. We provide training to customers on how to effectively utilize our products and services, enabling them to work independently without any reliance on external assistance.
+                </p>
+              </div>
+              <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <span style={{ fontSize: '0.8rem', color: '#fbbf24', fontWeight: 700 }}>
+                  ✓ On-site Staff Hands-on Training
+                </span>
+              </div>
+            </div>
+
+            {/* Pillar 4: Onsite service (PAN India) */}
+            <div className="glass-card" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', borderTop: '3px solid #c084fc' }}>
+              <div>
+                <div style={{ width: '46px', height: '46px', borderRadius: '10px', background: 'rgba(192, 132, 252, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.25rem' }}>
+                  <ShieldCheck size={22} color="#c084fc" />
+                </div>
+                <div style={{ fontSize: '0.78rem', color: '#c084fc', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.4rem' }}>
+                  NATIONWIDE FIELD DISPATCH
+                </div>
+                <h3 style={{ color: '#ffffff', fontSize: '1.35rem', fontWeight: 800, marginBottom: '0.85rem' }}>
+                  PAN-India Onsite Service
+                </h3>
+                <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>
+                  We offer PAN India services across India, deploying our highly skilled service engineers directly to our customers' locations. To ensure the health and functionality of our products, preventive actions are taken through on-site visits for product health checks. Our quality assurance and testing procedures ensure that products and services meet the required standards and that defects are identified and addressed promptly.
+                </p>
+              </div>
+              <div style={{ marginTop: '1.5rem', paddingTop: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <span style={{ fontSize: '0.8rem', color: '#c084fc', fontWeight: 700 }}>
+                  ✓ Scheduled Health Checks &amp; Preventive Audits
+                </span>
+              </div>
+            </div>
           </div>
         </div>
 

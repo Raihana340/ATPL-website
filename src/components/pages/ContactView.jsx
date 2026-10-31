@@ -333,45 +333,75 @@ export const ContactView = () => {
           
           {/* Left: Contact Coordinates */}
           <div id="contact-offices" className="glass-card" style={{ padding: '2.5rem', scrollMarginTop: '6rem' }}>
-            <h3 style={{ fontSize: '1.45rem', color: '#ffffff', marginBottom: '1.5rem' }}>Corporate Offices & Contact</h3>
+            <h3 style={{ fontSize: '1.45rem', color: '#ffffff', marginBottom: '1.5rem' }}>Corporate Offices & Network</h3>
 
-            <div style={{ marginBottom: '1.5rem' }}>
-              <strong style={{ color: 'var(--cyan-primary)', display: 'block', marginBottom: '0.35rem' }}>
-                🏢 Sales Office (Chennai HQ)
-              </strong>
-              <p style={{ color: '#cbd5e1', fontSize: '0.9rem', lineHeight: 1.5 }}>
-                TIDEL Park, G11 Ground Floor, No.4, Canal Bank Rd,<br />
-                Taramani, Chennai, Tamil Nadu - 600113
-              </p>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginBottom: '1.75rem' }}>
+              <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <strong style={{ color: 'var(--cyan-primary)', display: 'block', fontSize: '0.88rem', marginBottom: '0.25rem' }}>
+                  🏢 Head Office (Chennai)
+                </strong>
+                <p style={{ color: '#cbd5e1', fontSize: '0.82rem', lineHeight: 1.5, margin: 0 }}>
+                  TIDEL Park, G11 Ground Floor, Canal Bank Road, Taramani, Chennai - 600113
+                </p>
+              </div>
+
+              <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <strong style={{ color: 'var(--cyan-primary)', display: 'block', fontSize: '0.88rem', marginBottom: '0.25rem' }}>
+                  🏛️ Registered Office
+                </strong>
+                <p style={{ color: '#cbd5e1', fontSize: '0.82rem', lineHeight: 1.5, margin: 0 }}>
+                  275/11, S1, Second Floor, Gandhi Road, West Tambaram, Chennai - 600045
+                </p>
+              </div>
+
+              <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <strong style={{ color: '#38bdf8', display: 'block', fontSize: '0.88rem', marginBottom: '0.25rem' }}>
+                  📍 Branch 1: Bangalore Hub
+                </strong>
+                <p style={{ color: '#cbd5e1', fontSize: '0.82rem', lineHeight: 1.5, margin: 0 }}>
+                  Novel Tech Park, 46/4, GB Palya, Kudlu Gate, Bangalore - 560068
+                </p>
+              </div>
+
+              <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <strong style={{ color: '#38bdf8', display: 'block', fontSize: '0.88rem', marginBottom: '0.25rem' }}>
+                  🔬 Branch 2: Madurai R&D
+                </strong>
+                <p style={{ color: '#cbd5e1', fontSize: '0.82rem', lineHeight: 1.5, margin: 0 }}>
+                  TCE, Thiyagarajar College Of Engineering, Madurai - 625015
+                </p>
+              </div>
+
+              <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <strong style={{ color: '#38bdf8', display: 'block', fontSize: '0.88rem', marginBottom: '0.25rem' }}>
+                  ⚙️ Branch 3: Pune Industrial Hub
+                </strong>
+                <p style={{ color: '#cbd5e1', fontSize: '0.82rem', lineHeight: 1.5, margin: 0 }}>
+                  102, Suman Business Center, Kalyani Nagar, Pune, Maharashtra - 411014
+                </p>
+              </div>
+
+              <div style={{ backgroundColor: 'rgba(255, 255, 255, 0.03)', padding: '1rem', borderRadius: '10px', border: '1px solid rgba(255, 255, 255, 0.08)' }}>
+                <strong style={{ color: '#38bdf8', display: 'block', fontSize: '0.88rem', marginBottom: '0.25rem' }}>
+                  🏭 Branch 4: Hosur Manufacturing Hub
+                </strong>
+                <p style={{ color: '#cbd5e1', fontSize: '0.82rem', lineHeight: 1.5, margin: 0 }}>
+                  Plot no-51, 2/749-6 MM.Nagar, Mookandapalli, Hosur - 635126
+                </p>
+              </div>
             </div>
 
-            <div style={{ marginBottom: '1.5rem' }}>
-              <strong style={{ color: 'var(--cyan-primary)', display: 'block', marginBottom: '0.35rem' }}>
-                🏛️ Registered Office
+            <div style={{ marginBottom: '1.5rem', backgroundColor: 'rgba(0, 113, 186, 0.1)', padding: '1.25rem', borderRadius: '12px', border: '1px solid rgba(56, 189, 248, 0.25)' }}>
+              <strong style={{ color: '#ffffff', display: 'block', fontSize: '0.96rem', marginBottom: '0.5rem' }}>
+                📞 Direct Phone & Mobile Desks
               </strong>
-              <p style={{ color: '#cbd5e1', fontSize: '0.9rem', lineHeight: 1.5 }}>
-                275/11, S1, 2nd Floor, Gandhi Road, West Tambaram, Chennai - 600045
-              </p>
-            </div>
-
-            <div style={{ marginBottom: '1.5rem' }}>
-              <strong style={{ color: 'var(--cyan-primary)', display: 'block', marginBottom: '0.35rem' }}>
-                🔬 R&D & Innovation Center
-              </strong>
-              <p style={{ color: '#cbd5e1', fontSize: '0.9rem', lineHeight: 1.5 }}>
-                Technology Business Incubator (TCE-TBI), Thiagarajar College of Engineering, Madurai - 625015
-              </p>
-            </div>
-
-            <div style={{ marginBottom: '1.5rem' }}>
-              <strong style={{ color: 'var(--cyan-primary)', display: 'block', marginBottom: '0.35rem' }}>
-                📞 Departmental Phone & Mobile Desks
-              </strong>
-              <div style={{ color: '#cbd5e1', fontSize: '0.9rem', lineHeight: 1.6 }}>
-                <div><strong>Toll Free:</strong> <a href="tel:1800120774777" style={{ color: '#38bdf8' }}>1800-120-774777</a></div>
-                <div><strong>Landline:</strong> 044 3553 7618</div>
-                <div><strong>Sales Mobile:</strong> <a href="tel:+916380859963" style={{ color: '#34d399' }}>+91 63808 59963</a></div>
-                <div><strong>Software Mobile:</strong> <a href="tel:+919342173484" style={{ color: '#38bdf8' }}>+91 93421 73484</a></div>
+              <div style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: 1.7, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.5rem' }}>
+                <div><strong>Toll Free:</strong> <a href="tel:1800120774777" style={{ color: '#38bdf8', fontWeight: 700 }}>1800 120 774777</a></div>
+                <div><strong>Chennai Desk:</strong> 044 3553 7618</div>
+                <div><strong>Sales / WhatsApp:</strong> <a href="tel:+916380859963" style={{ color: '#34d399', fontWeight: 700 }}>+91 63808 59963</a></div>
+                <div><strong>Direct Line:</strong> <a href="tel:+917305535993" style={{ color: '#38bdf8' }}>+91 73055 35993</a></div>
+                <div><strong>Direct Line:</strong> <a href="tel:+917305635993" style={{ color: '#38bdf8' }}>+91 73056 35993</a></div>
+                <div><strong>Software Support:</strong> <a href="tel:+919342173484" style={{ color: '#38bdf8' }}>+91 93421 73484</a></div>
                 <div><strong>Service Mobile:</strong> <a href="tel:+917200157626" style={{ color: '#f59e0b' }}>+91 72001 57626</a></div>
               </div>
             </div>
@@ -380,8 +410,9 @@ export const ContactView = () => {
               <strong style={{ color: 'var(--cyan-primary)', display: 'block', marginBottom: '0.35rem' }}>
                 📧 Official Departmental Emails
               </strong>
-              <div style={{ color: '#cbd5e1', fontSize: '0.9rem', lineHeight: 1.6 }}>
+              <div style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: 1.6 }}>
                 <div><strong>Sales:</strong> <a href="mailto:sales@atplgroup.com" style={{ color: 'var(--cyan-primary)' }}>sales@atplgroup.com</a></div>
+                <div><strong>General:</strong> <a href="mailto:info@atplgroup.com" style={{ color: 'var(--cyan-primary)' }}>info@atplgroup.com</a></div>
                 <div><strong>Software Support:</strong> <a href="mailto:softwaresupport@atplgroup.com" style={{ color: 'var(--cyan-primary)' }}>softwaresupport@atplgroup.com</a></div>
                 <div><strong>Service Desk:</strong> <a href="mailto:support@atplgroup.com" style={{ color: 'var(--cyan-primary)' }}>support@atplgroup.com</a></div>
               </div>

@@ -274,11 +274,11 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          gap: '0.5rem',
-          marginBottom: '0.45rem',
-          flexShrink: 0
+          gap: '0.75rem',
+          marginBottom: '0.65rem',
+          flexWrap: 'wrap'
         }}>
-          <div className="hud-header-left" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
+          <div className="hud-header-left" style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap' }}>
             <div className="hud-header-pill" style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -286,9 +286,8 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
               background: 'rgba(0, 240, 255, 0.08)',
               border: '1px solid rgba(0, 240, 255, 0.35)',
               borderRadius: '999px',
-              padding: '0.15rem 0.6rem',
-              boxShadow: '0 0 12px rgba(0, 240, 255, 0.2)',
-              flexShrink: 0
+              padding: '0.2rem 0.65rem',
+              boxShadow: '0 0 12px rgba(0, 240, 255, 0.2)'
             }}>
               <span style={{
                 width: '6px',
@@ -311,7 +310,7 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
               </span>
             </div>
 
-            <div className="hud-header-title" style={{
+            <h2 className="hud-header-title" style={{
               fontFamily: 'var(--font-display)',
               fontSize: 'clamp(1.05rem, 1.8vw, 1.35rem)',
               fontWeight: 800,
@@ -320,8 +319,8 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
               margin: 0,
               lineHeight: 1.2
             }}>
-              11-Station Autonomous <span className="gradient-text">Factory Flight Inspection</span>
-            </div>
+              Autonomous <span className="gradient-text">Factory Flight Inspection</span>
+            </h2>
           </div>
 
           <div className="hud-header-right" style={{
@@ -329,296 +328,139 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
             color: '#94a3b8',
             display: 'flex',
             alignItems: 'center',
-            gap: '0.45rem',
+            gap: '0.5rem',
+            flexWrap: 'wrap',
             flexShrink: 0
           }}>
-            {!embedded && (
-              <>
-                <span className="hud-header-hint" style={{ display: 'inline-block' }}>Click beacon (1–11) to fly Archie</span>
-                <span className="hud-header-sep" style={{ color: '#00f0ff' }}>•</span>
-              </>
-            )}
-            <span style={{ color: '#00f0ff', fontFamily: 'var(--font-mono)', fontSize: '0.72rem', fontWeight: 800 }}>
-              STATION {currentIndex + 1}/{ATPL_FACTORY_NODES.length}
+            <span style={{ color: '#00f0ff', fontFamily: 'var(--font-mono)', fontSize: '0.74rem', fontWeight: 800 }}>
+              LIVE INSPECTION: <span style={{ color: '#ffffff' }}>{currentNode.name.replace('™', '')}</span>
             </span>
 
-            {embedded && (
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', marginLeft: '0.25rem' }}>
-                <button
-                  onClick={() => setIsAutoTour(!isAutoTour)}
-                  style={{
-                    backgroundColor: isAutoTour ? 'rgba(232, 88, 116, 0.2)' : 'rgba(0, 240, 255, 0.15)',
-                    border: isAutoTour ? '1px solid #E85874' : '1px solid #00f0ff',
-                    color: '#ffffff',
-                    borderRadius: '5px',
-                    padding: '0.2rem 0.55rem',
-                    fontSize: '0.70rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.25rem',
-                    minHeight: '26px',
-                    transition: 'all 0.15s ease'
-                  }}
-                  title={isAutoTour ? "Pause automated tour" : "Resume automated tour"}
-                >
-                  {isAutoTour ? <Pause size={10} color="#E85874" /> : <Play size={10} color="#00f0ff" />}
-                  <span>{isAutoTour ? 'Pause' : 'Play'}</span>
-                </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+              <button
+                onClick={handlePrev}
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  color: '#ffffff',
+                  borderRadius: '6px',
+                  padding: '0.22rem 0.55rem',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.2rem',
+                  minHeight: '28px',
+                  transition: 'all 0.15s ease'
+                }}
+                title="Previous station"
+              >
+                <ChevronLeft size={13} />
+                <span>Prev</span>
+              </button>
 
-                <button
-                  onClick={() => setCurrentView('factory-3d')}
-                  style={{
-                    backgroundColor: 'rgba(0, 113, 186, 0.25)',
-                    border: '1px solid rgba(0, 240, 255, 0.5)',
-                    color: '#00f0ff',
-                    borderRadius: '5px',
-                    padding: '0.2rem 0.55rem',
-                    fontSize: '0.70rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.25rem',
-                    minHeight: '26px',
-                    transition: 'all 0.15s ease'
-                  }}
-                  title="Switch to 3D Digital Twin View"
-                >
-                  <Layers size={10} />
-                  <span>3D</span>
-                </button>
-              </div>
-            )}
+              <button
+                onClick={handleNext}
+                style={{
+                  backgroundColor: 'rgba(0, 113, 186, 0.35)',
+                  border: '1.2px solid #00f0ff',
+                  color: '#ffffff',
+                  borderRadius: '6px',
+                  padding: '0.22rem 0.55rem',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.2rem',
+                  minHeight: '28px',
+                  transition: 'all 0.15s ease'
+                }}
+                title="Next station"
+              >
+                <span>Next</span>
+                <ChevronRight size={13} />
+              </button>
+
+              <button
+                onClick={() => setIsAutoTour(!isAutoTour)}
+                style={{
+                  backgroundColor: isAutoTour ? 'rgba(232, 88, 116, 0.2)' : 'rgba(0, 240, 255, 0.15)',
+                  border: isAutoTour ? '1px solid #E85874' : '1px solid #00f0ff',
+                  color: '#ffffff',
+                  borderRadius: '6px',
+                  padding: '0.22rem 0.6rem',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.25rem',
+                  minHeight: '28px',
+                  transition: 'all 0.15s ease'
+                }}
+                title={isAutoTour ? "Pause automated tour" : "Resume automated tour"}
+              >
+                {isAutoTour ? <Pause size={12} color="#E85874" /> : <Play size={12} color="#00f0ff" />}
+                <span>{isAutoTour ? 'Pause' : 'Play'}</span>
+              </button>
+
+              <button
+                onClick={() => setCurrentView('factory-3d')}
+                style={{
+                  backgroundColor: 'rgba(0, 113, 186, 0.25)',
+                  border: '1px solid rgba(0, 240, 255, 0.5)',
+                  color: '#00f0ff',
+                  borderRadius: '6px',
+                  padding: '0.22rem 0.65rem',
+                  fontSize: '0.72rem',
+                  fontWeight: 800,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.25rem',
+                  minHeight: '28px',
+                  transition: 'all 0.15s ease'
+                }}
+                title="Switch to 3D Digital Twin View"
+              >
+                <Layers size={12} />
+                <span>3D Twin</span>
+              </button>
+            </div>
           </div>
         </div>
 
         {/* =====================================================================
-            2. INTERACTIVE ANIMATION STAGE & SIDE TELEMETRY COMMAND PANEL (Single Fold)
+            2. FULL-BOX TOUR STAGE (Unobstructed Factory Floor View)
            ===================================================================== */}
         <div className="hud-tour-grid">
-          {/* Keyframe Animations & Responsive Layout Styles */}
           <style>{`
             #factory-blueprint-section {
               box-sizing: border-box;
             }
             .hud-tour-grid {
-              display: grid;
-              grid-template-columns: 1fr;
-              gap: 1rem;
-              align-items: stretch;
+              display: block;
+              width: 100%;
             }
-            @media (min-width: 1024px) {
-              #factory-blueprint-section.is-standalone {
-                height: calc(100vh - 100px);
-                min-height: 520px;
-                max-height: 700px;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-              }
-              #factory-blueprint-section.is-standalone > .container {
-                height: 100%;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-              }
-              #factory-blueprint-section.is-standalone .hud-tour-grid {
-                grid-template-columns: minmax(0, 1.65fr) minmax(360px, 415px);
-                gap: 1.15rem;
-                flex: 1;
-                min-height: 0;
-                height: 100%;
-              }
-              #factory-blueprint-section.is-standalone .hud-factory-viewport {
-                position: relative;
-                width: 100%;
-                height: 100%;
-                min-height: 0;
-                overflow: hidden;
-                background-color: #030816;
-                border-radius: 14px;
-                border: 1.5px solid rgba(0, 240, 255, 0.35);
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 30px rgba(0, 240, 255, 0.12);
-              }
-              #factory-blueprint-section.is-standalone .hud-side-panel {
-                height: 100%;
-                min-height: 0;
-                max-height: 100%;
-              }
-            }
-            #factory-blueprint-section.is-embedded {
-              height: auto !important;
-              min-height: auto !important;
-              max-height: none !important;
-              padding: 0 !important;
-            }
-            #factory-blueprint-section.is-embedded .hud-header-title,
-            #factory-blueprint-section.is-embedded .hud-header-hint,
-            #factory-blueprint-section.is-embedded .hud-header-sep {
-              display: none !important;
-            }
-            #factory-blueprint-section.is-embedded .hud-tour-grid {
-              display: flex !important;
-              flex-direction: column !important;
-              gap: 0.65rem !important;
-              height: auto !important;
-            }
-            #factory-blueprint-section.is-embedded .hud-factory-viewport {
-              position: relative !important;
-              width: 100% !important;
-              aspect-ratio: 16 / 9 !important;
-              height: auto !important;
-              max-height: 330px !important;
-              min-height: 220px !important;
-              overflow: hidden !important;
-              background-color: #030816 !important;
-              border-radius: 12px !important;
-              border: 1.5px solid rgba(0, 240, 255, 0.35) !important;
-              box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 240, 255, 0.12) !important;
-            }
-            #factory-blueprint-section.is-embedded .hud-side-panel {
-              height: auto !important;
-              min-height: auto !important;
-              max-height: none !important;
-              border-radius: 12px !important;
-              padding: 0.75rem 0.95rem !important;
-              gap: 0.5rem !important;
-              background-color: #050b18 !important;
-              border: 1.5px solid rgba(0, 240, 255, 0.3) !important;
-            }
-            #factory-blueprint-section.is-embedded .hud-panel-top-bar {
-              display: none !important;
-            }
-            #factory-blueprint-section.is-embedded .hud-station-thumb {
-              display: none !important;
-            }
-            @media (min-width: 640px) {
-              #factory-blueprint-section.is-embedded .hud-embedded-subgrid {
-                display: grid !important;
-                grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr) !important;
-                gap: 0.95rem !important;
-                align-items: center !important;
-              }
-            }
-            @media (max-width: 639px) {
-              #factory-blueprint-section.is-embedded .hud-embedded-subgrid {
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 0.55rem !important;
-              }
-            }
-            #factory-blueprint-section.is-standalone .hud-embedded-subgrid,
-            #factory-blueprint-section.is-standalone .hud-embedded-col-left,
-            #factory-blueprint-section.is-standalone .hud-embedded-col-right {
-              display: contents !important;
-            }
-            @media (max-width: 1023px) {
-              #factory-blueprint-section {
-                padding-top: 0.45rem !important;
-                padding-bottom: 0.55rem !important;
-                height: auto !important;
-                min-height: auto !important;
-                max-height: none !important;
-              }
-              .hud-header-bar {
-                margin-bottom: 0.35rem !important;
-                gap: 0.4rem !important;
-              }
-              .hud-header-hint,
-              .hud-header-sep {
-                display: none !important;
-              }
-              .hud-header-pill {
-                padding: 0.12rem 0.45rem !important;
-              }
-              .hud-header-pill-text {
-                font-size: 0.60rem !important;
-              }
-              .hud-header-title {
-                font-size: 0.88rem !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                max-width: 190px !important;
-              }
-              .hud-tour-grid {
-                display: flex !important;
-                flex-direction: column !important;
-                gap: 0.45rem !important;
-              }
-              .hud-factory-viewport {
-                position: relative !important;
-                width: 100% !important;
-                height: clamp(160px, 24vh, 185px) !important;
-                aspect-ratio: auto !important;
-                max-height: none !important;
-                min-height: 0 !important;
-                overflow: hidden !important;
-                background-color: #030816 !important;
-                border-radius: 10px !important;
-                border: 1.5px solid rgba(0, 240, 255, 0.35) !important;
-              }
-              .hud-station-thumb {
-                display: none !important;
-              }
-              .hud-side-panel {
-                padding: 0.6rem 0.75rem !important;
-                gap: 0.4rem !important;
-                border-radius: 10px !important;
-                height: auto !important;
-                max-height: none !important;
-              }
-              .hud-station-title {
-                font-size: 1.05rem !important;
-              }
-              .hud-desc-box {
-                padding: 0.45rem 0.65rem !important;
-                min-height: 0 !important;
-              }
-              .hud-desc-text {
-                font-size: 0.82rem !important;
-                line-height: 1.42 !important;
-              }
-              .hud-quick-btn {
-                height: 25px !important;
-                font-size: 0.72rem !important;
-              }
-              .hud-action-btn {
-                min-height: 34px !important;
-                font-size: 0.76rem !important;
-              }
-              .hud-demo-btn {
-                min-height: 36px !important;
-                font-size: 0.80rem !important;
-              }
-            }
-            .hud-side-panel {
-              background-color: #050b18;
-              border: 1.5px solid rgba(0, 240, 255, 0.35);
-              border-radius: 14px;
-              padding: 0.9rem 1.05rem;
-              display: flex;
-              flex-direction: column;
-              gap: 0.55rem;
-              box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 240, 255, 0.08);
+            .hud-factory-viewport {
               position: relative;
-              overflow-y: auto;
-              box-sizing: border-box;
+              width: 100%;
+              aspect-ratio: 16 / 9;
+              max-height: 720px;
+              min-height: 280px;
+              overflow: hidden;
+              background-color: #030816;
+              border-radius: 16px;
+              border: 1.5px solid rgba(0, 240, 255, 0.4);
+              box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 240, 255, 0.15);
             }
-            .hud-side-panel::-webkit-scrollbar {
-              width: 4px;
-            }
-            .hud-side-panel::-webkit-scrollbar-track {
-              background: rgba(3, 10, 24, 0.4);
-            }
-            .hud-side-panel::-webkit-scrollbar-thumb {
-              background: rgba(0, 240, 255, 0.35);
-              border-radius: 4px;
-            }
-            .hud-side-panel::-webkit-scrollbar-thumb:hover {
-              background: #00f0ff;
+            @media (max-width: 768px) {
+              .hud-factory-viewport {
+                border-radius: 10px;
+                aspect-ratio: 16 / 9;
+              }
             }
             @keyframes archieFloating {
               0%, 100% {
@@ -669,19 +511,15 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
               transform: translate(-50%, -50%) scale(1.25);
             }
             .hud-pin-disc {
-              width: 30px;
-              height: 30px;
+              width: 22px;
+              height: 22px;
               border-radius: 50%;
               display: flex;
               align-items: center;
               justifyContent: center;
-              font-family: var(--font-display, sans-serif);
-              font-size: 0.8rem;
-              font-weight: 900;
-              color: #ffffff;
               background: rgba(4, 13, 29, 0.88);
-              border: 1.5px solid rgba(0, 240, 255, 0.6);
-              box-shadow: 0 4px 14px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 240, 255, 0.35);
+              border: 1.5px solid rgba(0, 240, 255, 0.7);
+              box-shadow: 0 4px 14px rgba(0, 0, 0, 0.8), 0 0 12px rgba(0, 240, 255, 0.4);
               transition: all 0.3s ease;
             }
             .hud-station-pin.active .hud-pin-disc {
@@ -727,19 +565,16 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
               .hud-central-logo-hub:hover {
                 transform: translate(-50%, -50%) scale(0.88) !important;
               }
-            }
-            @media (max-width: 768px) {
               .hud-station-pin {
-                width: 32px !important;
-                height: 32px !important;
+                width: 24px !important;
+                height: 24px !important;
                 display: flex !important;
                 align-items: center !important;
-                justify-content: center !important;
+                justifyContent: center !important;
               }
               .hud-pin-disc {
-                width: 22px !important;
-                height: 22px !important;
-                font-size: 0.65rem !important;
+                width: 17px !important;
+                height: 17px !important;
               }
               .hud-archie-speech-badge {
                 padding: 0.12rem 0.45rem !important;
@@ -756,10 +591,6 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
             }
           `}</style>
 
-          {/* ===================================================================
-              1. 100% UNOBSTRUCTED FULL-VIEW BLUEPRINT CANVAS
-                 (No CRT top bar, No CRT bottom dock - pure view of robot flight!)
-             =================================================================== */}
           <div className="hud-factory-viewport">
             {/* The Isometric Factory Floor Graphic */}
             <picture style={{ width: '100%', height: '100%', display: 'block' }}>
@@ -1085,7 +916,7 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
                     color: '#ffffff',
                     letterSpacing: '0.04em'
                   }}>
-                    SCANNING STATION {currentNode.stepNumber}: <span style={{ color: '#00f0ff' }}>{currentNode.name.replace('™', '')}</span>
+                    SCANNING: <span style={{ color: '#00f0ff' }}>{currentNode.name.replace('™', '')}</span>
                   </span>
                 </div>
 
@@ -1136,13 +967,20 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
                     left: `${node.x}%`,
                     top: `${node.y}%`
                   }}
-                  title={`Station ${node.stepNumber}: ${node.name}`}
+                  title={node.name}
                   role="button"
                   tabIndex={0}
                 >
-                  {/* Glowing Numeric Disc */}
+                  {/* Glowing Beacon Disc (Number-Free) */}
                   <div className="hud-pin-disc">
-                    {node.stepNumber}
+                    <div style={{
+                      width: isActive ? '8px' : '5px',
+                      height: isActive ? '8px' : '5px',
+                      borderRadius: '50%',
+                      backgroundColor: isActive ? '#ffffff' : '#00f0ff',
+                      boxShadow: isActive ? '0 0 10px #ffffff' : '0 0 6px #00f0ff',
+                      transition: 'all 0.25s ease'
+                    }} />
                   </div>
 
                   {/* Clean Tooltip on Hover / Active */}
@@ -1171,362 +1009,102 @@ export const FactoryBlueprintMap = ({ embedded = false }) => {
                 </div>
               );
             })}
-          </div>
-
-          {/* ===================================================================
-              2. DEDICATED SIDE TELEMETRY & DESCRIPTION CONTROL PANEL (Compact Single Fold)
-             =================================================================== */}
-          <div className="hud-side-panel">
-            {/* Ambient cyber gradient in panel */}
+            {/* Sleek Floating Bottom Glass Station Selector Strip */}
             <div style={{
               position: 'absolute',
-              top: 0,
-              right: 0,
-              width: '160px',
-              height: '160px',
-              background: 'radial-gradient(circle at top right, rgba(0, 240, 255, 0.12) 0%, transparent 70%)',
-              pointerEvents: 'none'
-            }} />
-
-            {/* Top Bar: Mode Status & Quick Toggles */}
-            <div className="hud-panel-top-bar" style={{
+              bottom: '12px',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              zIndex: 35,
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
-              paddingBottom: '0.45rem',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.08)'
+              gap: '0.5rem',
+              backgroundColor: 'rgba(3, 10, 24, 0.88)',
+              backdropFilter: 'blur(14px)',
+              WebkitBackdropFilter: 'blur(14px)',
+              border: '1.2px solid rgba(0, 240, 255, 0.4)',
+              borderRadius: '999px',
+              padding: '0.35rem 0.75rem',
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.75), 0 0 20px rgba(0, 240, 255, 0.15)',
+              maxWidth: 'calc(100% - 24px)',
+              overflowX: 'auto'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
-                <span style={{
-                  width: '8px',
-                  height: '8px',
-                  borderRadius: '50%',
-                  backgroundColor: isAutoTour ? '#10b981' : '#f59e0b',
-                  boxShadow: isAutoTour ? '0 0 8px #10b981' : '0 0 8px #f59e0b',
-                  animation: isAutoTour ? 'sonarPingDot 1.6s infinite' : 'none'
-                }} />
-                <span style={{
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.72rem',
-                  fontWeight: 800,
-                  color: '#00f0ff',
-                  letterSpacing: '0.05em'
-                }}>
-                  {isAutoTour ? 'AUTO TOUR ACTIVE' : 'MANUAL CONTROL'}
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.35rem',
+                paddingRight: '0.5rem',
+                borderRight: '1px solid rgba(255, 255, 255, 0.15)',
+                flexShrink: 0
+              }}>
+                <span style={{ fontSize: '1rem' }}>{currentNode.icon}</span>
+                <span style={{ color: '#ffffff', fontSize: '0.76rem', fontWeight: 800, whiteSpace: 'nowrap' }}>
+                  {currentNode.name.replace('™', '')}
                 </span>
-              </div>
-
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                <button
-                  onClick={() => setIsAutoTour(!isAutoTour)}
-                  style={{
-                    backgroundColor: isAutoTour ? 'rgba(232, 88, 116, 0.2)' : 'rgba(0, 240, 255, 0.15)',
-                    border: isAutoTour ? '1px solid #E85874' : '1px solid #00f0ff',
-                    color: '#ffffff',
-                    borderRadius: '5px',
-                    padding: '0.22rem 0.6rem',
-                    fontSize: '0.72rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.3rem',
-                    minHeight: '28px',
-                    transition: 'all 0.15s ease'
-                  }}
-                  title={isAutoTour ? "Pause automated tour" : "Resume automated tour"}
-                >
-                  {isAutoTour ? <Pause size={11} color="#E85874" /> : <Play size={11} color="#00f0ff" />}
-                  <span>{isAutoTour ? 'Pause' : 'Play'}</span>
-                </button>
-
-                <button
-                  onClick={() => setCurrentView('factory-3d')}
-                  style={{
-                    backgroundColor: 'rgba(0, 113, 186, 0.25)',
-                    border: '1px solid rgba(0, 240, 255, 0.5)',
-                    color: '#00f0ff',
-                    borderRadius: '5px',
-                    padding: '0.22rem 0.6rem',
-                    fontSize: '0.72rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.3rem',
-                    minHeight: '28px',
-                    transition: 'all 0.15s ease'
-                  }}
-                  title="Switch to 3D Digital Twin View"
-                >
-                  <Layers size={11} />
-                  <span>3D</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Station Identity & Impact Metrics */}
-            <div className="hud-embedded-subgrid">
-              <div className="hud-embedded-col-left">
-                <div>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '0.35rem' }}>
-                <span style={{
-                  backgroundColor: 'rgba(232, 88, 116, 0.2)',
-                  border: '1px solid #E85874',
-                  color: '#ffffff',
-                  padding: '0.2rem 0.55rem',
-                  borderRadius: '5px',
-                  fontFamily: 'var(--font-mono)',
-                  fontSize: '0.72rem',
-                  fontWeight: 800,
-                  letterSpacing: '0.04em'
-                }}>
-                  STATION {currentIndex + 1} / {ATPL_FACTORY_NODES.length}
-                </span>
-
                 <span style={{
                   backgroundColor: 'rgba(16, 185, 129, 0.15)',
                   border: '1px solid rgba(16, 185, 129, 0.4)',
                   color: '#34d399',
-                  fontSize: '0.70rem',
+                  fontSize: '0.66rem',
                   fontWeight: 800,
-                  padding: '0.2rem 0.55rem',
-                  borderRadius: '5px'
+                  padding: '0.1rem 0.45rem',
+                  borderRadius: '999px',
+                  whiteSpace: 'nowrap'
                 }}>
-                  ⚡ {currentNode.roiMetric}
+                  {currentNode.roiMetric}
                 </span>
               </div>
 
-              <div style={{
-                margin: '0 0 0.15rem 0',
-                fontSize: '1.20rem',
-                fontWeight: 800,
-                color: '#ffffff',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.45rem',
-                fontFamily: 'var(--font-display, sans-serif)',
-                lineHeight: 1.2
-              }}>
-                <span>{currentNode.icon}</span>
-                <span>{currentNode.name}</span>
+              {/* Station jump dots (clean, numberless modern indicators) */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.35rem', flexShrink: 0 }}>
+                {ATPL_FACTORY_NODES.map((node, i) => (
+                  <button
+                    key={node.id}
+                    onClick={() => handleStationClick(i)}
+                    title={node.name}
+                    aria-label={node.name}
+                    style={{
+                      width: currentIndex === i ? '16px' : '6px',
+                      height: '6px',
+                      borderRadius: '999px',
+                      backgroundColor: currentIndex === i ? '#E85874' : 'rgba(255, 255, 255, 0.3)',
+                      border: 'none',
+                      padding: 0,
+                      cursor: 'pointer',
+                      transition: 'all 0.25s ease',
+                      boxShadow: currentIndex === i ? '0 0 8px #E85874' : 'none'
+                    }}
+                  />
+                ))}
               </div>
 
-              <div style={{
-                fontSize: '0.74rem',
-                color: '#38bdf8',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em'
-              }}>
-                {currentNode.category}
-              </div>
-            </div>
-
-            {/* Station Image Thumbnail Preview */}
-            <div className="hud-station-thumb" style={{
-              position: 'relative',
-              borderRadius: '8px',
-              overflow: 'hidden',
-              height: '82px',
-              backgroundColor: '#020617',
-              border: '1px solid rgba(0, 240, 255, 0.25)',
-              flexShrink: 0
-            }}>
-              <img
-                src={currentNode.image ? currentNode.image.replace('.webp', '_thumb.webp') : ''}
-                alt={currentNode.name}
-                width="320"
-                height="82"
-                loading="lazy"
-                onError={(e) => {
-                  if (e.currentTarget.src.includes('_thumb.webp')) {
-                    e.currentTarget.src = e.currentTarget.src.replace('_thumb.webp', '.webp');
-                  } else if (e.currentTarget.src.endsWith('.webp')) {
-                    e.currentTarget.src = e.currentTarget.src.replace('.webp', '.jpg');
-                  }
-                }}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  aspectRatio: '320 / 82',
-                  objectFit: 'cover',
-                  display: 'block'
-                }}
-              />
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(180deg, transparent 20%, rgba(3, 10, 24, 0.94) 100%)',
-                pointerEvents: 'none'
-              }} />
-              <div style={{
-                position: 'absolute',
-                bottom: '6px',
-                left: '8px',
-                right: '8px',
-                fontSize: '0.76rem',
-                fontWeight: 700,
-                color: '#ffffff',
-                lineHeight: 1.25,
-                textShadow: '0 2px 8px rgba(0,0,0,0.95)'
-              }}>
-                {currentNode.tagline}
-              </div>
-            </div>
-          </div>
-
-          {/* Station Controls & Actions Column */}
-          <div className="hud-embedded-col-right" style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
-            {/* 12 Stations Quick-Selector Grid (Hidden in embedded hero partition mode) */}
-            {!embedded && (
-              <div>
-                <div style={{
-                  fontSize: '0.68rem',
-                  fontWeight: 800,
-                  textTransform: 'uppercase',
-                  color: '#94a3b8',
-                  letterSpacing: '0.05em',
-                  marginBottom: '0.25rem'
-                }}>
-                  JUMP TO STATION (1–{ATPL_FACTORY_NODES.length})
-                </div>
-                <div className="hud-quick-buttons-grid" style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(6, 1fr)',
-                  gap: '0.25rem'
-                }}>
-                  {ATPL_FACTORY_NODES.map((node, i) => (
-                    <button
-                      key={node.id}
-                      onClick={() => handleStationClick(i)}
-                      title={`${node.stepNumber}. ${node.name}`}
-                      className="hud-quick-btn"
-                      style={{
-                        height: '28px',
-                        borderRadius: '5px',
-                        backgroundColor: currentIndex === i ? '#E85874' : 'rgba(255, 255, 255, 0.06)',
-                        border: currentIndex === i ? '1.5px solid #ffffff' : '1px solid rgba(255, 255, 255, 0.14)',
-                        color: '#ffffff',
-                        fontSize: '0.78rem',
-                        fontWeight: 800,
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        transition: 'all 0.15s ease',
-                        boxShadow: currentIndex === i ? '0 0 10px #E85874' : 'none'
-                      }}
-                    >
-                      {node.stepNumber}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Bottom Actions: Navigation & Live Demo CTA */}
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '0.35rem',
-              paddingTop: '0.45rem',
-              borderTop: '1px solid rgba(255, 255, 255, 0.08)',
-              flexShrink: 0
-            }}>
-              <div className="hud-action-btn-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.35rem' }}>
-                <button
-                  onClick={handlePrev}
-                  aria-label="Previous station"
-                  className="hud-action-btn"
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                    border: '1px solid rgba(255, 255, 255, 0.2)',
-                    color: '#ffffff',
-                    borderRadius: '7px',
-                    padding: '0.4rem',
-                    fontSize: '0.80rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.3rem',
-                    minHeight: '38px',
-                    transition: 'all 0.15s ease'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.18)'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)'}
-                >
-                  <ChevronLeft size={15} />
-                  <span>Prev</span>
-                </button>
-
-                <button
-                  onClick={handleNext}
-                  aria-label="Next station"
-                  className="hud-action-btn"
-                  style={{
-                    backgroundColor: 'rgba(0, 113, 186, 0.4)',
-                    border: '1.2px solid #00f0ff',
-                    color: '#ffffff',
-                    borderRadius: '7px',
-                    padding: '0.4rem',
-                    fontSize: '0.80rem',
-                    fontWeight: 800,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '0.3rem',
-                    minHeight: '38px',
-                    transition: 'all 0.15s ease',
-                    boxShadow: '0 0 10px rgba(0, 113, 186, 0.4)'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 113, 186, 0.7)'}
-                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(0, 113, 186, 0.4)'}
-                >
-                  <span>Next</span>
-                  <ChevronRight size={15} />
-                </button>
-              </div>
-
+              {/* Live Station Demo CTA */}
               <button
-                onClick={() => openDemoModal({ solution: currentNode.name, notes: `Inquiry from Robot Tour - Station ${currentNode.stepNumber}: ${currentNode.name}` })}
-                className="hud-demo-btn"
+                onClick={() => openDemoModal({ solution: currentNode.name, notes: `Inquiry from Tour - ${currentNode.name}` })}
                 style={{
                   backgroundColor: '#E85874',
                   border: 'none',
                   color: '#ffffff',
-                  borderRadius: '7px',
-                  padding: '0.5rem 0.85rem',
-                  fontSize: '0.84rem',
+                  borderRadius: '999px',
+                  padding: '0.28rem 0.75rem',
+                  fontSize: '0.72rem',
                   fontWeight: 800,
                   cursor: 'pointer',
-                  display: 'flex',
+                  display: 'inline-flex',
                   alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.4rem',
-                  minHeight: '40px',
-                  boxShadow: '0 4px 16px rgba(232, 88, 116, 0.45)',
-                  transition: 'all 0.15s ease',
-                  width: '100%'
+                  gap: '0.3rem',
+                  boxShadow: '0 2px 10px rgba(232, 88, 116, 0.45)',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#d44360'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#E85874'}
               >
-                <Sparkles size={15} />
-                <span>Explore Live Station Demo</span>
+                <Sparkles size={12} />
+                <span>Station Demo</span>
               </button>
             </div>
           </div>
         </div>
       </div>
-
-        </div>
-
-      </div>
     </section>
   );
 };
-

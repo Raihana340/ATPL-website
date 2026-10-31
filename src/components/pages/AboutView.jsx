@@ -21,6 +21,7 @@ import {
 import { ATPL_COMPANY_INFO, ATPL_CLIENTS } from '../../data/initialAdminData';
 import { ClientLogo, REAL_CLIENTS_DATA } from '../common/ClientBrandLogos';
 import { PageHeroBackdrop, HeroFilterPill } from '../common/PageHeroBackdrop';
+import { ProximityScaleGrid } from '../common/ProximityScaleGrid';
 
 export const AboutView = () => {
   const { openDemoModal, setCurrentView } = useApp();
@@ -35,7 +36,11 @@ export const AboutView = () => {
 
   const topics = [
     { id: 'all', label: 'All Company Info' },
+    { id: 'about-atpl', label: 'About ATPL' },
     { id: 'vision-mission', label: 'Vision & Mission' },
+    { id: 'core-values', label: '7 Core Values' },
+    { id: 'infrastructure-qa', label: 'Infrastructure & QA' },
+    { id: 'competitive-advantage', label: 'Why Work With ATPL' },
     { id: 'case-studies', label: 'Case Studies & Impact' },
     { id: 'enterprise-roster', label: 'Enterprise Roster (250+)' },
     { id: 'offices-branches', label: 'Offices & R&D Hubs' }
@@ -121,8 +126,61 @@ export const AboutView = () => {
           ))}
         </PageHeroBackdrop>
 
-        {/* Vision & Mission Grid (Official from Pitch Deck) */}
-        <div id="vision-mission" className="grid-2" style={{ gap: '2rem', marginBottom: '4rem', marginTop: '2.5rem', scrollMarginTop: '6rem' }}>
+        {/* Official About ATPL Company Profile (From atplgroup.com/about-us/) */}
+        <div id="about-atpl" className="glass-card" style={{ padding: '3rem', marginBottom: '4rem', marginTop: '2.5rem', scrollMarginTop: '6rem' }}>
+          <div className="grid-2" style={{ gap: '3rem', alignItems: 'center' }}>
+            <div>
+              <div className="badge badge-cyan" style={{ marginBottom: '0.85rem' }}>SOUTH INDIA AUTOMATION LEADER</div>
+              <h2 style={{ fontSize: '2.2rem', color: '#ffffff', fontWeight: 800, lineHeight: 1.25, marginBottom: '1.25rem' }}>
+                Archery Technocrats Private Limited <span className="gradient-text">(ATPL)</span>
+              </h2>
+              <p style={{ color: '#cbd5e1', fontSize: '0.98rem', lineHeight: 1.7, marginBottom: '1.25rem', textAlign: 'justify' }}>
+                Archery Technocrats Private Limited (ATPL) is a leading automation company from South India, founded by professionals who are together having more than 35+ years of experience in the AIDC &amp; IT Industry. ATPL is a leading Industrial Automation, AI/ML, IoT solutions, IT Infra, Tracking &amp; Traceability solutions, Enterprise Printing solution, Cleaning solutions and software services provider.
+              </p>
+              <p style={{ color: '#94a3b8', fontSize: '0.92rem', lineHeight: 1.65, marginBottom: '1.25rem', textAlign: 'justify' }}>
+                We at ATPL believe in providing best suited solutions to our clients, which should be cost effective and easy to implement. We at ATPL work on throughput to deliver the most effective solution. We have expertise in WMS, WIP Automation, Supply Chain Management, RTLS and RFID Tracking solutions. Our strength and expertise are to study problem statements and with throughput propose solutions.
+              </p>
+              <p style={{ color: '#94a3b8', fontSize: '0.92rem', lineHeight: 1.65, margin: 0, textAlign: 'justify' }}>
+                ATPL Group is India's leader in automation solutions for industrial purpose. Every market sector sees in ATPL a technological partner of Honeywell, CSL that is vertically integrated in order to cater to specific needs. Archery Technocrats is a controlled company of ATPL Group, specialized in industrial automation, Barcode, RFID and Wireless Solutions.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+              <div style={{ background: 'rgba(0, 240, 255, 0.05)', border: '1px solid rgba(0, 240, 255, 0.2)', borderRadius: '12px', padding: '1.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.5rem' }}>
+                  <Cpu size={20} color="#00f0ff" />
+                  <h4 style={{ color: '#ffffff', margin: 0, fontSize: '1.1rem' }}>Innovation &amp; Customization</h4>
+                </div>
+                <p style={{ color: '#94a3b8', fontSize: '0.86rem', lineHeight: 1.55, margin: 0 }}>
+                  Translating technological advancements into tailored solutions for customers. Products, applications, and services engineered to support modern industries at the highest level of quality and technology.
+                </p>
+              </div>
+
+              <div style={{ background: 'rgba(16, 185, 129, 0.05)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '12px', padding: '1.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.5rem' }}>
+                  <Globe size={20} color="#10b981" />
+                  <h4 style={{ color: '#ffffff', margin: 0, fontSize: '1.1rem' }}>With You All Over The Country</h4>
+                </div>
+                <p style={{ color: '#94a3b8', fontSize: '0.86rem', lineHeight: 1.55, margin: 0 }}>
+                  As part of a group, Archery Technocrats plays a national role: Chennai Headquarters at TIDEL Park, West Tambaram office, TCE-TBI Madurai R&amp;D Hub, Ananthapur branch, and an expansive network of sales and engineering teams across India.
+                </p>
+              </div>
+
+              <div style={{ background: 'rgba(232, 88, 116, 0.05)', border: '1px solid rgba(232, 88, 116, 0.2)', borderRadius: '12px', padding: '1.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.5rem' }}>
+                  <Target size={20} color="#E85874" />
+                  <h4 style={{ color: '#ffffff', margin: 0, fontSize: '1.1rem' }}>Total Barcoding &amp; Wireless Infrastructure</h4>
+                </div>
+                <p style={{ color: '#94a3b8', fontSize: '0.86rem', lineHeight: 1.55, margin: 0 }}>
+                  From wireless backbones to the ideal label and ribbon combinations, IPC consoles, POS terminals, and fixed multi-antenna RFID dock portals.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Vision & Mission Grid (Official from atplgroup.com/about-us/) */}
+        <div id="vision-mission" className="grid-2" style={{ gap: '2rem', marginBottom: '4rem', scrollMarginTop: '6rem' }}>
           <div className="glass-card" style={{ padding: '2.5rem', borderLeft: '4px solid var(--cyan-primary)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
               <div style={{ width: '42px', height: '42px', borderRadius: '8px', background: 'rgba(0, 240, 255, 0.12)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -145,6 +203,117 @@ export const AboutView = () => {
             <blockquote style={{ color: '#f8fafc', fontSize: '1.05rem', lineHeight: 1.65, fontStyle: 'italic', margin: 0 }}>
               "To discover, develop, and deliver innovative technology oriented solutions that help customers to prevail over their problems and improve their productivity, security and infrastructure."
             </blockquote>
+          </div>
+        </div>
+
+        {/* 7 Core Values Section (Official from atplgroup.com/about-us/) */}
+        {/* Dynamic Proximity Scale Grid for Core Values & Customer Commitments */}
+        <div id="core-values" style={{ marginBottom: '4rem', scrollMarginTop: '6rem' }}>
+          <ProximityScaleGrid />
+        </div>
+
+        {/* Our Infrastructure & Quality Assurance (Official from atplgroup.com/about-us/) */}
+        <div id="infrastructure-qa" style={{ marginBottom: '4rem', scrollMarginTop: '6rem' }}>
+          <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 2.5rem auto' }}>
+            <div className="badge badge-emerald" style={{ marginBottom: '0.5rem' }}>WORLD-CLASS FACILITIES</div>
+            <h2 style={{ fontSize: '2.1rem', color: '#ffffff', fontWeight: 800 }}>
+              Our Infrastructure &amp; <span className="gradient-text">Quality Assurance</span>
+            </h2>
+            <p style={{ color: '#94a3b8', fontSize: '0.95rem', marginTop: '0.5rem' }}>
+              Sophisticated quality control laboratories and fully configured departmental infrastructure.
+            </p>
+          </div>
+
+          <div className="grid-2" style={{ gap: '2rem' }}>
+            <div className="glass-card" style={{ padding: '2.5rem', border: '1px solid rgba(0, 240, 255, 0.3)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '10px', background: 'rgba(0, 240, 255, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Building2 size={24} color="#00f0ff" />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '1.35rem', color: '#ffffff', margin: 0, fontWeight: 800 }}>Our Infrastructure</h3>
+                  <div style={{ fontSize: '0.8rem', color: '#38bdf8', fontWeight: 700 }}>Seamless Operational Ecosystem</div>
+                </div>
+              </div>
+              <p style={{ color: '#cbd5e1', fontSize: '0.92rem', lineHeight: 1.65, textAlign: 'justify', margin: 0 }}>
+                We possess a well-equipped infrastructural set-up, which helps us in carrying out our operations without any interruption. Our infrastructure is configured with several specialized departments, which assists in streamlining our entire business operations. It consists of departments such as production, quality control, warehousing and packaging, logistics, and several others.
+              </p>
+            </div>
+
+            <div className="glass-card" style={{ padding: '2.5rem', border: '1px solid rgba(16, 185, 129, 0.3)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '10px', background: 'rgba(16, 185, 129, 0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <ShieldCheck size={24} color="#10b981" />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: '1.35rem', color: '#ffffff', margin: 0, fontWeight: 800 }}>Quality Assurance</h3>
+                  <div style={{ fontSize: '0.8rem', color: '#34d399', fontWeight: 700 }}>Dedicated Quality Control Laboratory</div>
+                </div>
+              </div>
+              <p style={{ color: '#cbd5e1', fontSize: '0.92rem', lineHeight: 1.65, textAlign: 'justify', margin: 0 }}>
+                Our company strictly adheres to global standards of excellence, as we are a quality-focused organization. To retain our company's formidable status in the industry, we have adopted strict quality guiding principles and policies suggested by the industry. Moreover, we have developed a sophisticated quality control laboratory, where all our activities related to quality checking are performed efficiently.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Why Work With ATPL? / Competitive Advantage (Official from atplgroup.com/about-us/) */}
+        <div id="competitive-advantage" className="glass-card" style={{ padding: '3.5rem 2.5rem', marginBottom: '4rem', scrollMarginTop: '6rem' }}>
+          <div style={{ textAlign: 'center', maxWidth: '750px', margin: '0 auto 2.5rem auto' }}>
+            <div className="badge badge-purple" style={{ marginBottom: '0.5rem' }}>COMPETITIVE ADVANTAGE</div>
+            <h2 style={{ fontSize: '2.1rem', color: '#ffffff', fontWeight: 800 }}>
+              Why Work With Archery Technocrats?
+            </h2>
+            <p style={{ color: '#94a3b8', fontSize: '0.95rem', marginTop: '0.5rem' }}>
+              Manufacturer-agnostic recommendations, dedicated single-source coordination, and unmatched domain heritage.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.5rem' }}>
+            {[
+              {
+                title: 'AIDC Total Solutions',
+                desc: 'We are experts in the Automatic Identification and Data Collection (AIDC) industry, combining total barcoding solutions from wireless backbones to appropriate labels and ribbons.'
+              },
+              {
+                title: '20+ Yrs Account Expertise',
+                desc: 'Archery Technocrats Account Managers average over 20 years of barcoding, RFID, mobile, and wireless expertise. We understand selecting the right tech for your specific business needs.'
+              },
+              {
+                title: 'Single Source Coordination',
+                desc: 'Your organization works with a single dedicated source at Archery Technocrats to coordinate your total solution; saving you time and money.'
+              },
+              {
+                title: 'Manufacturer-Agnostic',
+                desc: 'We take your business challenges seriously and gather research to provide manufacturer-agnostic recommendations that accomplish your goals in the most cost-effective manner.'
+              },
+              {
+                title: 'Enduring Partnership',
+                desc: 'Our commitment to your satisfaction and continued support is unparalleled in the industry. You can count on us to be your partner long after your solution is in place.'
+              },
+              {
+                title: 'Client-Centered Priority',
+                desc: 'The objectives of your organization are our main priority. We remain flexible and adaptable in helping you meet them.'
+              }
+            ].map((adv, idx) => (
+              <div
+                key={idx}
+                style={{
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  borderRadius: '10px',
+                  padding: '1.5rem'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.65rem' }}>
+                  <Zap size={16} color="var(--cyan-primary)" />
+                  <h4 style={{ color: '#ffffff', fontSize: '1.05rem', margin: 0, fontWeight: 700 }}>{adv.title}</h4>
+                </div>
+                <p style={{ color: '#94a3b8', fontSize: '0.86rem', lineHeight: 1.55, margin: 0, textAlign: 'justify' }}>
+                  {adv.desc}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
 

@@ -20,6 +20,7 @@ const SolutionsView = lazy(() => import('./components/pages/SolutionsView').then
 const PartnersView = lazy(() => import('./components/pages/PartnersView').then(m => ({ default: m.PartnersView })));
 const ResourcesView = lazy(() => import('./components/pages/ResourcesView').then(m => ({ default: m.ResourcesView })));
 const ServicesView = lazy(() => import('./components/pages/ServicesView').then(m => ({ default: m.ServicesView })));
+const CustomersView = lazy(() => import('./components/pages/CustomersView').then(m => ({ default: m.CustomersView })));
 const AboutView = lazy(() => import('./components/pages/AboutView').then(m => ({ default: m.AboutView })));
 const ContactView = lazy(() => import('./components/pages/ContactView').then(m => ({ default: m.ContactView })));
 const PrivacyView = lazy(() => import('./components/pages/PrivacyView').then(m => ({ default: m.PrivacyView })));
@@ -69,7 +70,13 @@ const MainAppContent = () => {
         setCurrentView('terms');
       } else if (['factory-3d', 'factory-tour', 'factory', 'twin', 'tour', '3d', 'robot-tour', 'digitaltwin'].includes(target)) {
         setCurrentView('factory-3d');
-      } else if (['software', 'hardware', 'solutions', 'partners', 'resources', 'services', 'about', 'contact'].includes(target)) {
+      } else if (['hardware-3d-deck', 'hardware-deck', '3d-hardware', 'hardware-3d', 'deck', '3d-deck', 'tarot-deck'].includes(target)) {
+        setCurrentView('hardware');
+        setTimeout(() => {
+          const el = document.getElementById('hardware-3d-deck');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }, 150);
+      } else if (['software', 'hardware', 'solutions', 'partners', 'resources', 'services', 'customers', 'about', 'contact'].includes(target)) {
         setCurrentView(target);
       }
     };
@@ -124,6 +131,8 @@ const MainAppContent = () => {
         return <ResourcesView />;
       case 'services':
         return <ServicesView />;
+      case 'customers':
+        return <CustomersView />;
       case 'about':
         return <AboutView />;
       case 'contact':
@@ -160,7 +169,7 @@ const MainAppContent = () => {
           </ErrorBoundary>
         )}
 
-        <main id="main-content" style={{ flex: 1 }}>
+        <main id="main-content" style={{ flex: 1, width: '100%', maxWidth: '100%', margin: 0, padding: 0 }}>
           <ErrorBoundary 
             key={currentView}
             title={`${currentView.toUpperCase()} View Reload Needed`}

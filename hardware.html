@@ -3,188 +3,834 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Industrial Automation Hardware | ATPL Group - Archery Technocrats</title>
-  <meta name="description" content="Industrial hardware portfolio by ATPL Group: UHF RFID Antennas & Portals, Barcode Scanners, Thermal Printers, Mobility Edge Tablets, PLC Automation, and Kiosk Systems.">
+  <title>ATPL Industrial Hardware Showcase | 360° Rotating Equipment Cards</title>
+  <meta name="description" content="Archery Technocrats Private Limited - Enterprise AIDC & Industrial Automation Hardware. Interactive portrait cards featuring automated 360-degree rotating equipment inspection.">
 
-  <!-- Core CSS -->
-  <link rel="stylesheet" href="css/main.css">
-  <link rel="stylesheet" href="css/components.css">
+  <!-- Pinned Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,700;1,800;1,900&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================================
+       CSS RESET & DARK PAGE STYLING (#111 page aesthetic)
+       ========================================================================= */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #111111;
+      color: #f1f5f9;
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2.5rem 1.5rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient Subtle Glows */
+    .ambient-glow {
+      position: absolute;
+      width: 750px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, rgba(129, 140, 248, 0.04) 50%, transparent 75%);
+      filter: blur(85px);
+      pointer-events: none;
+      z-index: 0;
+      top: 10%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Wrapper */
+    .wrapper {
+      width: 100%;
+      max-width: 1260px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Header text */
+    .carousel-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .carousel-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #00f0ff;
+      background: rgba(0, 240, 255, 0.08);
+      border: 1px solid rgba(0, 240, 255, 0.25);
+      padding: 0.35rem 0.95rem;
+      border-radius: 9999px;
+      margin-bottom: 0.75rem;
+    }
+
+    .carousel-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+      line-height: 1.15;
+      margin-bottom: 0.45rem;
+    }
+
+    .carousel-title span {
+      background: linear-gradient(135deg, #00f0ff, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .carousel-desc {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+
+    /* =========================================================================
+       DASHED ROUNDED FRAME
+       ========================================================================= */
+    .dashed-frame {
+      width: 100%;
+      border: 2px dashed rgba(255, 255, 255, 0.22);
+      border-radius: 22px;
+      padding: 20px;
+      background: rgba(18, 18, 18, 0.75);
+      backdrop-filter: blur(16px);
+      box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.7), 0 25px 60px rgba(0, 0, 0, 0.85);
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    /* Track containing absolute slots */
+    .cards-track {
+      width: 100%;
+      height: 610px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* =========================================================================
+       PORTRAIT CARDS (About 2:3 ratio)
+       ========================================================================= */
+    .portrait-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      border: 2px solid transparent;
+      border-radius: 18px;
+      background:
+        linear-gradient(#0e0e0e, #0e0e0e) padding-box,
+        linear-gradient(135deg, var(--c1), var(--c2)) border-box;
+      padding: 1.35rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      transform-origin: 50% 100%;
+      will-change: transform, opacity;
+      overflow: hidden;
+    }
+
+    .portrait-card:hover {
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 240, 255, 0.2);
+    }
+
+    /* Tiny vertical bold-italic ATPL tag on each side edge */
+    .gsap-tag {
+      position: absolute;
+      top: 50%;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem;
+      font-weight: 900;
+      font-style: italic;
+      letter-spacing: 0.15em;
+      color: rgba(255, 255, 255, 0.35);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .gsap-tag-left {
+      left: 8px;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center center;
+    }
+
+    .gsap-tag-right {
+      right: 8px;
+      transform: translateY(-50%) rotate(90deg);
+      transform-origin: center center;
+    }
+
+    .card-title-top {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      width: 100%;
+      letter-spacing: -0.01em;
+      z-index: 3;
+      min-height: 2.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-title-bottom {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: rgba(255, 255, 255, 0.45);
+      text-align: center;
+      width: 100%;
+      transform: scaleY(-1);
+      letter-spacing: -0.01em;
+      z-index: 3;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    /* Product 360° Rotating Image Frame inside the Card (Enlarged Dark Studio Plate) */
+    .card-image-box {
+      width: 100%;
+      height: 300px;
+      border-radius: 14px;
+      background: radial-gradient(circle at 50% 45%, #0f172a 0%, #080d1a 65%, #02050c 100%);
+      border: 1.5px solid rgba(0, 240, 255, 0.45);
+      box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.7), 0 8px 25px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin: 0.65rem 0;
+      padding: 0;
+      position: relative;
+      perspective: 1000px;
+    }
+
+    /* 360° Rotating Product Turntable (Slow Motion 16s) */
+    .product-turntable-360 {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+      animation: slowTurntable360 16s linear infinite;
+      will-change: transform;
+    }
+
+    .portrait-card:hover .product-turntable-360 {
+      animation-play-state: paused;
+    }
+
+    .turntable-double-face {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform-style: preserve-3d;
+    }
+
+    .turntable-img {
+      width: 100%;
+      height: 100%;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+      border-radius: 12px;
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.75));
+      backface-visibility: hidden;
+      display: block;
+    }
+
+    .turntable-front {
+      transform: translateZ(2px);
+    }
+
+    .turntable-back {
+      position: absolute;
+      filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.75)) brightness(0.85);
+      transform: rotateY(180deg) translateZ(2px);
+    }
+
+    @keyframes slowTurntable360 {
+      0% {
+        transform: perspective(1000px) rotateY(0deg);
+      }
+      100% {
+        transform: perspective(1000px) rotateY(360deg);
+      }
+    }
+
+    /* 360° Rotating Badge */
+    .card-360-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: rgba(10, 15, 29, 0.85);
+      backdrop-filter: blur(4px);
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      border-radius: 999px;
+      padding: 2px 8px;
+      font-size: 0.62rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 800;
+      color: #00f0ff;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      pointer-events: none;
+    }
+
+    @keyframes spin360Icon {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .spin-icon {
+      display: inline-block;
+      animation: spin360Icon 16s linear infinite;
+    }
+
+    /* =========================================================================
+       PILL-OUTLINE BUTTONS BELOW ("Next" and "Previous")
+       ========================================================================= */
+    .controls {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.75rem;
+      z-index: 2;
+    }
+
+    .pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      background: transparent;
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      padding: 0.65rem 1.85rem;
+      border-radius: 9999px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+    }
+
+    .pill-btn:hover:not(:disabled) {
+      border-color: #00f0ff;
+      color: #00f0ff;
+      background: rgba(0, 240, 255, 0.08);
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .pill-btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .pill-btn.dimmed, .pill-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Keyboard navigation hint */
+    .keyboard-hint {
+      margin-top: 1.25rem;
+      font-size: 0.8rem;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .keyboard-hint kbd {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 4px;
+      padding: 0.15rem 0.45rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: #cbd5e1;
+    }
+  </style>
 </head>
 <body>
 
   <!-- Ambient Glow -->
-  <div class="ambient-glow-1"></div>
-  <div class="ambient-glow-2"></div>
+  <div class="ambient-glow"></div>
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container nav-container">
-      <a href="index.html" class="brand-logo">
-        <div class="logo-mark">
-          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        </div>
-        <div class="logo-text">
-          <span class="logo-title">ARCHERY TECHNOCRATS</span>
-          <span class="logo-sub">ATPL GROUP • TARGET PERFECTION</span>
-        </div>
-      </a>
+  <main class="wrapper">
 
-      <nav class="nav-menu">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="about.html" class="nav-link">About Us</a>
-        <a href="software.html" class="nav-link">Software</a>
-        <a href="hardware.html" class="nav-link active">Hardware</a>
-        <a href="services.html" class="nav-link">Services & AMC</a>
-        <a href="factory-tour.html" class="nav-link tour-nav-btn">✨ 3D Factory Tour</a>
-      </nav>
-
-      <div class="header-actions">
-        <a href="contact.html" class="btn btn-primary btn-sm">Request Quote</a>
+    <!-- Header -->
+    <div class="carousel-header">
+      <div class="carousel-tag">
+        <span>✦</span>
+        <span>ATPL INDUSTRIAL HARDWARE // 360° ROTATING SHOWCASE</span>
+        <span>✦</span>
       </div>
-    </div>
-  </header>
-
-  <!-- Hero Header -->
-  <section class="section" style="padding-top: 9rem; padding-bottom: 3.5rem;">
-    <div class="container text-center" style="max-width: 850px; margin: 0 auto; text-align: center;">
-      <div class="section-tag">
-        <span class="dot"></span>
-        <span>Industrial Grade Hardware</span>
-      </div>
-      <h1 class="section-title">Built for <span class="gradient-text">Harsh Industrial Environments</span></h1>
-      <p class="section-subtitle">
-        From high-temperature on-metal RFID tags to IP68 rugged mobility tablets, robotic arms, and 24/7 continuous thermal transfer printers.
+      <h1 class="carousel-title">Hardware Spec <span>Carousel</span></h1>
+      <p class="carousel-desc">
+        Engineered hardware specs for high-speed tracking and harsh lines. Each product image automatically rotates 360 degrees.
       </p>
-      <div style="margin-top: 2rem;">
-        <a href="factory-tour.html" class="btn btn-primary btn-glow">See Hardware in 3D Action ➔</a>
+    </div>
+
+    <!-- Dashed Rounded Frame (Holds 4 Portrait Cards on Desktop / 2 on Mobile) -->
+    <div class="dashed-frame">
+      <div class="cards-track" id="cardsTrack" aria-live="polite">
+        <!-- Cards dynamically positioned absolutely in slots via GSAP -->
       </div>
     </div>
-  </section>
 
-  <!-- Hardware Categories Grid -->
-  <section class="section" style="padding-top: 0;">
-    <div class="container">
-      <div class="grid-3">
+    <!-- Pill-Outline Buttons Below ("Next" and "Previous") -->
+    <div class="controls">
+      <button id="nextBtn" class="pill-btn" aria-label="Next">
+        <span>Next</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
 
-        <!-- 1. RFID -->
-        <div id="rfid" class="product-card">
-          <div>
-            <span class="product-badge">AIDC & RFID</span>
-            <h4>UHF RFID Antennas & Portals</h4>
-            <p>High-sensitivity UHF RFID fixed reader arrays and dock-door antenna portals reading 1,200+ tags/sec with multi-directional spatial filtering.</p>
-            <ul class="product-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Long-range coverage up to 15 meters</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> On-metal & high-temp tag resistance</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Forklift dock door direction sensing</li>
-            </ul>
-          </div>
-          <a href="contact.html?hw=rfid" class="btn btn-secondary btn-sm" style="width: 100%;">Get RFID Technical Specs</a>
-        </div>
-
-        <!-- 2. SCANNING -->
-        <div id="scanners" class="product-card">
-          <div>
-            <span class="product-badge">Machine Vision</span>
-            <h4>Industrial Barcode Imagers</h4>
-            <p>Liquid-lens fixed mount and rugged handheld 1D/2D barcode imagers decoding curved, scratched, or low-contrast direct part marks (DPM).</p>
-            <ul class="product-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Ultra-fast decoding up to 60 scans/sec</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 3-Meter concrete drop durability</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Ethernet/IP & PROFINET direct bus</li>
-            </ul>
-          </div>
-          <a href="contact.html?hw=scanners" class="btn btn-secondary btn-sm" style="width: 100%;">Get Scanner Technical Specs</a>
-        </div>
-
-        <!-- 3. PRINTING -->
-        <div id="printers" class="product-card">
-          <div>
-            <span class="product-badge">Printing Solutions</span>
-            <h4>Thermal Barcode Printers</h4>
-            <p>All-metal construction industrial thermal transfer printers with 600 DPI micro-label precision, integrated RFID encoders, and automated peelers.</p>
-            <ul class="product-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 14 ips high-speed continuous printing</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> UHF RFID in-line encoding & verification</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Automated print & apply robotic arms</li>
-            </ul>
-          </div>
-          <a href="contact.html?hw=printers" class="btn btn-secondary btn-sm" style="width: 100%;">Get Printer Technical Specs</a>
-        </div>
-
-        <!-- 4. MOBILITY -->
-        <div id="mobility" class="product-card">
-          <div>
-            <span class="product-badge">Enterprise Mobility</span>
-            <h4>Rugged Tablets & Handhelds</h4>
-            <p>IP67 / IP68 sealed Android enterprise mobile computers with hot-swappable batteries and long-range barcode scanning engines.</p>
-            <ul class="product-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Sunlight-readable Gorilla Glass screens</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Forklift cradle & vehicle power dock</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 14-Hour continuous shift battery life</li>
-            </ul>
-          </div>
-          <a href="contact.html?hw=mobility" class="btn btn-secondary btn-sm" style="width: 100%;">Get Mobility Technical Specs</a>
-        </div>
-
-        <!-- 5. PLC & ROBOTICS -->
-        <div id="plc" class="product-card">
-          <div>
-            <span class="product-badge">Automation Control</span>
-            <h4>PLC & Robotic Assembly</h4>
-            <p>Multi-axis robotic arms, industrial touch panel PCs, and deterministic PLC controllers orchestrating automated pick-and-place lines.</p>
-            <ul class="product-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 0.05 mm repeatability precision</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Integrated safety light curtains</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Seamless SCADA/MES connectivity</li>
-            </ul>
-          </div>
-          <a href="contact.html?hw=plc" class="btn btn-secondary btn-sm" style="width: 100%;">Get Robotics Technical Specs</a>
-        </div>
-
-        <!-- 6. KIOSKS -->
-        <div id="kiosks" class="product-card">
-          <div>
-            <span class="product-badge">Touch Systems</span>
-            <h4>Interactive Factory Kiosks</h4>
-            <p>Vandal-proof stainless steel floor kiosks with biometric RFID login, digital SOP guides, and live dispatch dispatching screens.</p>
-            <ul class="product-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> IP65 water & dust resistant chassis</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Dual display & document scanner options</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Operator sign-in & work order dispatch</li>
-            </ul>
-          </div>
-          <a href="contact.html?hw=kiosks" class="btn btn-secondary btn-sm" style="width: 100%;">Get Kiosk Technical Specs</a>
-        </div>
-
-        <!-- 7. PERFECT LABELER -->
-        <div id="labeler" class="product-card">
-          <div>
-            <span class="product-badge" style="background: rgba(16,185,129,0.15); color: var(--emerald-accent); border-color: rgba(16,185,129,0.3);">Print & Apply</span>
-            <h4>PERFECT LABELER™ (Automated Print & Apply)</h4>
-            <p>High-speed in-line robotic labeling for cartons, cases, and pallets with real-time GS1 serialization, interchangeable applicator arms, and in-line barcode grade verification.</p>
-            <ul class="product-features">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Synchronized labeling up to 120 cartons/minute</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Interchangeable Tamp-Blow & Corner-Wrap arms</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> In-line ISO/IEC 15415 2D barcode verifier & reject chute</li>
-            </ul>
-          </div>
-          <a href="contact.html?hw=labeler" class="btn btn-secondary btn-sm" style="width: 100%;">Get Labeler Technical Specs</a>
-        </div>
-
-      </div>
+      <button id="prevBtn" class="pill-btn" aria-label="Previous">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>Previous</span>
+      </button>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-bottom">
-        <div>© 2026 Archery Technocrats Private Limited (ATPL Group).</div>
-        <div><a href="factory-tour.html" class="text-cyan">✨ Launch 3D Factory Tour</a></div>
-      </div>
+    <div class="keyboard-hint">
+      <span>Navigate cards with</span>
+      <kbd>←</kbd>
+      <kbd>→</kbd>
+      <span>arrow keys</span>
     </div>
-  </footer>
 
-  <script src="js/main.js"></script>
+  </main>
+
+  <!-- GSAP Pinned Version from cdnjs (v3.12.5) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <script>
+    /**
+     * ATPL HARDWARE INFINITE LOOPING CAROUSEL WITH AUTOMATIC 360° ROTATING PRODUCT IMAGES
+     */
+
+    // Hardware Products Data with Authentic Images from atplgroup.com
+    const PRODUCTS = [
+      {
+        id: "card-1",
+        image: "/assets/images/hardware/atpl_scanner_cutout.png",
+        category: "SCANNING SOLUTIONS",
+        name: "Honeywell Granit XP 1991i Scanner",
+        number: "1D / 2D",
+        unit: "15m High-Rack Imager (IP67)",
+        link: "https://atplgroup.com/barcode-scanner-solutions/",
+        c1: "#00f0ff",
+        c2: "#38bdf8"
+      },
+      {
+        id: "card-2",
+        image: "/assets/images/hardware/atpl_printer_industrial.png",
+        category: "PRINTING SOLUTIONS",
+        name: "Industrial RFID Thermal Printer",
+        number: "300 DPI",
+        unit: "Thermal Transfer 14 IPS Speed",
+        link: "https://atplgroup.com/barcode-printer-solutions/",
+        c1: "#10b981",
+        c2: "#059669"
+      },
+      {
+        id: "card-3",
+        image: "/assets/images/hardware/atpl_marking_laser.png",
+        category: "DIRECT PART MARKING",
+        name: "Telesis DPM Fiber Laser Marker",
+        number: "20W MOPA",
+        unit: "Indelible Metal & Polymer Etch",
+        link: "https://atplgroup.com/handheld-laser-marking-machine/",
+        c1: "#f43f5e",
+        c2: "#be123c"
+      },
+      {
+        id: "card-4",
+        image: "/assets/images/hardware/atpl_mobility_rugged.png",
+        category: "MOBILITY EDGE",
+        name: "Rugged Cold-Storage Terminal",
+        number: "IP68",
+        unit: "Sunlight Gorilla Glass Display",
+        link: "https://atplgroup.com/mobility-tablet-solutions/",
+        c1: "#38bdf8",
+        c2: "#818cf8"
+      },
+      {
+        id: "card-5",
+        image: "/assets/images/hardware/atpl_rfid_fixed_reader.jpg",
+        category: "RFID SOLUTIONS",
+        name: "Best-in-Class Fixed RFID Reader",
+        number: "15.2m Range",
+        unit: "High Tag Accuracy In-Line",
+        link: "https://atplgroup.com/rfid-card-tags-antenna-and-readers/",
+        c1: "#fb923c",
+        c2: "#f43f5e"
+      },
+      {
+        id: "card-6",
+        image: "/assets/images/hardware/atpl_scanner_cordless_hs2.jpg",
+        category: "WIRELESS SCANNING",
+        name: "ATPL Long-Range Cordless Scanner",
+        number: "100m Range",
+        unit: "Multi-Shift Battery Capacity",
+        link: "https://atplgroup.com/barcode-scanner-solutions/",
+        c1: "#c084fc",
+        c2: "#e879f9"
+      },
+      {
+        id: "card-7",
+        image: "/assets/images/hardware/atpl_touch_computer.jpg",
+        category: "FORKLIFT MOBILITY",
+        name: "Vehicle Mount Industrial Computer",
+        number: "MIL-STD",
+        unit: "-30°C Heated Defrost Display",
+        link: "https://atplgroup.com/mobility-tablet-solutions/",
+        c1: "#00f0ff",
+        c2: "#a855f7"
+      },
+      {
+        id: "card-8",
+        image: "/assets/images/hardware/atpl_rfid_antenna.jpg",
+        category: "RFID ANTENNAS",
+        name: "Ultra-High Gain Fixed Portal Antenna",
+        number: "9 dBi Gain",
+        unit: "Circular Polarization Rugged",
+        link: "https://atplgroup.com/rfid-card-tags-antenna-and-readers/",
+        c1: "#a855f7",
+        c2: "#ec4899"
+      }
+    ];
+
+    // DOM Elements
+    const track = document.getElementById("cardsTrack");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+
+    // Carousel Configuration
+    const GAP = 16;
+    const DURATION = 0.75;
+    const EASE = "power3.inOut";
+    const GHOST_SCALE = 0.58;
+
+    let isAnimating = false;
+    let headIndex = 0;
+    let activeCards = [];
+
+    // Responsive visible cards count: 2 on mobile (<=768px), 4 on desktop
+    function getSlotCount() {
+      return window.innerWidth <= 768 ? 2 : 4;
+    }
+
+    // Calculate dimensions
+    function getSlotMetrics() {
+      const slotCount = getSlotCount();
+      const trackWidth = track.clientWidth || track.getBoundingClientRect().width || 1200;
+      const cardWidth = Math.max(220, (trackWidth - (slotCount - 1) * GAP) / slotCount);
+      const cardHeight = 645;
+      track.style.height = `${cardHeight}px`;
+      return { slotCount, cardWidth, cardHeight };
+    }
+
+    function getSlotX(slotIndex, cardWidth) {
+      return slotIndex * (cardWidth + GAP);
+    }
+
+    // Build Card DOM Element with 360° Rotating 3D Turntable (Zero circles below, large clear official image)
+    function createCardElement(product, width) {
+      const card = document.createElement("a");
+      card.href = product.link;
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
+      card.className = "portrait-card";
+      card.style.setProperty("--c1", product.c1);
+      card.style.setProperty("--c2", product.c2);
+      card.style.width = `${width}px`;
+
+      card.innerHTML = `
+        <!-- Vertical bold-italic ATPL tags -->
+        <span class="gsap-tag gsap-tag-left">ATPL</span>
+        <span class="gsap-tag gsap-tag-right">ATPL</span>
+
+        <!-- Category in gradient -->
+        <div style="font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; background: linear-gradient(135deg, var(--c1), var(--c2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-align: center; margin-bottom: 0.2rem;">
+          ✦ ${product.category} ✦
+        </div>
+
+        <!-- Title at top in white -->
+        <div class="card-title-top">${product.name}</div>
+
+        <!-- Product Image Frame: Automated 360° Slow Turntable Plate with Crystal-Clear Official Image -->
+        <div class="card-image-box">
+          <div class="product-turntable-360">
+            <div class="turntable-double-face">
+              <!-- Front Face (Crisp, sharp, original high-res) -->
+              <img 
+                src="${product.image}" 
+                alt="${product.name}" 
+                class="turntable-img turntable-front"
+                loading="lazy"
+              />
+              <!-- Back Face (Studio shaded) -->
+              <img 
+                src="${product.image}" 
+                alt="${product.name}" 
+                class="turntable-img turntable-back"
+                loading="lazy"
+              />
+            </div>
+          </div>
+
+          <!-- 360° Pill Badge -->
+          <div class="card-360-badge">
+            <span class="spin-icon">↻</span>
+            <span>360° SLOW-MO</span>
+          </div>
+        </div>
+
+        <!-- Spec Badge & Unit -->
+        <div style="text-align: center; margin-bottom: 0.5rem;">
+          <div style="font-size: 1.05rem; font-weight: 800; background: linear-gradient(135deg, var(--c1), var(--c2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">${product.number}</div>
+          <div style="font-size: 0.72rem; color: #94a3b8; font-weight: 600; margin-top: 0.15rem;">${product.unit}</div>
+        </div>
+
+        <!-- Explore Hardware CTA Button -->
+        <div style="width: 100%; display: flex; margin-bottom: 0.45rem;">
+          <div style="flex: 1; text-align: center; background: linear-gradient(135deg, #0071ba, #005a96); color: #ffffff; padding: 0.55rem 0.65rem; border-radius: 8px; font-size: 0.76rem; font-weight: 700; box-shadow: 0 4px 15px rgba(0, 113, 186, 0.35);">
+            Explore Equipment →
+          </div>
+        </div>
+
+        <!-- Same title upside-down (scaleY(-1)) at bottom -->
+        <div class="card-title-bottom">${product.name}</div>
+      `;
+
+      return card;
+    }
+
+    // Initialize Carousel
+    function initCarousel() {
+      track.innerHTML = "";
+      activeCards = [];
+      const { slotCount, cardWidth } = getSlotMetrics();
+
+      for (let i = 0; i < slotCount; i++) {
+        const prodIndex = (headIndex + i) % PRODUCTS.length;
+        const card = createCardElement(PRODUCTS[prodIndex], cardWidth);
+        const slotX = getSlotX(i, cardWidth);
+        gsap.set(card, { x: slotX, scale: 1, opacity: 1 });
+        track.appendChild(card);
+        activeCards.push(card);
+      }
+    }
+
+    function setButtonsDimmed(dimmed) {
+      if (dimmed) {
+        nextBtn.classList.add("dimmed");
+        prevBtn.classList.add("dimmed");
+      } else {
+        nextBtn.classList.remove("dimmed");
+        prevBtn.classList.remove("dimmed");
+      }
+    }
+
+    // Slide Next
+    function slideNext() {
+      if (isAnimating) return;
+      isAnimating = true;
+      setButtonsDimmed(true);
+
+      const { slotCount, cardWidth } = getSlotMetrics();
+      const dur = DURATION;
+      const ease = EASE;
+
+      const ghostCard = activeCards[0];
+      const ghostTargetX = getSlotX(0, cardWidth) - (cardWidth + GAP) * 0.45;
+
+      gsap.to(ghostCard, {
+        x: ghostTargetX,
+        scale: GHOST_SCALE,
+        opacity: 0,
+        transformOrigin: "50% 100%",
+        duration: dur,
+        ease: ease,
+        onComplete: () => {
+          if (ghostCard && ghostCard.parentNode) {
+            ghostCard.parentNode.removeChild(ghostCard);
+          }
+        }
+      });
+
+      for (let i = 1; i < slotCount; i++) {
+        const targetX = getSlotX(i - 1, cardWidth);
+        gsap.to(activeCards[i], {
+          x: targetX,
+          duration: dur,
+          ease: ease
+        });
+      }
+
+      const nextProdIndex = (headIndex + slotCount) % PRODUCTS.length;
+      const newCard = createCardElement(PRODUCTS[nextProdIndex], cardWidth);
+      const incomingStartX = getSlotX(slotCount - 1, cardWidth) + (cardWidth + GAP) * 0.45;
+      const incomingTargetX = getSlotX(slotCount - 1, cardWidth);
+
+      gsap.set(newCard, {
+        x: incomingStartX,
+        scale: GHOST_SCALE,
+        opacity: 0,
+        transformOrigin: "50% 100%"
+      });
+
+      track.appendChild(newCard);
+
+      gsap.to(newCard, {
+        x: incomingTargetX,
+        scale: 1,
+        opacity: 1,
+        transformOrigin: "50% 100%",
+        duration: dur,
+        ease: ease,
+        onComplete: () => {
+          isAnimating = false;
+          setButtonsDimmed(false);
+        }
+      });
+
+      activeCards = [...activeCards.slice(1), newCard];
+      headIndex = (headIndex + 1) % PRODUCTS.length;
+    }
+
+    // Slide Prev
+    function slidePrev() {
+      if (isAnimating) return;
+      isAnimating = true;
+      setButtonsDimmed(true);
+
+      const { slotCount, cardWidth } = getSlotMetrics();
+      const dur = DURATION;
+      const ease = EASE;
+
+      const ghostCard = activeCards[slotCount - 1];
+      const ghostTargetX = getSlotX(slotCount - 1, cardWidth) + (cardWidth + GAP) * 0.45;
+
+      gsap.to(ghostCard, {
+        x: ghostTargetX,
+        scale: GHOST_SCALE,
+        opacity: 0,
+        transformOrigin: "50% 100%",
+        duration: dur,
+        ease: ease,
+        onComplete: () => {
+          if (ghostCard && ghostCard.parentNode) {
+            ghostCard.parentNode.removeChild(ghostCard);
+          }
+        }
+      });
+
+      for (let i = 0; i < slotCount - 1; i++) {
+        const targetX = getSlotX(i + 1, cardWidth);
+        gsap.to(activeCards[i], {
+          x: targetX,
+          duration: dur,
+          ease: ease
+        });
+      }
+
+      const prevProdIndex = (headIndex - 1 + PRODUCTS.length) % PRODUCTS.length;
+      const newCard = createCardElement(PRODUCTS[prevProdIndex], cardWidth);
+      const incomingStartX = getSlotX(0, cardWidth) - (cardWidth + GAP) * 0.45;
+      const incomingTargetX = getSlotX(0, cardWidth);
+
+      gsap.set(newCard, {
+        x: incomingStartX,
+        scale: GHOST_SCALE,
+        opacity: 0,
+        transformOrigin: "50% 100%"
+      });
+
+      track.prepend(newCard);
+
+      gsap.to(newCard, {
+        x: incomingTargetX,
+        scale: 1,
+        opacity: 1,
+        transformOrigin: "50% 100%",
+        duration: dur,
+        ease: ease,
+        onComplete: () => {
+          isAnimating = false;
+          setButtonsDimmed(false);
+        }
+      });
+
+      activeCards = [newCard, ...activeCards.slice(0, slotCount - 1)];
+      headIndex = (headIndex - 1 + PRODUCTS.length) % PRODUCTS.length;
+    }
+
+    // Event Listeners
+    nextBtn.addEventListener("click", slideNext);
+    prevBtn.addEventListener("click", slidePrev);
+
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        slideNext();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        slidePrev();
+      }
+    });
+
+    let resizeTimeout;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        if (!isAnimating) initCarousel();
+      }, 150);
+    });
+
+    // Initialize on load
+    document.addEventListener("DOMContentLoaded", initCarousel);
+  </script>
 </body>
 </html>

@@ -18,7 +18,8 @@ const normalizeView = (target) => {
   if (['partners', 'partner', 'alliances', 'oem', 'certifications'].includes(clean)) return 'partners';
   if (['resources', 'resource', 'downloads', 'docs', 'whitepapers', 'datasheets'].includes(clean)) return 'resources';
   if (['services', 'service', 'amc', 'support', 'maintenance', 'sla'].includes(clean)) return 'services';
-  if (['about', 'about-us', 'company', 'customers', 'clients', 'history'].includes(clean)) return 'about';
+  if (['customers', 'clients', 'case-studies', 'customer'].includes(clean)) return 'customers';
+  if (['about', 'about-us', 'company', 'history'].includes(clean)) return 'about';
   if (['contact', 'contact-us', 'help', 'helpdesk', 'inquiry'].includes(clean)) return 'contact';
   return 'home';
 };

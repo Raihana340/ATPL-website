@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATPL Enterprise Deployments &amp; Production Milestones | Archery Technocrats</title>
+  
+  <!-- GSAP from cdnjs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <style>
+    @font-face {
+      font-display: swap; font-family: Mori; font-style: normal; font-weight: 400;
+      src: url(https://assets.codepen.io/16327/PPMori-Regular.woff) format("woff");
+    }
+    @font-face {
+      font-display: swap; font-family: Mori; font-style: normal; font-weight: 600;
+      src: url(https://assets.codepen.io/16327/PPMori-SemiBold.woff) format("woff");
+    }
+    @font-face {
+      font-display: swap; font-family: Fraktion Mono; font-style: normal; font-weight: 400;
+      src: url(https://assets.codepen.io/16327/PPFraktionMono-Bold.woff) format("woff");
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cyan: #00f0ff;
+      --green: #0ae448;
+      --dark: #070c18;
+      --card-bg: rgba(13, 22, 42, 0.85);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --light: #f8fafc;
+      --slate: #94a3b8;
+    }
+
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      background: var(--dark);
+      font-family: Mori, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: var(--light);
+      overflow-x: hidden;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 50px 24px 80px;
+      gap: 32px;
+      background: radial-gradient(circle at 50% 0%, rgba(0, 240, 255, 0.07) 0%, transparent 60%), #070c18;
+    }
+
+    /* ── Header ── */
+    .header { text-align: center; max-width: 800px; }
+    .badge {
+      display: inline-block;
+      font-family: Fraktion Mono, monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--cyan);
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.35);
+      padding: 5px 14px;
+      border-radius: 999px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .header h1 {
+      font-weight: 700;
+      font-size: clamp(1.8rem, 3.2vw, 2.5rem);
+      color: var(--light);
+      margin-bottom: 12px;
+      letter-spacing: -0.02em;
+    }
+    .header p {
+      font-size: 0.95rem;
+      color: var(--slate);
+      line-height: 1.6;
+    }
+
+    /* ── Filter Bar ── */
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      width: 100%;
+      max-width: 1200px;
+      flex-wrap: wrap;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .filter-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--slate);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(0, 240, 255, 0.16);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 12px rgba(0, 240, 255, 0.25);
+    }
+    .radar-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--green);
+      background: rgba(10, 228, 72, 0.1);
+      border: 1px solid rgba(10, 228, 72, 0.35);
+      padding: 6px 14px;
+      border-radius: 999px;
+    }
+    .radar-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    /* ── Bento Grid ── */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    /* ── Card ── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 22px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border 0.3s ease, box-shadow 0.3s ease, transform 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card:hover, .card.spotlight {
+      border-color: var(--card-color, var(--cyan));
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65), 0 0 26px var(--card-glow, rgba(0, 240, 255, 0.35));
+      transform: translateY(-5px);
+    }
+
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .card-logo {
+      width: 68px;
+      height: 44px;
+      background: #ffffff;
+      border-radius: 10px;
+      padding: 5px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.85);
+    }
+    .card-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .card-category-tag {
+      font-family: Fraktion Mono, monospace;
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: var(--card-color, var(--cyan));
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #ffffff;
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-sub {
+      font-size: 0.76rem;
+      color: var(--slate);
+      margin-bottom: 14px;
+    }
+
+    .card-keyword-badge {
+      display: inline-block;
+      font-family: Fraktion Mono, monospace;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 240, 255, 0.12);
+      color: var(--card-color, var(--cyan));
+      border: 1.5px solid var(--card-color, var(--cyan));
+      margin-bottom: 14px;
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      color: #cbd5e1;
+      line-height: 1.55;
+      margin-bottom: 18px;
+    }
+
+    .card-footer {
+      padding-top: 12px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--slate);
+    }
+    .card-cta {
+      font-weight: 700;
+      color: var(--card-color, var(--cyan));
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ── Modal ── */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 7, 18, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: #0c1428;
+      border: 1.5px solid var(--cyan);
+      border-radius: 22px;
+      max-width: 520px;
+      width: 100%;
+      padding: 32px;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.9), 0 0 35px rgba(0, 240, 255, 0.3);
+      position: relative;
+    }
+    .modal-close-btn {
+      position: absolute;
+      top: 18px; right: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #fff;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="badge">ENTERPRISE PRODUCTION DEPLOYMENTS // LIVE RADAR</div>
+    <h1>Enterprise Deployments &amp; Production Milestones</h1>
+    <p>
+      Audited industrial automation, RFID tracking, and vision systems deployed across India's premier manufacturing and logistics facilities.
+    </p>
+  </div>
+
+  <div class="filter-bar">
+    <div class="filter-pills">
+      <button class="filter-btn active" data-filter="all">All Clients (12)</button>
+      <button class="filter-btn" data-filter="auto">⚡ EV &amp; Auto</button>
+      <button class="filter-btn" data-filter="fmcg">📦 FMCG &amp; Packaging</button>
+      <button class="filter-btn" data-filter="defense">🛡️ Defense &amp; Heavy</button>
+      <button class="filter-btn" data-filter="logistics">🚚 3PL &amp; Ports</button>
+      <button class="filter-btn" data-filter="pharma">💊 Pharma</button>
+    </div>
+    <div class="radar-status">
+      <span class="radar-dot"></span>
+      <span>Radar Sweep: ACTIVE</span>
+    </div>
+  </div>
+
+  <div class="bento-grid" id="grid">
+
+    <!-- 1. Ola Electric -->
+    <div class="card" data-cat="auto" style="--card-color: #00d26a; --card-glow: rgba(0,210,106,0.35);" data-title="Ola Electric" data-sub="FutureFactory Tamil Nadu" data-keyword="BATTERY SERIALIZATION" data-desc="Cell-to-pack DPM laser serialization and 2-minute shift allocation for mega-factory EV lines." data-tech="DPM Laser Marking + PERFECT TRACE &amp; PMS" data-logo="assets/images/clients/ola-electric.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/ola-electric.webp" alt="Ola Electric"></div>
+        <span class="card-category-tag">⚡ EV MOBILITY</span>
+      </div>
+      <h3 class="card-title">Ola Electric</h3>
+      <div class="card-sub">FutureFactory Tamil Nadu</div>
+      <div><span class="card-keyword-badge">BATTERY SERIALIZATION</span></div>
+      <p class="card-desc">Cell-to-pack DPM laser serialization and 2-minute shift resource allocation across mega-factory EV lines.</p>
+      <div class="card-footer">
+        <span>DPM Laser + PMS</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 2. Apollo Tyres -->
+    <div class="card" data-cat="auto" style="--card-color: #a855f7; --card-glow: rgba(168,85,247,0.35);" data-title="Apollo Tyres" data-sub="Tire Curing &amp; WMS Hubs" data-keyword="+50% DISPATCH ACCURACY" data-desc="Automated RAIN RFID overhead tunnel portals and inline barcode verifiers across high-speed tyre curing." data-tech="Multi-Antenna Overhead RFID Tunnels + SAP S/4HANA" data-logo="assets/images/clients/apollo-tyres.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/apollo-tyres.webp" alt="Apollo Tyres"></div>
+        <span class="card-category-tag">🚗 TYRES &amp; AUTO</span>
+      </div>
+      <h3 class="card-title">Apollo Tyres</h3>
+      <div class="card-sub">Tire Curing &amp; WMS Hubs</div>
+      <div><span class="card-keyword-badge">+50% DISPATCH ACCURACY</span></div>
+      <p class="card-desc">Automated RAIN RFID overhead tunnel portals and inline barcode verifiers across high-speed tyre dispatch.</p>
+      <div class="card-footer">
+        <span>Overhead RFID + SAP</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 3. Larsen & Toubro -->
+    <div class="card" data-cat="defense" style="--card-color: #38bdf8; --card-glow: rgba(56,189,248,0.35);" data-title="Larsen &amp; Toubro" data-sub="Heavy Engg &amp; Defense Fab" data-keyword="15M YARD SCANNING" data-desc="Long-range outdoor yard scanning across 50,000+ heavy fabricated assemblies with direct SAP S/4HANA sync." data-tech="Long-Range Imagers + Weatherproof Mil-Spec Tags" data-logo="assets/images/clients/larsen-toubro.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/larsen-toubro.webp" alt="Larsen &amp; Toubro"></div>
+        <span class="card-category-tag">🏗️ HEAVY FAB</span>
+      </div>
+      <h3 class="card-title">Larsen &amp; Toubro</h3>
+      <div class="card-sub">Heavy Engg &amp; Defense Fab</div>
+      <div><span class="card-keyword-badge">15M YARD SCANNING</span></div>
+      <p class="card-desc">Long-range outdoor yard scanning across 50,000+ heavy fabricated assemblies with real-time ERP sync.</p>
+      <div class="card-footer">
+        <span>Long-Range Imagers</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 4. Hindustan Unilever -->
+    <div class="card" data-cat="fmcg" style="--card-color: #00f0ff; --card-glow: rgba(0,240,255,0.35);" data-title="Hindustan Unilever" data-sub="High-Speed Packaging Lines" data-keyword="300 CARTONS / MIN" data-desc="Fixed-mount machine vision cameras grading GS1 DataMatrix codes with 4-millisecond pneumatic rejection." data-tech="Machine Vision Cameras + 4ms High-Speed Diverters" data-logo="assets/images/clients/hindustan-unilever.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/hindustan-unilever.webp" alt="Hindustan Unilever"></div>
+        <span class="card-category-tag">📦 PACKAGING</span>
+      </div>
+      <h3 class="card-title">Hindustan Unilever</h3>
+      <div class="card-sub">High-Speed Packaging Lines</div>
+      <div><span class="card-keyword-badge">300 CARTONS / MIN</span></div>
+      <p class="card-desc">Fixed-mount machine vision cameras grading GS1 DataMatrix codes with 4-millisecond pneumatic rejection.</p>
+      <div class="card-footer">
+        <span>Vision + Pneumatics</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 5. Proconnect Logistics -->
+    <div class="card" data-cat="logistics" style="--card-color: #38bdf8; --card-glow: rgba(56,189,248,0.35);" data-title="Proconnect Logistics" data-sub="Omnichannel 3PL Hubs (Redington)" data-keyword="3.5× DOCK SPEEDUP" data-desc="High-density Android mobile scanners and PERFECT WAREHOUSE cross-docking for Redington fulfillment." data-tech="Rugged Android Mobile Computers + PERFECT WAREHOUSE" data-logo="assets/images/clients/proconnect-logistics.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/proconnect-logistics.webp" alt="Proconnect Logistics"></div>
+        <span class="card-category-tag">🚚 3PL LOGISTICS</span>
+      </div>
+      <h3 class="card-title">Proconnect Logistics</h3>
+      <div class="card-sub">Omnichannel 3PL Hubs</div>
+      <div><span class="card-keyword-badge">3.5× DOCK SPEEDUP</span></div>
+      <p class="card-desc">High-density Android mobile scanners and cross-docking WMS eliminating dispatch discrepancies.</p>
+      <div class="card-footer">
+        <span>Mobile Terminals + WMS</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 6. Pegatron Electronics -->
+    <div class="card" data-cat="auto" style="--card-color: #00f0ff; --card-glow: rgba(0,240,255,0.35);" data-title="Pegatron Electronics" data-sub="High-Density SMT PCB Lines" data-keyword="99.99% READ RATE" data-desc="Ultra-high-speed PCB optical inspection and micro GS1 DataMatrix code component tracking." data-tech="PERFECT VERIFIER + Cognitive Area Imaging" data-logo="assets/images/clients/pegatron-electronics.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/pegatron-electronics.webp" alt="Pegatron Electronics"></div>
+        <span class="card-category-tag">⚡ HIGH-TECH EMS</span>
+      </div>
+      <h3 class="card-title">Pegatron Electronics</h3>
+      <div class="card-sub">High-Density SMT Lines</div>
+      <div><span class="card-keyword-badge">99.99% READ RATE</span></div>
+      <p class="card-desc">Ultra-high-speed PCB optical inspection and micro GS1 DataMatrix component tracking.</p>
+      <div class="card-footer">
+        <span>Micro-QR Vision</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 7. Bharat Electronics -->
+    <div class="card" data-cat="defense" style="--card-color: #818cf8; --card-glow: rgba(129,140,248,0.35);" data-title="Bharat Electronics" data-sub="Aerospace Systems (BEL)" data-keyword="DEFENSE MIL-STD" data-desc="Ultra-rugged DPM laser marking and traceability hardware for defense and radar manufacturing." data-tech="Ultra-Rugged Fiber Laser + Mil-Std Optical Scanners" data-logo="assets/images/clients/bel-bharat-electronics.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/bel-bharat-electronics.webp" alt="Bharat Electronics"></div>
+        <span class="card-category-tag">🛡️ DEFENSE &amp; RADAR</span>
+      </div>
+      <h3 class="card-title">Bharat Electronics</h3>
+      <div class="card-sub">Aerospace &amp; Radar Systems</div>
+      <div><span class="card-keyword-badge">DEFENSE MIL-STD</span></div>
+      <p class="card-desc">Ultra-rugged DPM laser marking and traceability hardware conforming to defense MIL-STD specs.</p>
+      <div class="card-footer">
+        <span>MIL-STD-130 Trace</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 8. Dixon Technologies -->
+    <div class="card" data-cat="defense" style="--card-color: #f59e0b; --card-glow: rgba(245,158,11,0.35);" data-title="Dixon Technologies" data-sub="Consumer Electronics EMS Plants" data-keyword="1,500+ MDM TERMINALS" data-desc="Zero-touch QR provisioning and remote kiosk lockdown for mobile scanners across nationwide factories." data-tech="Mobile Device Management + Android Lockdown Kiosk" data-logo="assets/images/clients/dixon-technologies.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/dixon-technologies.webp" alt="Dixon Technologies"></div>
+        <span class="card-category-tag">📱 CONSUMER EMS</span>
+      </div>
+      <h3 class="card-title">Dixon Technologies</h3>
+      <div class="card-sub">Consumer Electronics EMS Plants</div>
+      <div><span class="card-keyword-badge">1,500+ MDM TERMINALS</span></div>
+      <p class="card-desc">Zero-touch QR provisioning and remote kiosk lockdown for mobile scanners across factories.</p>
+      <div class="card-footer">
+        <span>MDM Kiosk Lockdown</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 9. GMR Airports -->
+    <div class="card" data-cat="logistics" style="--card-color: #06b6d4; --card-glow: rgba(6,182,212,0.35);" data-title="GMR Airports" data-sub="Delhi, Hyderabad &amp; Goa" data-keyword="BAGGAGE RFID PORTALS" data-desc="High-velocity IATA compliant baggage tracking RFID portals deployed at premier international airports." data-tech="High-Density RAIN RFID Readers + Sorting Interlocks" data-logo="assets/images/clients/gmr-airports.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/gmr-airports.webp" alt="GMR Airports"></div>
+        <span class="card-category-tag">✈️ AVIATION HUBS</span>
+      </div>
+      <h3 class="card-title">GMR Airports</h3>
+      <div class="card-sub">Delhi, Hyderabad &amp; Goa</div>
+      <div><span class="card-keyword-badge">BAGGAGE RFID PORTALS</span></div>
+      <p class="card-desc">High-velocity IATA compliant baggage tracking RFID portals deployed at international airports.</p>
+      <div class="card-footer">
+        <span>IATA-753 Portals</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 10. ArcelorMittal -->
+    <div class="card" data-cat="defense" style="--card-color: #ec4899; --card-glow: rgba(236,72,153,0.35);" data-title="ArcelorMittal" data-sub="Heavy Metals Foundry Yard" data-keyword="STEEL MILL WMS" data-desc="Extreme-duty asset verification surviving harsh outdoor temperature, foundry vibration, and slag dust." data-tech="IP67 Ruggedized Imagers + Heat-Resistant Tags" data-logo="assets/images/clients/arcelormittal.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/arcelormittal.webp" alt="ArcelorMittal"></div>
+        <span class="card-category-tag">🔥 FOUNDRY &amp; MILLS</span>
+      </div>
+      <h3 class="card-title">ArcelorMittal</h3>
+      <div class="card-sub">Heavy Metals Foundry Yard</div>
+      <div><span class="card-keyword-badge">STEEL MILL WMS</span></div>
+      <p class="card-desc">Extreme-duty asset verification surviving harsh foundry temperature, vibration, and slag dust.</p>
+      <div class="card-footer">
+        <span>IP67 High-Heat Tags</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 11. Caplin Steriles -->
+    <div class="card" data-cat="pharma" style="--card-color: #10b981; --card-glow: rgba(16,185,129,0.35);" data-title="Caplin Steriles" data-sub="Pharma Injectables USA Exports" data-keyword="US-FDA 21 CFR" data-desc="DGFT export serialization, tamper-evident labeling, and zero-paper compliant audit trails." data-tech="Thermal Printers + 21 CFR Part 11 Audit Software" data-logo="assets/images/clients/caplin-steriles.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/caplin-steriles.webp" alt="Caplin Steriles"></div>
+        <span class="card-category-tag">💊 PHARMA INJECTABLES</span>
+      </div>
+      <h3 class="card-title">Caplin Steriles</h3>
+      <div class="card-sub">Pharma Injectables USA</div>
+      <div><span class="card-keyword-badge">US-FDA 21 CFR</span></div>
+      <p class="card-desc">DGFT export serialization, tamper-evident labeling, and zero-paper compliant audit trails.</p>
+      <div class="card-footer">
+        <span>21 CFR Part 11</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+    <!-- 12. ABB -->
+    <div class="card" data-cat="defense" style="--card-color: #ef4444; --card-glow: rgba(239,68,68,0.35);" data-title="ABB Robotics" data-sub="Robotics &amp; Automation Plant" data-keyword="ROBOTIC TRACEABILITY" data-desc="Precision optical verification of robotic drive components with automated production line interlocks." data-tech="Cognitive 2D Imagers + Direct PLC / MES Gateways" data-logo="assets/images/clients/abb.webp">
+      <div class="card-top">
+        <div class="card-logo"><img src="assets/images/clients/abb.webp" alt="ABB"></div>
+        <span class="card-category-tag">🤖 ROBOTICS &amp; DRIVES</span>
+      </div>
+      <h3 class="card-title">ABB Robotics</h3>
+      <div class="card-sub">Robotics &amp; Automation Plant</div>
+      <div><span class="card-keyword-badge">ROBOTIC TRACEABILITY</span></div>
+      <p class="card-desc">Precision optical verification of robotic drive components with automated production line interlocks.</p>
+      <div class="card-footer">
+        <span>Direct PLC / MES</span>
+        <span class="card-cta">Specs →</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Detail Modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-box">
+      <button class="modal-close-btn" id="modalClose">✕</button>
+      <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+        <div style="width: 72px; height: 48px; background: #ffffff; border-radius: 12px; padding: 6px 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 14px rgba(0,0,0,0.4);">
+          <img id="modalLogo" src="" alt="Client Logo" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
+        <div>
+          <div style="font-family: Fraktion Mono, monospace; font-size: 0.65rem; color: var(--cyan); margin-bottom: 4px;" id="modalKeyword">KEYWORD</div>
+          <h2 style="font-size: 1.45rem; color: #fff; margin: 0;" id="modalTitle">Title</h2>
+          <div style="font-size: 0.8rem; color: var(--slate);" id="modalSub">Sub</div>
+        </div>
+      </div>
+      <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; margin-bottom: 16px;">
+        <div style="font-size: 0.65rem; font-family: Fraktion Mono, monospace; color: var(--cyan); margin-bottom: 6px; text-transform: uppercase;">DEPLOYMENT SUMMARY</div>
+        <p style="font-size: 0.88rem; color: #cbd5e1; line-height: 1.6; margin: 0;" id="modalDesc">Description</p>
+      </div>
+      <div style="background: rgba(15, 23, 42, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px; margin-bottom: 22px;">
+        <div style="font-size: 0.65rem; font-family: Fraktion Mono, monospace; color: var(--slate); margin-bottom: 6px; text-transform: uppercase;">ATPL HARDWARE &amp; ARCHITECTURE</div>
+        <div style="font-size: 0.86rem; color: #fff; font-weight: 600;" id="modalTech">Tech</div>
+      </div>
+      <button id="modalAction" style="width: 100%; background: linear-gradient(135deg, var(--cyan), #0284c7); color: #fff; border: none; padding: 12px; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: 0.88rem;">Close Case Details</button>
+    </div>
+  </div>
+
+  <script>
+    var cards = Array.from(document.querySelectorAll(".card"));
+    var filterBtns = Array.from(document.querySelectorAll(".filter-btn"));
+    var spotlightIndex = 0;
+    var isUserInteracting = false;
+    var userIdleTimer = null;
+
+    // Filter Buttons
+    filterBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        filterBtns.forEach(function (b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        var filter = btn.dataset.filter;
+        cards.forEach(function (c) {
+          if (filter === "all" || c.dataset.cat === filter) {
+            c.style.display = "flex";
+          } else {
+            c.style.display = "none";
+          }
+        });
+      });
+    });
+
+    // Radar Spotlight Cycle (gentle, no text ballooning)
+    setInterval(function () {
+      if (isUserInteracting) return;
+      var visibleCards = cards.filter(function (c) { return c.style.display !== "none"; });
+      if (!visibleCards.length) return;
+      cards.forEach(function (c) { c.classList.remove("spotlight"); });
+      spotlightIndex = (spotlightIndex + 1) % visibleCards.length;
+      visibleCards[spotlightIndex].classList.add("spotlight");
+    }, 2800);
+
+    // Track user hover to pause radar
+    var grid = document.getElementById("grid");
+    grid.addEventListener("mousemove", function () {
+      isUserInteracting = true;
+      if (userIdleTimer) clearTimeout(userIdleTimer);
+      userIdleTimer = setTimeout(function () {
+        isUserInteracting = false;
+      }, 3000);
+    });
+
+    // Modal Interaction
+    var modal = document.getElementById("modalBackdrop");
+    var modalTitle = document.getElementById("modalTitle");
+    var modalKeyword = document.getElementById("modalKeyword");
+    var modalSub = document.getElementById("modalSub");
+    var modalDesc = document.getElementById("modalDesc");
+    var modalTech = document.getElementById("modalTech");
+    var modalLogo = document.getElementById("modalLogo");
+    var modalClose = document.getElementById("modalClose");
+    var modalAction = document.getElementById("modalAction");
+
+    cards.forEach(function (card) {
+      card.addEventListener("click", function () {
+        modalTitle.textContent = card.dataset.title;
+        modalKeyword.textContent = card.dataset.keyword;
+        modalSub.textContent = card.dataset.sub || '';
+        modalDesc.textContent = card.dataset.desc;
+        modalTech.textContent = card.dataset.tech;
+        modalLogo.src = card.dataset.logo;
+        modal.classList.add("open");
+      });
+    });
+
+    modalClose.addEventListener("click", function () { modal.classList.remove("open"); });
+    modalAction.addEventListener("click", function () { modal.classList.remove("open"); });
+    modal.addEventListener("click", function (e) {
+      if (e.target === modal) modal.classList.remove("open");
+    });
+  </script>
+</body>
+</html>

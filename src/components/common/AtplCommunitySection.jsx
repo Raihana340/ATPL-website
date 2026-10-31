@@ -342,15 +342,16 @@ export function AtplCommunitySection() {
                   style={{
                     width: '100%',
                     height: 'auto',
-                    maxHeight: '400px',
-                    aspectRatio: '800 / 440',
+                    maxHeight: '430px',
+                    aspectRatio: '730 / 440',
                     objectFit: 'cover',
+                    objectPosition: 'center top',
                     display: 'block'
                   }}
                 />
               </div>
 
-              {/* Dedicated Caption Bar: Clean, professional name & title without confusing buttons */}
+              {/* Dedicated Caption Bar: Clean, professional name & title with verification badges */}
               <div 
                 style={{
                   background: 'linear-gradient(180deg, #091325 0%, #060c18 100%)',
@@ -359,86 +360,82 @@ export function AtplCommunitySection() {
                   color: '#ffffff'
                 }}
               >
-                <div style={{ 
-                  fontSize: '1.18rem', 
-                  fontWeight: 800, 
-                  color: '#ffffff', 
-                  letterSpacing: '-0.015em',
-                  lineHeight: 1.25
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  flexWrap: 'wrap',
+                  gap: '1rem'
                 }}>
-                  {activePhotoTab === 'team' ? 'Archery Technocrats Engineering Force' : 'Amarnath Paramasivam'}
-                </div>
-                <div style={{ 
-                  fontSize: '0.88rem', 
-                  color: activePhotoTab === 'team' ? '#94a3b8' : '#38bdf8', 
-                  fontWeight: 600,
-                  marginTop: '0.3rem',
-                  lineHeight: 1.4
-                }}>
-                  {activePhotoTab === 'team' 
-                    ? 'In-House Software Engineers, AIDC Integrators & Leadership' 
-                    : 'Founder & Managing Director • 15+ Yrs Industry 4.0 Vision'}
-                </div>
-              </div>
-            </div>
+                  <div>
+                    <div style={{ 
+                      fontSize: '1.18rem', 
+                      fontWeight: 800, 
+                      color: '#ffffff', 
+                      letterSpacing: '-0.015em',
+                      lineHeight: 1.25
+                    }}>
+                      {activePhotoTab === 'team' ? 'Archery Technocrats Engineering Force' : 'Amarnath Paramasivam'}
+                    </div>
+                    <div style={{ 
+                      fontSize: '0.88rem', 
+                      color: activePhotoTab === 'team' ? '#94a3b8' : '#38bdf8', 
+                      fontWeight: 600,
+                      marginTop: '0.3rem',
+                      lineHeight: 1.4
+                    }}>
+                      {activePhotoTab === 'team' 
+                        ? 'In-House Software Engineers, AIDC Integrators & Leadership' 
+                        : 'Founder & Managing Director • 15+ Yrs Industry 4.0 Vision'}
+                    </div>
+                  </div>
 
-            {/* Floating Tag Card Top-Left: ISO Certification (Cleanly framed in top corner, away from text) */}
-            <div 
-              className="atpl-community-tag-tl"
-              style={{
-                position: 'absolute',
-                top: '65px',
-                left: '-14px',
-                backgroundColor: 'rgba(11, 21, 40, 0.94)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid rgba(232, 88, 116, 0.45)',
-                borderRadius: '12px',
-                padding: '0.65rem 0.95rem',
-                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.45)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                zIndex: 4,
-                animation: 'atplFloatTag 7s ease-in-out infinite alternate-reverse'
-              }}
-            >
-              <Sparkles size={14} color="#E85874" />
-              <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#ffffff' }}>
-                ISO 9001:2015 Certified
-              </div>
-            </div>
+                  {/* Verification Badges in Caption - Never obscuring any faces */}
+                  <div style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.65rem',
+                    flexWrap: 'wrap'
+                  }}>
+                    <div style={{
+                      backgroundColor: 'rgba(232, 88, 116, 0.14)',
+                      border: '1px solid rgba(232, 88, 116, 0.4)',
+                      borderRadius: '8px',
+                      padding: '0.4rem 0.8rem',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.45rem',
+                      fontSize: '0.78rem',
+                      fontWeight: 700,
+                      color: '#ffffff'
+                    }}>
+                      <Sparkles size={14} color="#E85874" />
+                      <span>ISO 9001:2015 Certified</span>
+                    </div>
 
-            {/* Floating Tag Card Top-Right: 100% In-House R&D */}
-            <div 
-              className="atpl-community-tag-tr"
-              style={{
-                position: 'absolute',
-                top: '65px',
-                right: '-14px',
-                backgroundColor: 'rgba(11, 21, 40, 0.94)',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                border: '1px solid rgba(0, 113, 186, 0.45)',
-                borderRadius: '12px',
-                padding: '0.65rem 0.95rem',
-                boxShadow: '0 10px 25px rgba(0, 0, 0, 0.45)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                zIndex: 4,
-                animation: 'atplFloatTag 6s ease-in-out infinite alternate'
-              }}
-            >
-              <div style={{
-                width: '10px',
-                height: '10px',
-                borderRadius: '50%',
-                backgroundColor: '#00f0ff',
-                boxShadow: '0 0 8px #00f0ff'
-              }} />
-              <div style={{ fontSize: '0.78rem', fontWeight: 700, color: '#ffffff' }}>
-                100% In-House R&amp;D
+                    <div style={{
+                      backgroundColor: 'rgba(0, 240, 255, 0.12)',
+                      border: '1px solid rgba(0, 240, 255, 0.4)',
+                      borderRadius: '8px',
+                      padding: '0.4rem 0.8rem',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.45rem',
+                      fontSize: '0.78rem',
+                      fontWeight: 700,
+                      color: '#ffffff'
+                    }}>
+                      <div style={{
+                        width: '8px',
+                        height: '8px',
+                        borderRadius: '50%',
+                        backgroundColor: '#00f0ff',
+                        boxShadow: '0 0 8px #00f0ff'
+                      }} />
+                      <span>100% In-House R&amp;D</span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -448,14 +445,6 @@ export function AtplCommunitySection() {
       </div>
 
       <style>{`
-        @keyframes atplFloatTag {
-          0% {
-            transform: translateY(0);
-          }
-          100% {
-            transform: translateY(-8px);
-          }
-        }
         @media (max-width: 768px) {
           .atpl-community-grid {
             grid-template-columns: 1fr !important;
@@ -467,16 +456,6 @@ export function AtplCommunitySection() {
           }
           .atpl-laurel-divider {
             display: none !important;
-          }
-          .atpl-community-tag-tr {
-            right: 8px !important;
-            top: 55px !important;
-            padding: 0.4rem 0.7rem !important;
-          }
-          .atpl-community-tag-tl {
-            left: 8px !important;
-            top: 55px !important;
-            padding: 0.4rem 0.7rem !important;
           }
           .atpl-search-form {
             padding: 0.35rem 0.5rem 0.35rem 1rem !important;

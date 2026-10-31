@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ATPL Hardware Products Carousel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* =========================================================================
+       CSS RESET & BASE STYLES
+       ========================================================================= */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #060913;
+      color: #f8fafc;
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1.5rem;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Ambient background glows */
+    .bg-ambient-1 {
+      position: absolute;
+      top: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 700px;
+      height: 380px;
+      background: radial-gradient(circle, rgba(0, 240, 255, 0.09) 0%, rgba(129, 140, 248, 0.05) 50%, transparent 75%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .bg-ambient-2 {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.08) 0%, rgba(251, 146, 60, 0.04) 50%, transparent 75%);
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Main Container Wrapper */
+    .carousel-section {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Header text */
+    .section-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.35rem 0.95rem;
+      border-radius: 9999px;
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid rgba(0, 240, 255, 0.3);
+      color: #00f0ff;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.7rem);
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      color: #ffffff;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title span {
+      background: linear-gradient(135deg, #00f0ff 0%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-sub {
+      color: #94a3b8;
+      font-size: 0.95rem;
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.55;
+    }
+
+    /* =========================================================================
+       DASHED-BORDER CAROUSEL FRAME
+       ========================================================================= */
+    .carousel-dashed-frame {
+      width: 100%;
+      border: 2px dashed rgba(255, 255, 255, 0.22);
+      border-radius: 24px;
+      padding: 20px;
+      background: rgba(9, 14, 25, 0.68);
+      backdrop-filter: blur(20px);
+      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.65), 0 25px 60px rgba(0, 0, 0, 0.75);
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    /* Cards track holding absolute cards */
+    .carousel-track {
+      width: 100%;
+      height: 440px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* =========================================================================
+       PORTRAIT CARD STYLES
+       ========================================================================= */
+    .product-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      /* 2px rounded gradient border */
+      border: 2px solid transparent;
+      border-radius: 20px;
+      background:
+        linear-gradient(#0b0f19, #0b0f19) padding-box,
+        linear-gradient(135deg, var(--c1), var(--c2)) border-box;
+      padding: 1.35rem 1.15rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      text-decoration: none;
+      box-sizing: border-box;
+      cursor: pointer;
+      user-select: none;
+      overflow: hidden;
+      will-change: transform, opacity;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 240, 255, 0.12);
+      transition: box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .product-card:hover {
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.85), 0 0 35px rgba(0, 240, 255, 0.28);
+    }
+
+    /* Tiny vertical model code on side edges */
+    .side-code {
+      position: absolute;
+      top: 50%;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      color: var(--c1);
+      opacity: 0.65;
+      pointer-events: none;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .side-code-left {
+      left: 6px;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: center center;
+    }
+
+    .side-code-right {
+      right: 6px;
+      transform: translateY(-50%) rotate(90deg);
+      transform-origin: center center;
+    }
+
+    /* Top: Product Name in Gradient */
+    .card-top {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .card-star {
+      font-size: 0.75rem;
+      color: var(--c1);
+      opacity: 0.9;
+    }
+
+    .card-title {
+      font-size: 0.96rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.25;
+      text-align: center;
+      max-width: 90%;
+    }
+
+    /* Center: SVG Icon, Huge Spec Number, and Unit */
+    .card-center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin: auto 0;
+      width: 100%;
+    }
+
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      margin-bottom: 0.9rem;
+      color: var(--c1);
+      filter: drop-shadow(0 0 10px rgba(0, 240, 255, 0.35));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .card-spec-num {
+      font-size: clamp(2.6rem, 3.8vw, 3.6rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.55rem;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .card-spec-unit {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #94a3b8;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      max-width: 90%;
+    }
+
+    /* Bottom: Same Name flipped upside-down */
+    .card-bottom {
+      width: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
+      transform: rotate(180deg);
+      opacity: 0.8;
+    }
+
+    .card-title-flipped {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, var(--c1), var(--c2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.25;
+      text-align: center;
+      max-width: 90%;
+    }
+
+    /* =========================================================================
+       CONTROLS: TWO PILL-OUTLINE BUTTONS BELOW
+       ========================================================================= */
+    .carousel-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.75rem;
+    }
+
+    .pill-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      padding: 0.7rem 2.5rem;
+      border-radius: 9999px;
+      background: transparent;
+      color: #ffffff;
+      border: 1.5px solid rgba(255, 255, 255, 0.24);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      user-select: none;
+    }
+
+    .pill-btn:hover {
+      border-color: #00f0ff;
+      color: #00f0ff;
+      background: rgba(0, 240, 255, 0.06);
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.35);
+      transform: translateY(-2px);
+    }
+
+    .pill-btn:active {
+      transform: translateY(0);
+    }
+
+    .pill-btn svg {
+      transition: transform 0.2s ease;
+    }
+
+    .pill-btn:hover svg.icon-prev {
+      transform: translateX(-3px);
+    }
+
+    .pill-btn:hover svg.icon-next {
+      transform: translateX(3px);
+    }
+
+    /* Keyboard hint */
+    .keyboard-hint {
+      margin-top: 1rem;
+      font-size: 0.78rem;
+      color: #64748b;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .keyboard-hint kbd {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 0.1rem 0.4rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.72rem;
+      color: #cbd5e1;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .carousel-dashed-frame {
+        padding: 14px;
+        border-radius: 18px;
+      }
+      .carousel-track {
+        height: 410px;
+      }
+      .product-card {
+        padding: 1.15rem 0.9rem;
+      }
+      .card-spec-num {
+        font-size: 2.8rem;
+      }
+      .pill-btn {
+        padding: 0.65rem 1.8rem;
+        font-size: 0.88rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Ambient Glows -->
+  <div class="bg-ambient-1"></div>
+  <div class="bg-ambient-2"></div>
+
+  <main class="carousel-section">
+
+    <!-- Top Navigation Links -->
+    <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem;">
+      <a href="index.html" style="color: #94a3b8; text-decoration: none; font-size: 0.82rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.45rem; transition: color 0.2s ease;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+        <span>ATPL Home</span>
+      </a>
+      <a href="hardware.html" style="color: #00f0ff; text-decoration: none; font-size: 0.82rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(0, 240, 255, 0.08); padding: 0.35rem 0.85rem; border-radius: 9999px; border: 1px solid rgba(0, 240, 255, 0.25);">
+        <span>Full Hardware View</span>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </a>
+    </div>
+
+    <!-- Header Section -->
+    <div class="section-header">
+      <div class="section-badge">
+        <span>✦</span>
+        <span>ATPL INDUSTRIAL HARDWARE</span>
+        <span>✦</span>
+      </div>
+      <h1 class="section-title">Infinite Spec <span>Carousel</span></h1>
+      <p class="section-sub">
+        Hardware equipment specifications engineered for high-throughput tracking, harsh environments, and automated manufacturing.
+      </p>
+    </div>
+
+    <!-- Dashed-Border Frame (Holds 4 Portrait Cards on Desktop / 2 on Mobile) -->
+    <div class="carousel-dashed-frame">
+      <div class="carousel-track" id="carouselTrack" aria-live="polite">
+        <!-- Cards dynamically positioned absolutely in slots via GSAP -->
+      </div>
+    </div>
+
+    <!-- Controls: Two Pill-Outline Buttons Below ("Previous" and "Next") -->
+    <div class="carousel-controls">
+      <button id="prevBtn" class="pill-btn" aria-label="Previous Slide">
+        <svg class="icon-prev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+        <span>Previous</span>
+      </button>
+
+      <button id="nextBtn" class="pill-btn" aria-label="Next Slide">
+        <span>Next</span>
+        <svg class="icon-next" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </button>
+    </div>
+
+    <div class="keyboard-hint">
+      <span>Navigate using</span>
+      <kbd>←</kbd>
+      <kbd>→</kbd>
+      <span>arrow keys</span>
+    </div>
+
+  </main>
+
+  <!-- GSAP Pinned Version from cdnjs (v3.12.5) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+  <script>
+    /**
+     * ATPL HARDWARE INFINITE LOOPING CAROUSEL
+     * Motion Choreography:
+     * - Cards positioned absolutely in calculated slots.
+     * - No delayed fade-ins.
+     * - Next: whole row slides left by one slot in one smooth 0.7s power3.inOut tween.
+     *         At the same moment, a ghost copy of the first card shrinks to 80% scale and fades out at left edge.
+     *         The incoming card starts small (scale 0.8) and transparent (opacity 0) just past right end and grows to full size.
+     * - Previous: exact reverse.
+     * - Ignore clicks while animating.
+     * - Support arrow keys, 2 cards on mobile, and respects prefers-reduced-motion.
+     */
+
+    // Products Data: [name, big spec number, unit, link, and two gradient colours for each]
+    const PRODUCTS = [
+      {
+        name: "UHF RFID Portal Array",
+        spec: "1,200+",
+        unit: "tags / sec decode",
+        link: "https://atplgroup.com/",
+        c1: "#00f0ff",
+        c2: "#3b82f6",
+        code: "ATPL // RF-980",
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.93 4.93a10 10 0 0 1 14.14 0"></path><path d="M7.76 7.76a6 6 0 0 1 8.48 0"></path><circle cx="12" cy="12" r="2"></circle><path d="M12 14v7"></path><path d="M9 21h6"></path></svg>`
+      },
+      {
+        name: "Ultra-Rugged 2D Imager",
+        spec: "3.0m",
+        unit: "concrete drop rating",
+        link: "https://atplgroup.com/barcode-scanner-solutions/",
+        c1: "#f43f5e",
+        c2: "#fb7185",
+        code: "ATPL // SC-199",
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><line x1="7" y1="12" x2="17" y2="12"></line></svg>`
+      },
+      {
+        name: "Thermal Transfer Printer",
+        spec: "600",
+        unit: "DPI micro precision",
+        link: "https://atplgroup.com/",
+        c1: "#818cf8",
+        c2: "#c084fc",
+        code: "ATPL // PR-600",
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>`
+      },
+      {
+        name: "Enterprise Mobility Tab",
+        spec: "IP68",
+        unit: "submersible sealed",
+        link: "https://atplgroup.com/",
+        c1: "#fb923c",
+        c2: "#f59e0b",
+        code: "ATPL // MB-10X",
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>`
+      },
+      {
+        name: "Fiber Laser Marker",
+        spec: "0.01",
+        unit: "mm beam repeatability",
+        link: "https://atplgroup.com/",
+        c1: "#10b981",
+        c2: "#06b6d4",
+        code: "ATPL // LZ-30W",
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><line x1="12" y1="2" x2="12" y2="6"></line><line x1="12" y1="18" x2="12" y2="22"></line><line x1="4.93" y1="4.93" x2="7.76" y2="7.76"></line><line x1="16.24" y1="16.24" x2="19.07" y2="19.07"></line><line x1="2" y1="12" x2="6" y2="12"></line><line x1="18" y1="12" x2="22" y2="12"></line></svg>`
+      },
+      {
+        name: "Robotic Assembly Cell",
+        spec: "120",
+        unit: "units / min tamper",
+        link: "https://atplgroup.com/",
+        c1: "#ec4899",
+        c2: "#f43f5e",
+        code: "ATPL // RB-6AX",
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>`
+      },
+      {
+        name: "Modular Smart Kiosk",
+        spec: "24/7",
+        unit: "continuous duty",
+        link: "https://atplgroup.com/",
+        c1: "#38bdf8",
+        c2: "#818cf8",
+        code: "ATPL // KS-500",
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>`
+      },
+      {
+        name: "Wearable Voice Terminal",
+        spec: "99.9%",
+        unit: "voice pick accuracy",
+        link: "https://atplgroup.com/",
+        c1: "#a855f7",
+        c2: "#6366f1",
+        code: "ATPL // VC-200",
+        icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>`
+      }
+    ];
+
+    // DOM Elements
+    const track = document.getElementById("carouselTrack");
+    const nextBtn = document.getElementById("nextBtn");
+    const prevBtn = document.getElementById("prevBtn");
+
+    // Carousel State
+    let isAnimating = false;
+    let headIndex = 0;
+    let activeCards = [];
+    const GAP = 16; // gap in px between cards
+
+    // Get number of visible cards based on screen size (2 on mobile <= 768px, 4 on desktop)
+    function getVisibleSlotsCount() {
+      return window.innerWidth <= 768 ? 2 : 4;
+    }
+
+    // Calculate slot width and x-coordinates
+    function getSlotDimensions() {
+      const slotCount = getVisibleSlotsCount();
+      const trackWidth = track.clientWidth;
+      const cardWidth = (trackWidth - (slotCount - 1) * GAP) / slotCount;
+      return { slotCount, cardWidth };
+    }
+
+    function getSlotX(slotIndex, cardWidth) {
+      return slotIndex * (cardWidth + GAP);
+    }
+
+    // Check user's motion preference
+    function shouldReduceMotion() {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    }
+
+    // Build Card DOM Element
+    function createCardElement(product, width) {
+      const card = document.createElement("a");
+      card.href = product.link;
+      card.target = "_blank";
+      card.rel = "noopener noreferrer";
+      card.className = "product-card";
+      card.style.setProperty("--c1", product.c1);
+      card.style.setProperty("--c2", product.c2);
+      card.style.width = `${width}px`;
+
+      card.innerHTML = `
+        <span class="side-code side-code-left">${product.code}</span>
+        <span class="side-code side-code-right">${product.code}</span>
+
+        <div class="card-top">
+          <span class="card-star">✦</span>
+          <h3 class="card-title">${product.name}</h3>
+        </div>
+
+        <div class="card-center">
+          <div class="card-icon">${product.icon}</div>
+          <div class="card-spec-num">${product.spec}</div>
+          <div class="card-spec-unit">${product.unit}</div>
+        </div>
+
+        <div class="card-bottom">
+          <span class="card-star">✦</span>
+          <div class="card-title-flipped">${product.name}</div>
+        </div>
+      `;
+
+      return card;
+    }
+
+    // Initialize the carousel track with initial visible cards
+    function initCarousel() {
+      track.innerHTML = "";
+      activeCards = [];
+      const { slotCount, cardWidth } = getSlotDimensions();
+
+      for (let i = 0; i < slotCount; i++) {
+        const prodIndex = (headIndex + i) % PRODUCTS.length;
+        const card = createCardElement(PRODUCTS[prodIndex], cardWidth);
+        const xPos = getSlotX(i, cardWidth);
+
+        gsap.set(card, {
+          x: xPos,
+          y: 0,
+          scale: 1,
+          opacity: 1
+        });
+
+        track.appendChild(card);
+        activeCards.push(card);
+      }
+    }
+
+    // Slide Next
+    function slideNext() {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      const { slotCount, cardWidth } = getSlotDimensions();
+      const reduceMotion = shouldReduceMotion();
+      const duration = reduceMotion ? 0.01 : 0.7;
+      const ease = reduceMotion ? "none" : "power3.inOut";
+
+      // 1. First card (Slot 0) becomes ghost: shrinks to 80% scale and fades out at left edge
+      const firstCard = activeCards[0];
+      const ghostTargetX = getSlotX(0, cardWidth) - (cardWidth + GAP) * 0.4;
+
+      gsap.to(firstCard, {
+        x: ghostTargetX,
+        scale: 0.8,
+        opacity: 0,
+        duration: duration,
+        ease: ease,
+        onComplete: () => {
+          firstCard.remove();
+        }
+      });
+
+      // 2. Middle cards slide left by one slot in the same 0.7s tween
+      for (let i = 1; i < slotCount; i++) {
+        const targetX = getSlotX(i - 1, cardWidth);
+        gsap.to(activeCards[i], {
+          x: targetX,
+          duration: duration,
+          ease: ease
+        });
+      }
+
+      // 3. Incoming card: starts small (scale 0.8) and transparent (opacity 0) just past right end
+      const nextProdIndex = (headIndex + slotCount) % PRODUCTS.length;
+      const newCard = createCardElement(PRODUCTS[nextProdIndex], cardWidth);
+      const incomingStartX = getSlotX(slotCount - 1, cardWidth) + (cardWidth + GAP) * 0.4;
+      const incomingTargetX = getSlotX(slotCount - 1, cardWidth);
+
+      gsap.set(newCard, {
+        x: incomingStartX,
+        scale: 0.8,
+        opacity: 0
+      });
+
+      track.appendChild(newCard);
+
+      // Grows to full size as it slides into the last slot in the exact same 0.7s tween
+      gsap.to(newCard, {
+        x: incomingTargetX,
+        scale: 1,
+        opacity: 1,
+        duration: duration,
+        ease: ease,
+        onComplete: () => {
+          isAnimating = false;
+        }
+      });
+
+      // Advance internal queue
+      activeCards = [...activeCards.slice(1), newCard];
+      headIndex = (headIndex + 1) % PRODUCTS.length;
+    }
+
+    // Slide Previous (Exact reverse)
+    function slidePrev() {
+      if (isAnimating) return;
+      isAnimating = true;
+
+      const { slotCount, cardWidth } = getSlotDimensions();
+      const reduceMotion = shouldReduceMotion();
+      const duration = reduceMotion ? 0.01 : 0.7;
+      const ease = reduceMotion ? "none" : "power3.inOut";
+
+      // 1. Last card becomes ghost: shrinks to 80% scale and fades out at right edge
+      const lastCard = activeCards[slotCount - 1];
+      const ghostTargetX = getSlotX(slotCount - 1, cardWidth) + (cardWidth + GAP) * 0.4;
+
+      gsap.to(lastCard, {
+        x: ghostTargetX,
+        scale: 0.8,
+        opacity: 0,
+        duration: duration,
+        ease: ease,
+        onComplete: () => {
+          lastCard.remove();
+        }
+      });
+
+      // 2. Middle cards slide right by one slot in the same 0.7s tween
+      for (let i = 0; i < slotCount - 1; i++) {
+        const targetX = getSlotX(i + 1, cardWidth);
+        gsap.to(activeCards[i], {
+          x: targetX,
+          duration: duration,
+          ease: ease
+        });
+      }
+
+      // 3. Incoming card: starts small (scale 0.8) and transparent (opacity 0) just past left end
+      const prevProdIndex = (headIndex - 1 + PRODUCTS.length) % PRODUCTS.length;
+      const newCard = createCardElement(PRODUCTS[prevProdIndex], cardWidth);
+      const incomingStartX = getSlotX(0, cardWidth) - (cardWidth + GAP) * 0.4;
+      const incomingTargetX = getSlotX(0, cardWidth);
+
+      gsap.set(newCard, {
+        x: incomingStartX,
+        scale: 0.8,
+        opacity: 0
+      });
+
+      track.prepend(newCard);
+
+      // Grows to full size as it slides into slot 0 in the exact same 0.7s tween
+      gsap.to(newCard, {
+        x: incomingTargetX,
+        scale: 1,
+        opacity: 1,
+        duration: duration,
+        ease: ease,
+        onComplete: () => {
+          isAnimating = false;
+        }
+      });
+
+      // Advance internal queue backward
+      activeCards = [newCard, ...activeCards.slice(0, slotCount - 1)];
+      headIndex = (headIndex - 1 + PRODUCTS.length) % PRODUCTS.length;
+    }
+
+    // Button Click Listeners
+    nextBtn.addEventListener("click", slideNext);
+    prevBtn.addEventListener("click", slidePrev);
+
+    // Keyboard Arrow Keys Support
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        slideNext();
+      } else if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        slidePrev();
+      }
+    });
+
+    // Handle Window Resize (recalculate slots and reposition cards)
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (!isAnimating) {
+          initCarousel();
+        }
+      }, 150);
+    });
+
+    // Initialize on load
+    document.addEventListener("DOMContentLoaded", initCarousel);
+  </script>
+</body>
+</html>
