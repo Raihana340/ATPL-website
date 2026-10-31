@@ -521,7 +521,7 @@ export const HomeView = () => {
                 backgroundColor: '#1e293b'
               }}>
                 <img 
-                  src="https://atplgroup.com/wp-content/uploads/2024/01/tel.jpg" 
+                  src="/assets/images/executive_avatar.svg" 
                   alt="Mr. Vinayagam, Senior Consultant"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   onError={(e) => {

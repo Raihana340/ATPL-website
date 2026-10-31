@@ -170,24 +170,43 @@ export const ClientLogo = ({ clientName, slug, height = 54, className = '', styl
     );
   }
 
+  const svgSrc = `/assets/images/clients/${finalSlug}.svg`;
   const avifSrc = `/assets/images/clients/${finalSlug}.avif`;
   const webpSrc = `/assets/images/clients/${finalSlug}.webp`;
   const pngSrc = `/assets/images/clients/${finalSlug}.png`;
 
+  // Known vector SVG client logos for instant sharp rendering
+  const KNOWN_SVG_SLUGS = [
+    'ola-electric', 'apollo-tyres', 'larsen-toubro', 'hindustan-unilever',
+    'proconnect-logistics', 'pegatron-electronics', 'bel-bharat-electronics',
+    'dixon-technologies', 'gmr-airports', 'arcelormittal', 'caplin-steriles',
+    'abb', 'dell-technologies', 'bosch'
+  ];
+
+  const primarySrc = KNOWN_SVG_SLUGS.includes(finalSlug) ? svgSrc : webpSrc;
+
   return (
     <picture style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-      <source srcSet={`${avifSrc} 1x, ${avifSrc} 2x`} sizes="(max-width: 640px) 120px, 180px" type="image/avif" />
-      <source srcSet={`${webpSrc} 1x, ${webpSrc} 2x`} sizes="(max-width: 640px) 120px, 180px" type="image/webp" />
+      {KNOWN_SVG_SLUGS.includes(finalSlug) ? (
+        <source srcSet={svgSrc} type="image/svg+xml" />
+      ) : (
+        <>
+          <source srcSet={`${avifSrc} 1x, ${avifSrc} 2x`} sizes="(max-width: 640px) 120px, 180px" type="image/avif" />
+          <source srcSet={`${webpSrc} 1x, ${webpSrc} 2x`} sizes="(max-width: 640px) 120px, 180px" type="image/webp" />
+        </>
+      )}
       <img
-        src={webpSrc}
-        srcSet={`${webpSrc} 1x, ${webpSrc} 2x`}
+        src={primarySrc}
+        srcSet={KNOWN_SVG_SLUGS.includes(finalSlug) ? undefined : `${webpSrc} 1x, ${webpSrc} 2x`}
         sizes="(max-width: 640px) 120px, 180px"
         alt={`${displayName} — Enterprise Industry 4.0 Client`}
         title={`${displayName} — Click to view deployment impact`}
         className={className}
         onClick={onClick}
         onError={(e) => {
-          if (e.currentTarget.src !== pngSrc) {
+          if (e.currentTarget.src.includes('.svg') && webpSrc) {
+            e.currentTarget.src = webpSrc;
+          } else if (e.currentTarget.src !== pngSrc) {
             e.currentTarget.src = pngSrc;
           } else {
             setImageError(true);

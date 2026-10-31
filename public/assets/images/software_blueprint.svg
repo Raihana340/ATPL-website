@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="600" height="400">
+  <defs>
+    <linearGradient id="softBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a192f"/>
+      <stop offset="50%" stop-color="#040d1a"/>
+      <stop offset="100%" stop-color="#020611"/>
+    </linearGradient>
+    <linearGradient id="cyanLine" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f0ff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.2"/>
+    </linearGradient>
+    <pattern id="softGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#00f0ff" stroke-width="0.5" stroke-opacity="0.12"/>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill="url(#softBg)" rx="14"/>
+  <rect width="100%" height="100%" fill="url(#softGrid)" rx="14"/>
+
+  <!-- Top App Window Header -->
+  <rect x="25" y="25" width="550" height="34" rx="8" fill="#0f2138" stroke="#00f0ff" stroke-width="1" stroke-opacity="0.3"/>
+  <circle cx="45" cy="42" r="5" fill="#ef4444"/>
+  <circle cx="60" cy="42" r="5" fill="#f59e0b"/>
+  <circle cx="75" cy="42" r="5" fill="#10b981"/>
+  <text x="100" y="46" font-family="monospace" font-size="11" font-weight="bold" fill="#00f0ff">ATPL INDUSTRIAL CLOUD SUITE // LIVE SHOPFLOOR TELEMETRY</text>
+  <rect x="480" y="32" width="80" height="20" rx="4" fill="#00d26a" fill-opacity="0.2" stroke="#00d26a" stroke-width="1"/>
+  <text x="496" y="46" font-family="monospace" font-size="9" font-weight="bold" fill="#00d26a">● ONLINE</text>
+
+  <!-- Left Sidebar (Navigation Modules) -->
+  <rect x="25" y="68" width="130" height="305" rx="8" fill="#09182b" stroke="#00f0ff" stroke-width="1" stroke-opacity="0.2"/>
+  <rect x="35" y="80" width="110" height="26" rx="4" fill="#0071ba" fill-opacity="0.4" stroke="#00f0ff" stroke-width="1"/>
+  <text x="45" y="97" font-family="monospace" font-size="9" font-weight="bold" fill="#ffffff">📊 DASHBOARD</text>
+  <rect x="35" y="114" width="110" height="24" rx="4" fill="#0c233e" stroke="#38bdf8" stroke-width="0.5"/>
+  <text x="45" y="130" font-family="monospace" font-size="9" fill="#94a3b8">📦 WAREHOUSE</text>
+  <rect x="35" y="144" width="110" height="24" rx="4" fill="#0c233e" stroke="#38bdf8" stroke-width="0.5"/>
+  <text x="45" y="160" font-family="monospace" font-size="9" fill="#94a3b8">🔍 TRACEABILITY</text>
+  <rect x="35" y="174" width="110" height="24" rx="4" fill="#0c233e" stroke="#38bdf8" stroke-width="0.5"/>
+  <text x="45" y="190" font-family="monospace" font-size="9" fill="#94a3b8">⚙️ PRODUCTION</text>
+  <rect x="35" y="204" width="110" height="24" rx="4" fill="#0c233e" stroke="#38bdf8" stroke-width="0.5"/>
+  <text x="45" y="220" font-family="monospace" font-size="9" fill="#94a3b8">🏷️ LABEL CLOUD</text>
+  <rect x="35" y="234" width="110" height="24" rx="4" fill="#0c233e" stroke="#38bdf8" stroke-width="0.5"/>
+  <text x="45" y="250" font-family="monospace" font-size="9" fill="#94a3b8">📱 MDM FLEET</text>
+
+  <!-- Central KPI Metric Cards -->
+  <rect x="168" y="68" width="125" height="75" rx="8" fill="#0b2444" stroke="#00f0ff" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="180" y="88" font-family="monospace" font-size="8" fill="#94a3b8">THROUGHPUT RATE</text>
+  <text x="180" y="118" font-family="monospace" font-size="20" font-weight="900" fill="#00f0ff">99.98%</text>
+  <text x="180" y="134" font-family="monospace" font-size="7.5" fill="#00d26a">↑ +14.2% vs baseline</text>
+
+  <rect x="303" y="68" width="125" height="75" rx="8" fill="#0b2444" stroke="#a855f7" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="315" y="88" font-family="monospace" font-size="8" fill="#94a3b8">SERIALIZED UNITS</text>
+  <text x="315" y="118" font-family="monospace" font-size="20" font-weight="900" fill="#a855f7">1.48M</text>
+  <text x="315" y="134" font-family="monospace" font-size="7.5" fill="#a855f7">Zero escape rate</text>
+
+  <rect x="438" y="68" width="137" height="75" rx="8" fill="#0b2444" stroke="#E85874" stroke-width="1" stroke-opacity="0.4"/>
+  <text x="450" y="88" font-family="monospace" font-size="8" fill="#94a3b8">ERP SYNC LATENCY</text>
+  <text x="450" y="118" font-family="monospace" font-size="20" font-weight="900" fill="#E85874">1.8 ms</text>
+  <text x="450" y="134" font-family="monospace" font-size="7.5" fill="#E85874">SAP S/4HANA Connected</text>
+
+  <!-- Big Telemetry Line Chart -->
+  <rect x="168" y="152" width="407" height="221" rx="8" fill="#091b33" stroke="#00f0ff" stroke-width="1" stroke-opacity="0.25"/>
+  <text x="185" y="174" font-family="monospace" font-size="9" font-weight="bold" fill="#00f0ff">LIVE TELEMETRY READS // 24-HOUR RUN</text>
+  <!-- Chart Axes & Grid -->
+  <line x1="190" y1="330" x2="550" y2="330" stroke="#38bdf8" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="190" y1="200" x2="550" y2="200" stroke="#38bdf8" stroke-width="0.5" stroke-dasharray="3 3" stroke-opacity="0.2"/>
+  <line x1="190" y1="265" x2="550" y2="265" stroke="#38bdf8" stroke-width="0.5" stroke-dasharray="3 3" stroke-opacity="0.2"/>
+
+  <!-- Glowing Trend Graph Wave -->
+  <path d="M190,310 Q240,290 280,240 T370,220 T460,195 T550,185" fill="none" stroke="#00f0ff" stroke-width="3"/>
+  <path d="M190,310 Q240,290 280,240 T370,220 T460,195 T550,185 L550,330 L190,330 Z" fill="url(#cyanLine)" fill-opacity="0.15"/>
+  <!-- Chart Peak Dots -->
+  <circle cx="280" cy="240" r="4" fill="#00f0ff"/>
+  <circle cx="370" cy="220" r="4" fill="#00f0ff"/>
+  <circle cx="460" cy="195" r="4" fill="#00f0ff"/>
+  <circle cx="550" cy="185" r="5" fill="#ffffff" stroke="#00f0ff" stroke-width="2"/>
+</svg>

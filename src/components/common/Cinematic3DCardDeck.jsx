@@ -1791,6 +1791,8 @@ export const Cinematic3DCardDeck = ({ activeCategory = 'all', onCategoryChange }
                         onError={(e) => {
                           if (e.currentTarget.src !== card.fallbackImage) {
                             e.currentTarget.src = card.fallbackImage;
+                          } else {
+                            e.currentTarget.src = '/assets/images/hardware/blueprint_scanner.svg';
                           }
                         }}
                       />
@@ -2286,6 +2288,8 @@ export const Cinematic3DCardDeck = ({ activeCategory = 'all', onCategoryChange }
                     onError={(e) => {
                       if (e.currentTarget.src !== card.fallbackImage) {
                         e.currentTarget.src = card.fallbackImage;
+                      } else {
+                        e.currentTarget.src = '/assets/images/hardware/blueprint_scanner.svg';
                       }
                     }}
                   />

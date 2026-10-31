@@ -24,28 +24,35 @@ export const AtplLogo = ({
       }} 
       className={className}
     >
-      <picture style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
-        <source srcSet="/atpl_logo.avif 1x, /atpl_logo.avif 2x" sizes={`${size}px`} type="image/avif" />
-        <source srcSet="/atpl_logo.webp 1x, /atpl_logo.webp 2x" sizes={`${size}px`} type="image/webp" />
-        <img 
-          src="/atpl_logo.webp" 
-          srcSet="/atpl_logo.webp 1x, /atpl_logo.webp 2x"
-          sizes={`${size}px`}
-          alt="ATPL Archery Technocrats Official Logo" 
-          width={size} 
-          height={size}
-          loading="eager"
-          decoding="async"
-          style={{
-            width: `${size}px`,
-            height: `${size}px`,
-            aspectRatio: '1 / 1',
-            objectFit: 'contain',
-            flexShrink: 0,
-            display: 'block'
-          }}
-        />
-      </picture>
+      {/* Authentic High-Precision Vector SVG Emblem */}
+      <svg 
+        viewBox="0 0 1000 1000" 
+        width={size} 
+        height={size} 
+        fill="none" 
+        xmlns="http://www.w3.org/2000/svg"
+        style={{
+          width: `${size}px`,
+          height: `${size}px`,
+          aspectRatio: '1 / 1',
+          flexShrink: 0,
+          display: 'block'
+        }}
+        aria-label="ATPL Archery Technocrats Official Vector Logo"
+      >
+        {/* 1. Top Blue Triangle Facet */}
+        <polygon points="220,107 377,434 80,577" fill="#29A6E8" />
+        {/* 2. Dark Charcoal Arrow Shaft */}
+        <polygon points="1,854 80,577 377,434 824,226 840,220 426,538" fill="#2F4149" />
+        {/* 3. Teal Accent Band */}
+        <polygon points="229,678 426,538 457,600 296,731" fill="#0E87A9" />
+        {/* 4. Bottom Light Blue Triangle Facet */}
+        <polygon points="296,731 457,600 648,1000" fill="#3EA6E9" />
+        {/* 5. Arrowhead Tip Diamond */}
+        <polygon points="840,220 864,133 1000,107 910,225" fill="#2F4149" />
+        {/* 6. Signature Coral Bow Arc */}
+        <path d="M436,34 L465,59 C605,180 740,430 740,580 C740,730 705,870 648,1000 C725,870 784,710 784,540 C784,370 655,140 436,34 Z" fill="#E85874" />
+      </svg>
 
       {showText && (
         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', lineHeight: 1.1 }}>

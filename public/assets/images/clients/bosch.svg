@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" width="320" height="90">
+  <rect width="100%" height="100%" fill="#ffffff" rx="8"/>
+  <g transform="translate(36, 18)">
+    <!-- Bosch Armature Magneto Emblem -->
+    <circle cx="26" cy="26" r="22" fill="none" stroke="#EA1C24" stroke-width="4"/>
+    <rect x="22" y="8" width="8" height="36" fill="#EA1C24"/>
+    <!-- Brand Typography -->
+    <text x="62" y="36" font-family="'Arial Black', 'Helvetica', sans-serif" font-size="28" font-weight="900" fill="#EA1C24" letter-spacing="0.06em">BOSCH</text>
+  </g>
+</svg>

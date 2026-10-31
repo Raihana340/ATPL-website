@@ -32,7 +32,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Standard', val: 'AIS-156 Compliant' }
     ],
     color: '#00d26a',
-    icon: '/assets/images/clients/ola-electric.webp'
+    icon: '/assets/images/clients/ola-electric.svg'
   },
   {
     id: 'client-apollo',
@@ -50,7 +50,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'ERP Sync', val: 'Direct SAP S/4' }
     ],
     color: '#a855f7',
-    icon: '/assets/images/clients/apollo-tyres.webp'
+    icon: '/assets/images/clients/apollo-tyres.svg'
   },
   {
     id: 'client-lt',
@@ -68,7 +68,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Yard Audits', val: 'Real-Time Sync' }
     ],
     color: '#38bdf8',
-    icon: '/assets/images/clients/larsen-toubro.webp'
+    icon: '/assets/images/clients/larsen-toubro.svg'
   },
   {
     id: 'client-hul',
@@ -86,7 +86,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Verification', val: 'GS1 DataMatrix' }
     ],
     color: '#00f0ff',
-    icon: '/assets/images/clients/hindustan-unilever.webp'
+    icon: '/assets/images/clients/hindustan-unilever.svg'
   },
   {
     id: 'client-proconnect',
@@ -104,7 +104,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Active SKUs', val: '45,000+ Managed' }
     ],
     color: '#38bdf8',
-    icon: '/assets/images/clients/proconnect-logistics.webp'
+    icon: '/assets/images/clients/proconnect-logistics.svg'
   },
   {
     id: 'client-pegatron',
@@ -122,7 +122,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Quality Standard', val: 'ISO/IEC 15415' }
     ],
     color: '#00f0ff',
-    icon: '/assets/images/clients/pegatron-electronics.webp'
+    icon: '/assets/images/clients/pegatron-electronics.svg'
   },
   {
     id: 'client-bel',
@@ -140,7 +140,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Audit Trail', val: 'Tamper-Evident' }
     ],
     color: '#818cf8',
-    icon: '/assets/images/clients/bel-bharat-electronics.webp'
+    icon: '/assets/images/clients/bel-bharat-electronics.svg'
   },
   {
     id: 'client-dixon',
@@ -158,7 +158,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Uptime SLA', val: '99.95%' }
     ],
     color: '#f59e0b',
-    icon: '/assets/images/clients/dixon-technologies.webp'
+    icon: '/assets/images/clients/dixon-technologies.svg'
   },
   {
     id: 'client-gmr',
@@ -176,7 +176,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Airports', val: 'DEL, HYD, GOX' }
     ],
     color: '#06b6d4',
-    icon: '/assets/images/clients/gmr-airports.webp'
+    icon: '/assets/images/clients/gmr-airports.svg'
   },
   {
     id: 'client-arcelormittal',
@@ -194,7 +194,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Verification', val: 'Coil & Billet WIP' }
     ],
     color: '#ec4899',
-    icon: '/assets/images/clients/arcelormittal.webp'
+    icon: '/assets/images/clients/arcelormittal.svg'
   },
   {
     id: 'client-caplin',
@@ -212,7 +212,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Traceability', val: 'Vial-Level Serial' }
     ],
     color: '#10b981',
-    icon: '/assets/images/clients/caplin-steriles.webp'
+    icon: '/assets/images/clients/caplin-steriles.svg'
   },
   {
     id: 'client-abb',
@@ -230,7 +230,7 @@ export const ATPL_VALUES_ITEMS = [
       { label: 'Inspection', val: 'Sub-Assembly 2D' }
     ],
     color: '#ef4444',
-    icon: '/assets/images/clients/abb.webp'
+    icon: '/assets/images/clients/abb.svg'
   }
 ];
 

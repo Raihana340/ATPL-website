@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" width="320" height="90">
+  <rect width="100%" height="100%" fill="#ffffff" rx="8"/>
+  <g transform="translate(36, 18)">
+    <!-- ABB Swiss Red Typography -->
+    <text x="0" y="38" font-family="'Arial Black', 'Helvetica Neue', sans-serif" font-size="44" font-weight="900" fill="#FF000F" letter-spacing="0.08em">ABB</text>
+    <text x="120" y="28" font-family="'Arial', sans-serif" font-size="9" font-weight="800" fill="#1E293B" letter-spacing="0.16em">ROBOTICS &amp;</text>
+    <text x="120" y="40" font-family="'Arial', sans-serif" font-size="9" font-weight="800" fill="#1E293B" letter-spacing="0.16em">DISCRETE AUTOMATION</text>
+  </g>
+</svg>

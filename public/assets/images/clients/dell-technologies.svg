@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" width="320" height="90">
+  <rect width="100%" height="100%" fill="#ffffff" rx="8"/>
+  <g transform="translate(32, 16)">
+    <!-- Dell Round Emblem -->
+    <circle cx="28" cy="28" r="24" fill="none" stroke="#007DB8" stroke-width="2.5"/>
+    <text x="28" y="36" font-family="'Arial Black', sans-serif" font-size="20" font-weight="900" fill="#007DB8" text-anchor="middle" letter-spacing="-0.04em">DELL</text>
+    <!-- Brand Typography -->
+    <text x="66" y="30" font-family="'Segoe UI', Roboto, sans-serif" font-size="18" font-weight="900" fill="#007DB8" letter-spacing="0.02em">Technologies</text>
+    <text x="68" y="44" font-family="'Segoe UI', sans-serif" font-size="8.5" font-weight="700" fill="#64748B" letter-spacing="0.18em">ENTERPRISE IT SOLUTIONS</text>
+  </g>
+</svg>

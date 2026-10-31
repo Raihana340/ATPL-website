@@ -72,7 +72,12 @@ function getProductImage(product) {
 
   if (product.fallbackImage && product.fallbackImage.startsWith('/')) return product.fallbackImage;
   if (product.image) return product.image;
-  return '/assets/images/hardware/atpl_scanner_cutout.png';
+  if (product.category === 'printers') return '/assets/images/hardware/blueprint_printer.svg';
+  if (product.category === 'rfid') return '/assets/images/hardware/blueprint_rfid.svg';
+  if (product.category === 'mobility') return '/assets/images/hardware/blueprint_mobility.svg';
+  if (product.category === 'marking') return '/assets/images/hardware/blueprint_marking.svg';
+  if (product.category === 'plc') return '/assets/images/hardware/blueprint_vision.svg';
+  return '/assets/images/hardware/blueprint_scanner.svg';
 }
 
 function buildCardHTML(product, theme) {
@@ -106,6 +111,7 @@ function buildCardHTML(product, theme) {
             src="${prodImg}" 
             alt="${product.title}" 
             loading="lazy"
+            onerror="this.onerror=null; this.src='/assets/images/hardware/blueprint_scanner.svg';"
             style="width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: cover; border-radius: 12px; filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.75)); backface-visibility: hidden; transform: translateZ(2px); display: block;" 
           />
           <!-- Back Face (Un-mirrored, studio shaded) -->
@@ -113,6 +119,7 @@ function buildCardHTML(product, theme) {
             src="${prodImg}" 
             alt="${product.title}" 
             loading="lazy"
+            onerror="this.onerror=null; this.src='/assets/images/hardware/blueprint_scanner.svg';"
             style="position: absolute; width: 100%; height: 100%; max-width: 100%; max-height: 100%; object-fit: cover; border-radius: 12px; filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.75)) brightness(0.85); backface-visibility: hidden; transform: rotateY(180deg) translateZ(2px); display: block;" 
           />
         </div>

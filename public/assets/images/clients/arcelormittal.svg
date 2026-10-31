@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" width="320" height="90">
+  <rect width="100%" height="100%" fill="#ffffff" rx="8"/>
+  <g transform="translate(24, 18)">
+    <!-- ArcelorMittal Dynamic Steel Flame Loop -->
+    <path d="M12,40 C6,24 16,10 30,12 C42,14 46,28 38,38 C32,46 18,48 12,40 Z" fill="#E84E1B"/>
+    <path d="M22,28 C26,20 34,22 32,28 C30,34 24,34 22,28 Z" fill="#ffffff"/>
+    <!-- Brand Typography -->
+    <text x="54" y="30" font-family="'Century Gothic', 'Arial', sans-serif" font-size="20" font-weight="900" fill="#2D2926" letter-spacing="-0.02em">ArcelorMittal</text>
+    <text x="56" y="45" font-family="'Arial', sans-serif" font-size="8.5" font-weight="700" fill="#E84E1B" letter-spacing="0.18em">STEEL &amp; MINING</text>
+  </g>
+</svg>

@@ -904,6 +904,10 @@ export const SoftwareView = () => {
                       <img 
                         src={app.image} 
                         alt={app.name} 
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/assets/images/software_blueprint.svg';
+                        }}
                         style={{
                           width: '100%',
                           height: '100%',
@@ -1192,6 +1196,10 @@ export const SoftwareView = () => {
                       alt={prod.imageAlt}
                       className="software-authentic-img"
                       loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = '/assets/images/software_blueprint.svg';
+                      }}
                     />
                     
                   </div>
