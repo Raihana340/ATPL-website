@@ -204,25 +204,59 @@ export const Navbar = ({ onOpenSearch }) => {
                 <span className="announcement-text-mobile">🚀 3D Digital Twin Tour</span>
               </span>
             </div>
-            <button
-              onClick={() => handleNavClick('factory-3d')}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: '#E85874',
-                cursor: 'pointer',
-                fontWeight: 700,
-                fontSize: '0.74rem',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.2rem',
-                padding: '0.2rem 0.35rem',
-                flexShrink: 0
-              }}
-            >
-              <span>Explore</span>
-              <ArrowRight size={12} />
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem', flexShrink: 0 }}>
+              <button
+                onClick={() => handleNavClick('factory-3d')}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#E85874',
+                  cursor: 'pointer',
+                  fontWeight: 700,
+                  fontSize: '0.74rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.2rem',
+                  padding: '0.2rem 0.35rem',
+                  flexShrink: 0
+                }}
+              >
+                <span>Explore</span>
+                <ArrowRight size={12} />
+              </button>
+
+              <span style={{ color: '#cbd5e1' }}>•</span>
+
+              <button
+                onClick={() => handleNavClick('admin')}
+                style={{
+                  background: 'rgba(0, 113, 186, 0.08)',
+                  border: '1px solid rgba(0, 113, 186, 0.3)',
+                  borderRadius: '5px',
+                  color: '#0071ba',
+                  cursor: 'pointer',
+                  fontWeight: 700,
+                  fontSize: '0.73rem',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.25rem',
+                  padding: '0.14rem 0.5rem',
+                  flexShrink: 0,
+                  transition: 'all 0.15s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = '#0071ba';
+                  e.currentTarget.style.color = '#ffffff';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = 'rgba(0, 113, 186, 0.08)';
+                  e.currentTarget.style.color = '#0071ba';
+                }}
+                title="Open ATPL Control Center & SEO Manager"
+              >
+                <span>⚙️ Admin Panel</span>
+              </button>
+            </div>
           </div>
 
           <div style={{ display: 'none', alignItems: 'center', gap: '1.25rem', flexShrink: 0 }} className="top-banner-right">
@@ -1605,6 +1639,31 @@ export const Navbar = ({ onOpenSearch }) => {
                   }}
                 >
                   Request Live Demo ➔
+                </button>
+
+                <button
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    handleNavClick('admin');
+                  }}
+                  style={{
+                    minHeight: '40px',
+                    backgroundColor: 'rgba(0, 113, 186, 0.06)',
+                    color: '#0071ba',
+                    border: '1px dashed rgba(0, 113, 186, 0.35)',
+                    borderRadius: '8px',
+                    padding: '0.6rem 1rem',
+                    fontWeight: 700,
+                    fontSize: '0.88rem',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '0.4rem',
+                    marginTop: '0.25rem'
+                  }}
+                >
+                  <span>⚙️ Admin & SEO Control Center</span>
                 </button>
               </div>
             </div>

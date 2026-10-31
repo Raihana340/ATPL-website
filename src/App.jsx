@@ -57,14 +57,18 @@ const MainAppContent = () => {
   const { currentView, setCurrentView } = useApp();
   const [searchOpen, setSearchOpen] = useState(false);
 
-  // Synchronize URL path on initial load & popstate (supporting /privacy, /terms, etc.)
+  // Synchronize URL path on initial load & popstate (supporting /privacy, /terms, /admin, etc.)
   useEffect(() => {
     const handleLocation = () => {
       const path = window.location.pathname.replace(/^\//, '').toLowerCase();
       const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
-      const target = path || hash;
+      const target = hash || path;
 
-      if (target === 'privacy') {
+      if (['admin', 'cms', 'control', 'dashboard'].includes(target) || target.startsWith('admin')) {
+        setCurrentView('admin');
+      } else if (['login', 'signin', 'auth', 'portal'].includes(target)) {
+        setCurrentView('login');
+      } else if (target === 'privacy') {
         setCurrentView('privacy');
       } else if (target === 'terms') {
         setCurrentView('terms');
