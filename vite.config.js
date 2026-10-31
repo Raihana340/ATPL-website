@@ -7,7 +7,10 @@ export default defineConfig({
     port: 5180,
     strictPort: true,
     open: false,
-    host: true
+    host: true,
+    watch: {
+      ignored: ['**/.agents/**', '**/.git/**', '**/dist/**']
+    }
   },
   build: {
     target: 'esnext',
