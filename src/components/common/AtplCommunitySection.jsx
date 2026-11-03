@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { 
   Users, 
@@ -9,19 +10,35 @@ import {
   ShieldCheck, 
   Layers, 
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Globe2,
+  Cpu
 } from 'lucide-react';
+import { NumberTicker } from '../ui/number-ticker';
+import { MagneticButton } from '../ui/magnetic-button';
+import { GlowEffect } from '../ui/glow-effect';
+import { ShineBadge } from '../ui/shine-badge';
+import { SpotlightCard } from '../ui/spotlight-card';
+import { ParallaxTiltCard } from '../ui/parallax-tilt-card';
+import { AnimatedTabs } from '../ui/animated-tabs';
 
 /**
- * LaurelWreath: Authentic laurel wreath SVG icon with ATPL Logo Blue & light styling.
+ * LaurelWreath: Authentic laurel wreath SVG icon with ATPL Logo Blue & light styling,
+ * now enhanced with 21st.dev NumberTicker for animated scroll telemetry.
  */
-function LaurelWreath({ children, number, label, accentColor = '#299fe0' }) {
+function LaurelWreath({ number, label, accentColor = '#299fe0', tickerVal, tickerSuffix = '' }) {
   return (
-    <div style={{
-      display: 'flex',
-      alignItems: 'center',
-      gap: '0.65rem'
-    }}>
+    <motion.div 
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.65rem'
+      }}
+    >
       {/* Left Laurel Branch */}
       <svg width="22" height="38" viewBox="0 0 22 38" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
         <path d="M18 2C16 8 11 13 6 18C2 22 2 28 6 33C8 35 12 36 18 36" stroke={accentColor} strokeWidth="2.2" strokeLinecap="round"/>
@@ -38,9 +55,16 @@ function LaurelWreath({ children, number, label, accentColor = '#299fe0' }) {
           fontWeight: 900,
           color: '#f8fafc',
           lineHeight: 1.1,
-          letterSpacing: '-0.02em'
+          letterSpacing: '-0.02em',
+          display: 'flex',
+          alignItems: 'baseline',
+          gap: '2px'
         }}>
-          {number}
+          {tickerVal !== undefined ? (
+            <NumberTicker value={tickerVal} suffix={tickerSuffix} />
+          ) : (
+            number
+          )}
         </div>
         <div style={{
           fontSize: '0.84rem',
@@ -60,17 +84,25 @@ function LaurelWreath({ children, number, label, accentColor = '#299fe0' }) {
         <path d="M11 22C15 24 18 27 20 26" stroke={accentColor} strokeWidth="1.8" strokeLinecap="round"/>
         <path d="M9 30C12 31 15 33 17 33" stroke={accentColor} strokeWidth="1.8" strokeLinecap="round"/>
       </svg>
-    </div>
+    </motion.div>
   );
 }
 
 /**
- * AtplCommunitySection: Zoho Community-style hero section featuring our real team & leadership
- * Inspired directly by community.zoho.com layout with 30-30-40 brand harmony.
+ * AtplCommunitySection: Upgraded with 21st.dev Animated Architecture & 5-Pillar Motion
+ * - NumberTicker animated counters
+ * - MagneticButton + GlowEffect CTA
+ * - 3D ParallaxTiltCard with dynamic cursor spotlight
+ * - AnimatedTabs sliding spring pill selector
  */
 export function AtplCommunitySection() {
   const { openDemoModal, setCurrentView } = useApp();
   const [activePhotoTab, setActivePhotoTab] = useState('team'); // 'team' | 'founder'
+
+  const photoTabs = [
+    { id: 'team', label: 'ATPL Engineering Team', icon: <Users size={15} /> },
+    { id: 'founder', label: 'Leadership & Founder', icon: <ShieldCheck size={15} /> }
+  ];
 
   return (
     <section 
@@ -78,16 +110,33 @@ export function AtplCommunitySection() {
         position: 'relative',
         backgroundColor: '#070d18',
         backgroundImage: `
-          radial-gradient(circle at 15% 25%, rgba(0, 113, 186, 0.16) 0%, transparent 45%),
-          radial-gradient(circle at 85% 75%, rgba(232, 88, 116, 0.12) 0%, transparent 50%),
+          radial-gradient(circle at 15% 25%, rgba(0, 113, 186, 0.22) 0%, transparent 45%),
+          radial-gradient(circle at 85% 75%, rgba(232, 88, 116, 0.16) 0%, transparent 50%),
           linear-gradient(180deg, #060b14 0%, #0a1324 50%, #060b14 100%)
         `,
-        padding: '5rem 0',
+        padding: '5.5rem 0',
         overflow: 'hidden',
-        borderTop: '1px solid rgba(0, 113, 186, 0.2)',
-        borderBottom: '1px solid rgba(0, 113, 186, 0.2)'
+        borderTop: '1px solid rgba(0, 113, 186, 0.25)',
+        borderBottom: '1px solid rgba(0, 113, 186, 0.25)'
       }}
     >
+      {/* Volumetric Optical Glows (Genjutsu Aura) */}
+      <div 
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          top: '20%',
+          right: '5%',
+          width: '500px',
+          height: '500px',
+          borderRadius: '50%',
+          background: 'radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, transparent 70%)',
+          filter: 'blur(60px)',
+          pointerEvents: 'none',
+          zIndex: 0
+        }}
+      />
+
       {/* Subtle Background Cityscape / Smart Factory Skyline Vector */}
       <div 
         aria-hidden="true"
@@ -129,41 +178,19 @@ export function AtplCommunitySection() {
           }}
         >
           {/* =========================================================================
-              LEFT COLUMN: Zoho Community Content & Metrics
+              LEFT COLUMN: Community Content & Metrics
              ========================================================================= */}
-          <div>
-            {/* Small Brand App Badge */}
-            <div 
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.65rem',
-                marginBottom: '1.75rem'
-              }}
-            >
-              <div 
-                style={{
-                  width: '42px',
-                  height: '42px',
-                  borderRadius: '12px',
-                  backgroundColor: 'rgba(14, 26, 49, 0.85)',
-                  border: '2px solid #0071ba',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 4px 16px rgba(0, 113, 186, 0.3)'
-                }}
-              >
-                <Users size={22} color="#299fe0" strokeWidth={2.4} />
-              </div>
-              <span style={{
-                fontSize: '1.25rem',
-                fontWeight: 800,
-                color: '#ffffff',
-                letterSpacing: '-0.01em'
-              }}>
-                ATPL <span style={{ color: '#299fe0' }}>Community</span>
-              </span>
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            {/* Luminous Shine Badge */}
+            <div style={{ marginBottom: '1.5rem' }}>
+              <ShineBadge variant="cyan" icon={<Users size={16} color="#00f0ff" />}>
+                ATPL COMMUNITY • 2,500+ SHOPFLOOR PRACTITIONERS
+              </ShineBadge>
             </div>
 
             {/* Main Headline */}
@@ -174,10 +201,11 @@ export function AtplCommunitySection() {
                 color: '#ffffff',
                 lineHeight: 1.14,
                 letterSpacing: '-0.03em',
-                marginBottom: '1.25rem'
+                marginBottom: '1.25rem',
+                fontFamily: 'var(--font-display, Inter, sans-serif)'
               }}
             >
-              ATPL Community
+              Where Innovators Connect &amp; <span className="gradient-text">Build the Future.</span>
             </h2>
 
             {/* Subtitle / Value Proposition */}
@@ -186,23 +214,24 @@ export function AtplCommunitySection() {
                 fontSize: 'clamp(1rem, 1.6vw, 1.22rem)',
                 lineHeight: 1.65,
                 color: '#94a3b8',
-                marginBottom: '2rem',
+                marginBottom: '2.25rem',
                 maxWidth: '520px'
               }}
             >
-              Where Industry 4.0 innovators, mechanical engineers, and factory pioneers connect, engage, and build the future of Indian manufacturing.
+              Connect with Industry 4.0 practitioners, systems architects, and factory automation pioneers across India’s leading discrete manufacturing and warehousing hubs.
             </p>
 
-            {/* CTA Button: ATPL Coral Pill Button */}
-            <div style={{ marginBottom: '2.75rem' }}>
-              <button
+            {/* CTA Button: Magnetic Coral Pill Button with Luminous Aura */}
+            <div style={{ marginBottom: '2.75rem', display: 'inline-flex', position: 'relative' }}>
+              <GlowEffect colors={['#E85874', '#ff7b92', '#00f0ff', '#0071ba']} mode="breathe" blur="soft" duration={3.5} scale={1.12} />
+              <MagneticButton
                 onClick={() => openDemoModal({ mode: 'community', solution: 'ATPL Community & Engineering Network' })}
                 style={{
                   backgroundColor: '#E85874',
                   color: '#ffffff',
                   border: 'none',
-                  borderRadius: '8px',
-                  padding: '0.9rem 2.2rem',
+                  borderRadius: '999px',
+                  padding: '0.95rem 2.4rem',
                   fontSize: '0.96rem',
                   fontWeight: 800,
                   letterSpacing: '0.04em',
@@ -211,26 +240,17 @@ export function AtplCommunitySection() {
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  boxShadow: '0 8px 24px rgba(232, 88, 116, 0.4)',
-                  transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#d44360';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                  e.currentTarget.style.boxShadow = '0 12px 30px rgba(232, 88, 116, 0.55)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#E85874';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.boxShadow = '0 8px 24px rgba(232, 88, 116, 0.4)';
+                  boxShadow: '0 8px 25px rgba(232, 88, 116, 0.45)',
+                  position: 'relative',
+                  zIndex: 1
                 }}
               >
                 <span>JOIN NOW</span>
                 <ChevronRight size={18} strokeWidth={3} />
-              </button>
+              </MagneticButton>
             </div>
 
-            {/* Social Proof Laurel Wreath Metrics */}
+            {/* Social Proof Laurel Wreath Metrics with NumberTicker */}
             <div 
               className="atpl-laurel-metrics"
               style={{
@@ -241,205 +261,215 @@ export function AtplCommunitySection() {
                 paddingTop: '0.5rem'
               }}
             >
-              <LaurelWreath number="250+" label="Enterprise Clients" accentColor="#299fe0" />
+              <LaurelWreath tickerVal={250} tickerSuffix="+" label="Enterprise Clients" accentColor="#299fe0" />
               
               {/* Vertical divider */}
               <div className="atpl-laurel-divider" style={{ width: '1px', height: '42px', backgroundColor: 'rgba(255, 255, 255, 0.12)' }} />
               
-              <LaurelWreath number="35+ Years" label="Domain Legacy" accentColor="#E85874" />
+              <LaurelWreath tickerVal={35} tickerSuffix="+ Yrs" label="Domain Legacy" accentColor="#E85874" />
 
               {/* Vertical divider */}
               <div className="atpl-laurel-divider" style={{ width: '1px', height: '42px', backgroundColor: 'rgba(255, 255, 255, 0.12)' }} />
 
-              <LaurelWreath number="6 Hubs" label="Pan-India Branches" accentColor="#00f0ff" />
+              <LaurelWreath tickerVal={6} tickerSuffix=" Hubs" label="Pan-India Branches" accentColor="#00f0ff" />
             </div>
-          </div>
+          </motion.div>
 
           {/* =========================================================================
-              RIGHT COLUMN: Real Team & Leadership Showcase
+              RIGHT COLUMN: Real Team & Leadership Showcase with 3D Tilt & Spotlight
              ========================================================================= */}
-          <div style={{ position: 'relative' }}>
-            
-            {/* Top Toggle Pills: Team Expo vs Founder */}
+          <motion.div
+            initial={{ opacity: 0, x: 24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            style={{ position: 'relative' }}
+          >
+            {/* Top Toggle Pills with 21st.dev AnimatedTabs */}
             <div 
               style={{
                 display: 'flex',
                 justifyContent: 'center',
-                gap: '0.5rem',
-                marginBottom: '1rem',
+                marginBottom: '1.25rem',
                 position: 'relative',
                 zIndex: 3
               }}
             >
-              <button
-                type="button"
-                onClick={() => setActivePhotoTab('team')}
-                style={{
-                  backgroundColor: activePhotoTab === 'team' ? '#0071ba' : 'rgba(15, 26, 48, 0.85)',
-                  color: activePhotoTab === 'team' ? '#ffffff' : '#cbd5e1',
-                  border: activePhotoTab === 'team' ? '1.5px solid #38bdf8' : '1px solid rgba(255, 255, 255, 0.18)',
-                  borderRadius: '999px',
-                  padding: '0.45rem 1.15rem',
-                  fontSize: '0.84rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.45rem',
-                  boxShadow: activePhotoTab === 'team' ? '0 4px 16px rgba(0, 113, 186, 0.45)' : 'none',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                <Users size={15} color={activePhotoTab === 'team' ? '#ffffff' : '#94a3b8'} />
-                <span>ATPL Engineering Team</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => setActivePhotoTab('founder')}
-                style={{
-                  backgroundColor: activePhotoTab === 'founder' ? '#0071ba' : 'rgba(15, 26, 48, 0.85)',
-                  color: activePhotoTab === 'founder' ? '#ffffff' : '#cbd5e1',
-                  border: activePhotoTab === 'founder' ? '1.5px solid #38bdf8' : '1px solid rgba(255, 255, 255, 0.18)',
-                  borderRadius: '999px',
-                  padding: '0.45rem 1.15rem',
-                  fontSize: '0.84rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.45rem',
-                  boxShadow: activePhotoTab === 'founder' ? '0 4px 16px rgba(0, 113, 186, 0.45)' : 'none',
-                  transition: 'all 0.2s ease'
-                }}
-              >
-                <ShieldCheck size={15} color={activePhotoTab === 'founder' ? '#ffffff' : '#94a3b8'} />
-                <span>Leadership & Founder</span>
-              </button>
+              <AnimatedTabs 
+                tabs={photoTabs}
+                activeTab={activePhotoTab}
+                onSelectTab={setActivePhotoTab}
+                layoutId="communityPhotoTab"
+                size="sm"
+              />
             </div>
 
-            {/* Team / Leadership Showcase Stage */}
-            <div 
-              style={{
-                position: 'relative',
-                borderRadius: '24px',
-                overflow: 'hidden',
-                backgroundColor: '#0b1528',
-                border: '2px solid rgba(0, 113, 186, 0.35)',
-                boxShadow: '0 24px 60px rgba(0, 0, 0, 0.5), 0 0 35px rgba(0, 113, 186, 0.15)',
-                transition: 'all 0.35s ease'
-              }}
-            >
-              {/* Photo Display */}
-              <div style={{ position: 'relative', overflow: 'hidden' }}>
-                <img 
-                  src={activePhotoTab === 'team' ? "/assets/images/atpl_team_full_group.png" : "/assets/images/amarnath_paramasivam.jpg"}
-                  alt={activePhotoTab === 'team' 
-                    ? "Archery Technocrats Private Limited - Authentic Engineering Team at Industrial Expo" 
-                    : "Amarnath Paramasivam - Founder & Managing Director, Archery Technocrats"}
-                  width="800"
-                  height="440"
-                  loading="lazy"
-                  style={{
-                    width: '100%',
-                    height: 'auto',
-                    maxHeight: '430px',
-                    aspectRatio: '730 / 440',
-                    objectFit: 'cover',
-                    objectPosition: 'center top',
-                    display: 'block'
-                  }}
-                />
-              </div>
-
-              {/* Dedicated Caption Bar: Clean, professional name & title with verification badges */}
-              <div 
+            {/* Team / Leadership Showcase Stage with 3D Mouse Parallax Tilt & Spotlight */}
+            <ParallaxTiltCard tiltFactor={8}>
+              <SpotlightCard
+                spotlightColor="rgba(0, 240, 255, 0.25)"
+                borderColor="rgba(0, 113, 186, 0.4)"
+                backgroundColor="#0b1528"
                 style={{
-                  background: 'linear-gradient(180deg, #091325 0%, #060c18 100%)',
-                  borderTop: '1px solid rgba(0, 113, 186, 0.25)',
-                  padding: '1.25rem 1.6rem',
-                  color: '#ffffff'
+                  borderRadius: '24px',
+                  boxShadow: '0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 113, 186, 0.2)'
                 }}
               >
-                <div style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  flexWrap: 'wrap',
-                  gap: '1rem'
-                }}>
-                  <div>
-                    <div style={{ 
-                      fontSize: '1.18rem', 
-                      fontWeight: 800, 
-                      color: '#ffffff', 
-                      letterSpacing: '-0.015em',
-                      lineHeight: 1.25
-                    }}>
-                      {activePhotoTab === 'team' ? 'Archery Technocrats Engineering Force' : 'Amarnath Paramasivam'}
-                    </div>
-                    <div style={{ 
-                      fontSize: '0.88rem', 
-                      color: activePhotoTab === 'team' ? '#94a3b8' : '#38bdf8', 
-                      fontWeight: 600,
-                      marginTop: '0.3rem',
-                      lineHeight: 1.4
-                    }}>
-                      {activePhotoTab === 'team' 
-                        ? 'In-House Software Engineers, AIDC Integrators & Leadership' 
-                        : 'Founder & Managing Director • 15+ Yrs Industry 4.0 Vision'}
-                    </div>
-                  </div>
+                {/* Photo Display with Animated Cross-Fade */}
+                <div style={{ position: 'relative', overflow: 'hidden' }}>
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activePhotoTab}
+                      initial={{ opacity: 0, scale: 0.98 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.98 }}
+                      transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    >
+                      <img 
+                        src={activePhotoTab === 'team' ? "/assets/images/atpl_team_full_group.png" : "/assets/images/amarnath_paramasivam.jpg"}
+                        alt={activePhotoTab === 'team' 
+                          ? "Archery Technocrats Private Limited - Authentic Engineering Team at Industrial Expo" 
+                          : "Amarnath Paramasivam - Founder & Managing Director, Archery Technocrats"}
+                        width="800"
+                        height="440"
+                        loading="lazy"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                          maxHeight: '430px',
+                          aspectRatio: '730 / 440',
+                          objectFit: 'cover',
+                          objectPosition: 'center top',
+                          display: 'block'
+                        }}
+                      />
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
 
-                  {/* Verification Badges in Caption - Never obscuring any faces */}
+                {/* Dedicated Caption Bar: Clean, professional name & title with verification badges */}
+                <div 
+                  style={{
+                    background: 'linear-gradient(180deg, #091325 0%, #060c18 100%)',
+                    borderTop: '1px solid rgba(0, 113, 186, 0.25)',
+                    padding: '1.25rem 1.6rem',
+                    color: '#ffffff',
+                    position: 'relative',
+                    zIndex: 2
+                  }}
+                >
                   <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '0.65rem',
-                    flexWrap: 'wrap'
+                    justifyContent: 'space-between',
+                    flexWrap: 'wrap',
+                    gap: '1rem'
                   }}>
-                    <div style={{
-                      backgroundColor: 'rgba(232, 88, 116, 0.14)',
-                      border: '1px solid rgba(232, 88, 116, 0.4)',
-                      borderRadius: '8px',
-                      padding: '0.4rem 0.8rem',
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      gap: '0.45rem',
-                      fontSize: '0.78rem',
-                      fontWeight: 700,
-                      color: '#ffffff'
-                    }}>
-                      <Sparkles size={14} color="#E85874" />
-                      <span>ISO 9001:2015 Certified</span>
+                    <div>
+                      <div style={{ 
+                        fontSize: '1.24rem', 
+                        fontWeight: 800, 
+                        color: '#ffffff', 
+                        letterSpacing: '-0.015em',
+                        lineHeight: 1.25
+                      }}>
+                        {activePhotoTab === 'team' ? 'Archery Technocrats Engineering Force' : 'Amarnath Paramasivam'}
+                      </div>
+                      <div style={{ 
+                        fontSize: '0.88rem', 
+                        color: activePhotoTab === 'team' ? '#94a3b8' : '#38bdf8', 
+                        fontWeight: 600,
+                        marginTop: '0.3rem',
+                        lineHeight: 1.4
+                      }}>
+                        {activePhotoTab === 'team' 
+                          ? 'In-House Software Engineers, AIDC Integrators & Shopfloor Deployment Specialists' 
+                          : 'Founder & Managing Director • Mechanical Engineer & MBA • 15+ Yrs AIDC Leadership'}
+                      </div>
+                      {activePhotoTab === 'founder' && (
+                        <blockquote style={{
+                          margin: '0.65rem 0 0 0',
+                          paddingLeft: '0.75rem',
+                          borderLeft: '2px solid #E85874',
+                          color: '#e2e8f0',
+                          fontSize: '0.85rem',
+                          fontStyle: 'italic',
+                          lineHeight: 1.5
+                        }}>
+                          "We should not hesitate to take risks to accomplish our commitments. Target Perfection."
+                        </blockquote>
+                      )}
                     </div>
 
+                    {/* Verification Badges in Caption */}
                     <div style={{
-                      backgroundColor: 'rgba(0, 240, 255, 0.12)',
-                      border: '1px solid rgba(0, 240, 255, 0.4)',
-                      borderRadius: '8px',
-                      padding: '0.4rem 0.8rem',
-                      display: 'inline-flex',
+                      display: 'flex',
                       alignItems: 'center',
-                      gap: '0.45rem',
-                      fontSize: '0.78rem',
-                      fontWeight: 700,
-                      color: '#ffffff'
+                      gap: '0.65rem',
+                      flexWrap: 'wrap'
                     }}>
+                      {activePhotoTab === 'founder' ? (
+                        <div style={{
+                          backgroundColor: 'rgba(56, 189, 248, 0.12)',
+                          border: '1px solid rgba(56, 189, 248, 0.4)',
+                          borderRadius: '8px',
+                          padding: '0.4rem 0.8rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.45rem',
+                          fontSize: '0.78rem',
+                          fontWeight: 700,
+                          color: '#38bdf8'
+                        }}>
+                          <ShieldCheck size={14} color="#38bdf8" />
+                          <span>40 ➔ 200+ Enterprise Clients</span>
+                        </div>
+                      ) : (
+                        <div style={{
+                          backgroundColor: 'rgba(232, 88, 116, 0.14)',
+                          border: '1px solid rgba(232, 88, 116, 0.4)',
+                          borderRadius: '8px',
+                          padding: '0.4rem 0.8rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.45rem',
+                          fontSize: '0.78rem',
+                          fontWeight: 700,
+                          color: '#ffffff'
+                        }}>
+                          <Sparkles size={14} color="#E85874" />
+                          <span>ISO 9001:2015</span>
+                        </div>
+                      )}
+
                       <div style={{
-                        width: '8px',
-                        height: '8px',
-                        borderRadius: '50%',
-                        backgroundColor: '#00f0ff',
-                        boxShadow: '0 0 8px #00f0ff'
-                      }} />
-                      <span>100% In-House R&amp;D</span>
+                        backgroundColor: 'rgba(0, 240, 255, 0.12)',
+                        border: '1px solid rgba(0, 240, 255, 0.4)',
+                        borderRadius: '8px',
+                        padding: '0.4rem 0.8rem',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.45rem',
+                        fontSize: '0.78rem',
+                        fontWeight: 700,
+                        color: '#ffffff'
+                      }}>
+                        <div style={{
+                          width: '8px',
+                          height: '8px',
+                          borderRadius: '50%',
+                          backgroundColor: '#00f0ff',
+                          boxShadow: '0 0 8px #00f0ff'
+                        }} />
+                        <span>100% In-House R&amp;D</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              </SpotlightCard>
+            </ParallaxTiltCard>
 
-          </div>
+          </motion.div>
         </div>
 
       </div>
@@ -456,16 +486,6 @@ export function AtplCommunitySection() {
           }
           .atpl-laurel-divider {
             display: none !important;
-          }
-          .atpl-search-form {
-            padding: 0.35rem 0.5rem 0.35rem 1rem !important;
-          }
-          .atpl-search-input {
-            font-size: 0.88rem !important;
-          }
-          .atpl-search-btn {
-            padding: 0.55rem 1.1rem !important;
-            font-size: 0.84rem !important;
           }
         }
       `}</style>

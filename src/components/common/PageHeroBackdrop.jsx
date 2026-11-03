@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 /**
  * HeroFilterPill: High-impact, luminous glassmorphism filter tab button.
@@ -16,12 +17,15 @@ export function HeroFilterPill({
   const [hovered, setHovered] = useState(false);
 
   return (
-    <button
+    <motion.button
       type="button"
       className="page-hero-pill-btn"
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
+      whileHover={{ y: -2 }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ duration: 0.15 }}
       style={{
         position: 'relative',
         display: 'inline-flex',
@@ -33,7 +37,6 @@ export function HeroFilterPill({
         fontWeight: active ? 700 : 500,
         letterSpacing: '0.01em',
         cursor: 'pointer',
-        transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
         // Glassmorphism styling
         background: active
           ? `linear-gradient(135deg, ${accentColor} 0%, rgba(0, 113, 186, 0.95) 100%)`
@@ -53,7 +56,6 @@ export function HeroFilterPill({
           : hovered
           ? `0 0 16px ${accentColor}40, 0 4px 12px rgba(0, 0, 0, 0.3)`
           : '0 4px 12px rgba(0, 0, 0, 0.25)',
-        transform: active || hovered ? 'translateY(-2px)' : 'translateY(0)',
         outline: 'none',
         userSelect: 'none'
       }}
@@ -88,7 +90,7 @@ export function HeroFilterPill({
           {count}
         </span>
       )}
-    </button>
+    </motion.button>
   );
 }
 
@@ -112,8 +114,11 @@ export function PageHeroBackdrop({
   maxWidth = '1020px'
 }) {
   return (
-    <div 
+    <motion.div 
       className="page-hero-backdrop-container"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
       style={{
         position: 'relative',
         maxWidth: maxWidth,
@@ -346,6 +351,6 @@ export function PageHeroBackdrop({
           }
         }
       `}</style>
-    </div>
+    </motion.div>
   );
 }

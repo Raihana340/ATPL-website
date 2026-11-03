@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { Scale, FileCheck, ShieldAlert, ArrowLeft, Building2, CheckCircle2 } from 'lucide-react';
 
@@ -16,8 +17,16 @@ export const TermsView = () => {
         position: 'relative',
         borderBottom: '1px solid rgba(0, 240, 255, 0.2)'
       }}>
-        <div className="container" style={{ maxWidth: '900px', margin: '0 auto' }}>
-          <button
+        <motion.div 
+          className="container" 
+          style={{ maxWidth: '900px', margin: '0 auto' }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+        >
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
             onClick={() => {
               setCurrentView('home');
               window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -34,13 +43,12 @@ export const TermsView = () => {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '0.4rem',
-              marginBottom: '2rem',
-              transition: 'all 0.2s ease'
+              marginBottom: '2rem'
             }}
           >
             <ArrowLeft size={14} />
             <span>Back to Home</span>
-          </button>
+          </motion.button>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.75rem' }}>
             <span style={{
@@ -64,7 +72,7 @@ export const TermsView = () => {
           <p style={{ color: '#94a3b8', fontSize: '1.05rem', lineHeight: 1.6, maxWidth: '750px' }}>
             Terms and conditions governing the access, licensing, and deployment of Archery Technocrats Private Limited (ATPL Group) software suites, AIDC hardware integration, and industrial engineering services.
           </p>
-        </div>
+        </motion.div>
       </section>
 
       {/* Main Content Body */}

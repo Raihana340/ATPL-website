@@ -32,7 +32,8 @@ import {
   Calculator,
   Smartphone,
   Zap,
-  Barcode
+  Barcode,
+  Bot
 } from 'lucide-react';
 
 export const ATPL_LANGUAGES = [
@@ -117,6 +118,13 @@ export const Navbar = ({ onOpenSearch }) => {
 
   const handleNavClick = (viewId) => {
     setCurrentView(viewId);
+    try {
+      if (viewId === 'home') {
+        window.history.pushState(null, '', window.location.pathname);
+      } else {
+        window.history.pushState(null, '', `#${viewId}`);
+      }
+    } catch (e) {}
     setMobileMenuOpen(false);
     setActiveDropdown(null);
     setLanguageOpen(false);
@@ -915,6 +923,45 @@ export const Navbar = ({ onOpenSearch }) => {
               <Sparkles size={14} color="#E85874" />
               <span>3D Hardware</span>
             </button>
+
+            {/* Direct Comparison Section Link */}
+            <button
+              onClick={() => {
+                if (currentView !== 'home') {
+                  setCurrentView('home');
+                }
+                setTimeout(() => {
+                  const el = document.getElementById('archie-3d-robot');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+              }}
+              style={{
+                background: 'rgba(0, 113, 186, 0.08)',
+                border: '1px solid rgba(0, 113, 186, 0.3)',
+                color: '#0071ba',
+                padding: '0.45rem 0.75rem',
+                fontSize: '0.88rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                borderRadius: '8px',
+                transition: 'all 0.2s ease'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(0, 113, 186, 0.16)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(0, 113, 186, 0.08)';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+              title="Compare Archery Technocrats vs Traditional Resellers"
+            >
+              <Sparkles size={14} color="#0071ba" />
+              <span>Why ATPL</span>
+            </button>
           </nav>
 
           {/* Right Action Utilities (Zoho Search, Language, Sign In, Sign Up) */}
@@ -1050,6 +1097,41 @@ export const Navbar = ({ onOpenSearch }) => {
               </GsapDropdown>
             </div>
 
+
+            {/* Direct Admin Control Center Button (Desktop) */}
+            <button
+              onClick={() => handleNavClick('admin')}
+              className="desktop-only-action"
+              style={{
+                backgroundColor: 'rgba(15, 23, 42, 0.04)',
+                border: '1.5px solid #cbd5e1',
+                color: '#1e293b',
+                fontWeight: 700,
+                fontSize: '0.86rem',
+                padding: '0.45rem 0.8rem',
+                borderRadius: '6px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                fontFamily: 'var(--font-display)'
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = '#0071ba';
+                e.currentTarget.style.color = '#ffffff';
+                e.currentTarget.style.borderColor = '#0071ba';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.04)';
+                e.currentTarget.style.color = '#1e293b';
+                e.currentTarget.style.borderColor = '#cbd5e1';
+              }}
+              title="Open Admin Control Center & SEO Manager"
+            >
+              <LayoutDashboard size={15} />
+              <span>Admin</span>
+            </button>
 
             {/* Ask Archie AI Quick Header Button (Desktop Only) */}
             <button

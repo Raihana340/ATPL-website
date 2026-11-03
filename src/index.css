@@ -72,6 +72,22 @@
   --transition-fast: 160ms var(--ease-out);
   --transition-normal: 240ms var(--ease-out);
   --transition-spring: 320ms var(--ease-spring);
+
+  /* ========================================================================
+     DESIGN DNA & MOTION DESIGN TOKENS (Three.js, GSAP & Genjutsu Synergy)
+     ======================================================================== */
+  --dna-cyan: #00f0ff;
+  --dna-cyan-rgb: 0, 240, 255;
+  --dna-blue: #0071ba;
+  --dna-blue-rgb: 0, 113, 186;
+  --dna-coral: #E85874;
+  --dna-emerald: #10b981;
+  --dna-dark-cockpit: #050b16;
+  --dna-dark-surface: #0a1325;
+  --dna-glass-card: rgba(10, 19, 37, 0.78);
+  --dna-spring-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --dna-spring-snappy: cubic-bezier(0.22, 1, 0.36, 1);
+  --genjutsu-radial-glow: radial-gradient(circle, rgba(0, 240, 255, 0.16) 0%, rgba(0, 113, 186, 0.06) 50%, transparent 75%);
 }
 
 *, *::before, *::after {
@@ -303,20 +319,28 @@ body::before {
   filter: blur(80px);
 }
 
-/* Scrollbar */
+/* Global Smooth Scrolling & Momentum Physics */
+html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Cyber-Industrial Gradient Scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: #060b14;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 240, 255, 0.25);
-  border-radius: 4px;
+  background: linear-gradient(180deg, #0071ba 0%, #00f0ff 100%);
+  border-radius: 999px;
+  border: 1.5px solid #060b14;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 240, 255, 0.5);
+  background: linear-gradient(180deg, #00f0ff 0%, #E85874 100%);
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.8);
 }
 
 /* Typography Helpers */

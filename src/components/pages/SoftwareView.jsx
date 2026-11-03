@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
+import { AnimatedTabs } from '../ui/animated-tabs';
+import { BentoCard } from '../ui/bento-card';
+import { ShineBadge } from '../ui/shine-badge';
+import { ParallaxTiltCard } from '../ui/parallax-tilt-card';
+import { MagneticButton } from '../ui/magnetic-button';
 import { 
   Boxes, 
   Eye, 
@@ -596,28 +602,17 @@ export const SoftwareView = () => {
         borderBottom: '1px solid #e2e8f0',
         position: 'relative'
       }}>
-        <div className="container" style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 clamp(1rem, 2.5vw, 2.5rem)' }}>
-          
-          {/* Section Sub-Badge */}
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            backgroundColor: '#eff6ff',
-            border: '1px solid #bfdbfe',
-            color: '#0071ba',
-            padding: '0.4rem 1rem',
-            borderRadius: '999px',
-            fontSize: '0.78rem',
-            fontWeight: 800,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            marginBottom: '1.25rem',
-            fontFamily: 'var(--font-mono, monospace)'
-          }}>
-            <span style={{ width: '7px', height: '7px', borderRadius: '50%', backgroundColor: '#0071ba' }} />
-            <span>ATPL PROPRIETARY SOFTWARE</span>
-          </div>
+        <motion.div 
+          className="container" 
+          style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 clamp(1rem, 2.5vw, 2.5rem)' }}
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+        >
+          {/* Section Sub-Badge with 21st.dev ShineBadge */}
+          <ShineBadge variant="blue" style={{ marginBottom: '1.25rem' }}>
+            ATPL PROPRIETARY SOFTWARE SUITE
+          </ShineBadge>
 
           <h1 style={{
             fontSize: 'clamp(2rem, 3.8vw, 3.2rem)',
@@ -662,7 +657,65 @@ export const SoftwareView = () => {
               Our internal team of solution architects is committed to supervising the entire process, beginning with requirement gathering and concluding with the delivery of the finalized application to the customer. Simultaneously, our development team collaborates with service engineers for the integration of hardware components, specifically focusing on those who engage extensively with industry-leading OEMs.
             </p>
           </div>
-        </div>
+
+          {/* Executive Performance Highlights Ribbon (UI/UX Pro Max & 21st.dev) */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+            gap: '1rem',
+            marginTop: '2.5rem',
+            paddingTop: '2rem',
+            borderTop: '1px solid #e2e8f0'
+          }}>
+            {[
+              { metric: '8+ Enterprise Modules', label: 'Proprietary Industrial Stack', icon: <Boxes size={18} color="#0071ba" /> },
+              { metric: '< 8ms Takt Time', label: 'Ultra-Fast Machine Vision Inspection', icon: <Activity size={18} color="#0071ba" /> },
+              { metric: '100% On-Prem & Cloud', label: 'Zero Extra Printer License Fees', icon: <Printer size={18} color="#0071ba" /> },
+              { metric: 'ISO & 21 CFR Compliant', label: 'IATF 16949 & DSCSA Verified', icon: <ShieldCheck size={18} color="#0071ba" /> }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.3, delay: i * 0.05 }}
+                whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.85rem',
+                  padding: '0.9rem 1.1rem',
+                  backgroundColor: '#f8fafc',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '12px',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.02)'
+                }}
+              >
+                <div style={{
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '10px',
+                  backgroundColor: '#eff6ff',
+                  border: '1px solid #bfdbfe',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flexShrink: 0
+                }}>
+                  {item.icon}
+                </div>
+                <div>
+                  <div style={{ fontSize: '0.96rem', fontWeight: 800, color: '#0f172a', lineHeight: 1.2 }}>
+                    {item.metric}
+                  </div>
+                  <div style={{ fontSize: '0.74rem', color: '#64748b', fontWeight: 500, marginTop: '2px' }}>
+                    {item.label}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </section>
 
       {/* =========================================================================
@@ -715,59 +768,26 @@ export const SoftwareView = () => {
             </p>
           </div>
 
-          {/* 8 Product Navigation Pills */}
-          <div style={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            justifyContent: 'center',
-            gap: '0.55rem',
-            marginBottom: '2rem'
-          }}>
-            {showcaseApps.map((app, idx) => {
-              const isSelected = focusedAppIndex === idx;
-              return (
-                <button
-                  key={app.id}
-                  onClick={() => {
-                    if (focusedAppIndex === idx) {
-                      scrollToProductSection(app.id);
-                    } else {
-                      setFocusedAppIndex(idx);
-                    }
-                  }}
-                  style={{
-                    backgroundColor: isSelected ? '#0071ba' : '#ffffff',
-                    color: isSelected ? '#ffffff' : '#64748b',
-                    border: `1.5px solid ${isSelected ? '#0071ba' : '#e2e8f0'}`,
-                    padding: '0.5rem 1.15rem',
-                    borderRadius: '999px',
-                    fontSize: '0.86rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                    boxShadow: isSelected ? '0 4px 14px rgba(0, 113, 186, 0.35)' : '0 2px 5px rgba(0,0,0,0.03)',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.35rem'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isSelected) {
-                      e.currentTarget.style.borderColor = '#0071ba';
-                      e.currentTarget.style.color = '#0071ba';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isSelected) {
-                      e.currentTarget.style.borderColor = '#e2e8f0';
-                      e.currentTarget.style.color = '#64748b';
-                    }
-                  }}
-                >
-                  {isSelected && <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#38bdf8' }} />}
-                  <span>{app.name}</span>
-                </button>
-              );
-            })}
+          {/* 8 Product Navigation Pills with 21st.dev AnimatedTabs */}
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '2.5rem', width: '100%' }}>
+            <AnimatedTabs
+              tabs={showcaseApps.map((app) => ({
+                id: app.id,
+                label: app.name
+              }))}
+              activeTab={showcaseApps[focusedAppIndex]?.id}
+              onSelectTab={(id) => {
+                const idx = showcaseApps.findIndex((a) => a.id === id);
+                if (idx !== -1) {
+                  if (focusedAppIndex === idx) {
+                    scrollToProductSection(id);
+                  } else {
+                    setFocusedAppIndex(idx);
+                  }
+                }
+              }}
+              layoutId="softwareShowcasePill"
+            />
           </div>
 
           {/* 3D Fanned Software Product Cards Showcase */}
@@ -1102,43 +1122,19 @@ export const SoftwareView = () => {
 
           <div style={{
             display: 'flex',
-            flexWrap: 'wrap',
-            gap: '0.55rem',
-            paddingTop: '0.75rem',
-            borderTop: '1px solid #e2e8f0'
+            paddingTop: '0.85rem',
+            borderTop: '1px solid #e2e8f0',
+            overflowX: 'auto',
+            paddingBottom: '0.4rem',
+            WebkitOverflowScrolling: 'touch'
           }}>
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveCategory(cat.id)}
-                style={{
-                  backgroundColor: activeCategory === cat.id ? '#0071ba' : '#f1f5f9',
-                  color: activeCategory === cat.id ? '#ffffff' : '#475569',
-                  border: activeCategory === cat.id ? '1px solid #005a96' : '1px solid #cbd5e1',
-                  borderRadius: '999px',
-                  padding: '0.45rem 1.15rem',
-                  fontSize: '0.82rem',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  transition: 'all 0.15s ease',
-                  letterSpacing: '0.02em'
-                }}
-                onMouseEnter={(e) => {
-                  if (activeCategory !== cat.id) {
-                    e.currentTarget.style.backgroundColor = '#e2e8f0';
-                    e.currentTarget.style.color = '#0f172a';
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  if (activeCategory !== cat.id) {
-                    e.currentTarget.style.backgroundColor = '#f1f5f9';
-                    e.currentTarget.style.color = '#475569';
-                  }
-                }}
-              >
-                {cat.label}
-              </button>
-            ))}
+            <AnimatedTabs
+              tabs={categories}
+              activeTab={activeCategory}
+              onSelectTab={setActiveCategory}
+              layoutId="softwareCategoryPill"
+              size="sm"
+            />
           </div>
         </div>
       </section>
@@ -1188,20 +1184,27 @@ export const SoftwareView = () => {
                   }
                 `}</style>
 
-                <div className="software-authentic-row">
-                  {/* Left Column: Image with Brochure Badge if applicable */}
+                <motion.div 
+                  className="software-authentic-row"
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-40px' }}
+                  transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+                >
+                  {/* Left Column: Image with 21st.dev ParallaxTiltCard */}
                   <div style={{ position: 'relative' }}>
-                    <img 
-                      src={prod.image}
-                      alt={prod.imageAlt}
-                      className="software-authentic-img"
-                      loading="lazy"
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.src = '/assets/images/software_blueprint.svg';
-                      }}
-                    />
-                    
+                    <ParallaxTiltCard tiltFactor={6} style={{ width: '100%', borderRadius: '12px' }}>
+                      <img 
+                        src={prod.image}
+                        alt={prod.imageAlt}
+                        className="software-authentic-img"
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = '/assets/images/software_blueprint.svg';
+                        }}
+                      />
+                    </ParallaxTiltCard>
                   </div>
 
                   {/* Right Column: Title, Paragraphs, and Action Buttons */}
@@ -1209,25 +1212,9 @@ export const SoftwareView = () => {
                     
                     {/* Brochure Badge in Content */}
                     {isBrochureFeatured && (
-                      <div style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        backgroundColor: 'rgba(234, 179, 8, 0.15)',
-                        border: '1.5px solid #eab308',
-                        color: isDark ? '#fef08a' : '#854d0e',
-                        padding: '0.35rem 0.95rem',
-                        borderRadius: '999px',
-                        fontSize: '0.76rem',
-                        fontWeight: 800,
-                        letterSpacing: '0.08em',
-                        textTransform: 'uppercase',
-                        width: 'fit-content',
-                        fontFamily: 'var(--font-mono, monospace)',
-                        boxShadow: '0 4px 14px rgba(234, 179, 8, 0.2)'
-                      }}>
-                        <span>★ ATPL PROPRIETARY SUITE • 2026 EDITION</span>
-                      </div>
+                      <ShineBadge variant="amber">
+                        ★ ATPL PROPRIETARY SUITE • 2026 EDITION
+                      </ShineBadge>
                     )}
 
                     {/* Category Label */}
@@ -1303,14 +1290,14 @@ export const SoftwareView = () => {
                     {/* Buttons: Know More, Download Brochure, Watch Video, Open Live Portal */}
                     <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.9rem', marginTop: '0.5rem' }}>
                       
-                      {/* Know More Button */}
-                      <button
+                      {/* Know More Button (Magnetic Spring) */}
+                      <MagneticButton
                         onClick={() => openDemoModal({ solution: `${prod.titlePrimary} ${prod.titleSecondary}`, notes: `Inquiry for ${prod.titlePrimary} ${prod.titleSecondary} from Software page` })}
                         style={{
                           backgroundColor: prod.ctaColor,
                           color: '#ffffff',
                           border: 'none',
-                          borderRadius: '6px',
+                          borderRadius: '8px',
                           padding: '0.75rem 1.65rem',
                           fontSize: '0.92rem',
                           fontWeight: 800,
@@ -1319,15 +1306,12 @@ export const SoftwareView = () => {
                           alignItems: 'center',
                           gap: '0.45rem',
                           boxShadow: '0 4px 14px rgba(0, 0, 0, 0.25)',
-                          transition: 'all 0.15s ease',
                           minHeight: '44px'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = prod.ctaHoverColor}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = prod.ctaColor}
                       >
                         <span>Know More</span>
                         <ArrowRight size={16} />
-                      </button>
+                      </MagneticButton>
 
                       {/* Download Brochure Link */}
                       {prod.brochureUrl && (
@@ -1425,7 +1409,7 @@ export const SoftwareView = () => {
                     </div>
 
                   </div>
-                </div>
+                </motion.div>
               </div>
             </div>
           );

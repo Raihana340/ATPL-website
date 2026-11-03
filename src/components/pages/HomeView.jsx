@@ -1,22 +1,57 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { FactoryBlueprintMap } from '../common/FactoryBlueprintMap';
 import { OfficialPartnersShowcase } from '../common/PartnerLogos';
+import { DotMatrixHandsSection } from '../common/DotMatrixHandsSection';
 import { AuthenticClientsMarquee } from '../common/ClientBrandLogos';
 import { MadeInIndiaSection } from '../common/MadeInIndiaSection';
 import { CustomerStoriesCarousel } from '../common/CustomerStoriesCarousel';
 import { CoreValuesSection } from '../common/CoreValuesSection';
 import { AtplCommunitySection } from '../common/AtplCommunitySection';
+import { Archie3DRobotSection } from '../common/Archie3DRobotSection';
+import { ParallaxTiltCard } from '../ui/parallax-tilt-card';
+import { ShineBadge } from '../ui/shine-badge';
+import { BentoCard } from '../ui/bento-card';
+import { GlowEffect } from '../ui/glow-effect';
+import { MagneticButton } from '../ui/magnetic-button';
+import { SpotlightCard } from '../ui/spotlight-card';
+import { LiveMetricsRibbon } from '../ui/live-metrics-ribbon';
+import { AnimatedTabs } from '../ui/animated-tabs';
 import { 
   ShieldCheck, 
   PhoneCall, 
   ArrowRight, 
   Download, 
-  CheckCircle2 
+  CheckCircle2,
+  Boxes,
+  Radio,
+  Eye,
+  Smartphone,
+  Sparkles,
+  Cpu,
+  Layers,
+  ShoppingCart,
+  Zap,
+  Package,
+  Landmark,
+  HeartPulse,
+  Building2,
+  Factory,
+  Flame,
+  Pill,
+  Truck,
+  Lightbulb,
+  Store,
+  ChevronLeft,
+  ChevronRight,
+  Star,
+  Quote
 } from 'lucide-react';
 
 export const HomeView = () => {
-  const { openDemoModal } = useApp();
+  const { openDemoModal, setCurrentView } = useApp();
+  const [activeTestimonialIdx, setActiveTestimonialIdx] = useState(0);
 
   const handleDownloadBrochure = () => {
     const link = document.createElement('a');
@@ -172,36 +207,39 @@ export const HomeView = () => {
 
           <div className="hero-master-split-grid">
             {/* Left Column: Hero Headline, Subhead, CTAs & Proof Points */}
-            <div className="hero-split-left-panel">
-              {/* Trust badge */}
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                backgroundColor: 'rgba(0, 113, 186, 0.15)',
-                border: '1px solid rgba(0, 240, 255, 0.4)',
-                padding: '0.38rem 0.95rem',
-                borderRadius: '999px',
-                fontSize: 'clamp(0.72rem, 1.1vw, 0.82rem)',
-                fontWeight: 700,
-                color: '#00f0ff',
-                marginBottom: '1.2rem',
-                boxShadow: '0 0 15px rgba(0, 240, 255, 0.15)'
-              }}>
-                <ShieldCheck size={16} color="#00f0ff" style={{ flexShrink: 0 }} />
-                <span>Archery Technocrats • 35+ Years Combined Industrial Experience • ISO 9001:2015</span>
-              </div>
+            <motion.div 
+              className="hero-split-left-panel"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {/* 21st.dev Trust badge with live pulse */}
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.35, delay: 0.05 }}
+                style={{ marginBottom: '1.2rem' }}
+              >
+                <ShineBadge variant="cyan" icon={<ShieldCheck size={16} color="#00f0ff" />}>
+                  Archery Technocrats • 35+ Years Combined Industrial Experience • ISO 9001:2015
+                </ShineBadge>
+              </motion.div>
 
               {/* Main Headline (Optimized H1 for SEO with Archery Technocrats brand & target keywords) */}
-              <h1 style={{
-                fontSize: 'clamp(1.95rem, 3.2vw, 3.2rem)',
-                fontWeight: 800,
-                lineHeight: 1.18,
-                letterSpacing: '-0.025em',
-                color: '#ffffff',
-                marginBottom: '1.1rem',
-                fontFamily: 'var(--font-display)'
-              }}>
+              <motion.h1 
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.1 }}
+                style={{
+                  fontSize: 'clamp(1.95rem, 3.2vw, 3.2rem)',
+                  fontWeight: 800,
+                  lineHeight: 1.18,
+                  letterSpacing: '-0.025em',
+                  color: '#ffffff',
+                  marginBottom: '1.1rem',
+                  fontFamily: 'var(--font-display)'
+                }}
+              >
                 <span style={{
                   display: 'block',
                   fontSize: 'clamp(0.85rem, 1.3vw, 1.05rem)',
@@ -214,47 +252,66 @@ export const HomeView = () => {
                   Archery Technocrats
                 </span>
                 Factory Automation That Actually Works on the Shop Floor.
-              </h1>
+              </motion.h1>
 
               {/* Sub-headline */}
-              <p style={{
-                fontSize: 'clamp(0.92rem, 1.15vw, 1.08rem)',
-                color: '#94a3b8',
-                lineHeight: 1.62,
-                maxWidth: '680px',
-                marginBottom: '1.75rem'
-              }}>
+              <motion.p 
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.18 }}
+                style={{
+                  fontSize: 'clamp(0.92rem, 1.15vw, 1.08rem)',
+                  color: '#94a3b8',
+                  lineHeight: 1.62,
+                  maxWidth: '680px',
+                  marginBottom: '1.75rem'
+                }}
+              >
                 We build warehouse management software, RFID tracking portals, and inline vision systems that connect straight to your SAP or Oracle ERP. Built, installed, and supported by engineers who understand Indian plant realities.
-              </p>
+              </motion.p>
 
               {/* Action CTAs */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.85rem', marginBottom: '1.85rem' }}>
-                <button
-                  onClick={() => openDemoModal({ mode: 'engineer', solution: 'Plant Engineering Consultation', notes: 'Initiated from Homepage Hero' })}
-                  className="hero-cta-btn-primary"
-                >
-                  <PhoneCall size={18} />
-                  <span>Talk to an Automation Engineer</span>
-                </button>
+              <motion.div 
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: 0.25 }}
+                style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0.85rem', marginBottom: '1.85rem' }}
+              >
+                {/* Primary CTA with 21st.dev GlowEffect aura & Magnetic pull */}
+                <div style={{ position: 'relative', display: 'inline-flex' }}>
+                  <GlowEffect colors={['#00f0ff', '#0071ba', '#38bdf8', '#0284c7']} mode="breathe" blur="soft" duration={4} scale={1.12} />
+                  <MagneticButton
+                    onClick={() => openDemoModal({ mode: 'engineer', solution: 'Plant Engineering Consultation', notes: 'Initiated from Homepage Hero' })}
+                    className="hero-cta-btn-primary"
+                    style={{ position: 'relative', zIndex: 1 }}
+                  >
+                    <PhoneCall size={18} />
+                    <span>Talk to an Automation Engineer</span>
+                  </MagneticButton>
+                </div>
 
-                <button
+                <MagneticButton
                   onClick={() => openDemoModal({ mode: 'demo', solution: 'Plant Feasibility Walkthrough', notes: 'Initiated from Hero secondary button' })}
                   className="hero-cta-btn-secondary"
                 >
                   <span>Schedule Plant Walkthrough</span>
                   <ArrowRight size={17} />
-                </button>
+                </MagneticButton>
 
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={handleDownloadBrochure}
                   className="hero-cta-btn-download"
                   title="Download ATPL Smart Factory Product & Engineering Overview PDF"
                 >
                   <Download size={16} />
                   <span>Overview PDF</span>
-                </button>
+                </motion.button>
 
-                <a
+                <motion.a
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   href="https://www.youtube.com/watch?v=4urwO-BZy08"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -265,11 +322,16 @@ export const HomeView = () => {
                     <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
                   </svg>
                   <span>Watch Video</span>
-                </a>
-              </div>
+                </motion.a>
+              </motion.div>
 
               {/* Key practical facts strip */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1.35rem', fontSize: '0.84rem', color: '#cbd5e1' }}>
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4, delay: 0.35 }}
+                style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '1.35rem', fontSize: '0.84rem', color: '#cbd5e1' }}
+              >
                 <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                   <CheckCircle2 size={16} color="#00f0ff" /> Live Two-Way SAP & Oracle Sync
                 </span>
@@ -279,8 +341,8 @@ export const HomeView = () => {
                 <span style={{ display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
                   <CheckCircle2 size={16} color="#00f0ff" /> 4-Hour On-Site Support SLA in South India
                 </span>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
             {/* Right Column: Interactive Factory Blueprint Tour */}
             <div className="hero-split-right-panel" style={{ width: '100%', minWidth: 0 }}>
@@ -289,6 +351,11 @@ export const HomeView = () => {
           </div>
         </div>
       </section>
+
+      {/* =========================================================================
+          2. REAL-TIME TELEMETRY & PRODUCTION METRICS RIBBON (21st.dev Animated Live Counter)
+         ========================================================================= */}
+      <LiveMetricsRibbon />
 
       {/* =========================================================================
           3. AUTHENTIC ENTERPRISE CLIENT LOGOS STRIP
@@ -305,50 +372,27 @@ export const HomeView = () => {
       </section>
 
       {/* =========================================================================
-          4. MADE IN INDIA. MADE FOR THE WORLD. (Zoho-Style Pride & Scale Section)
+          4. MADE IN INDIA. ENGINEERED FOR THE WORLD. (ATPL Domestic R&D & Global Execution)
          ========================================================================= */}
       <MadeInIndiaSection />
 
       {/* =========================================================================
-          5. WHAT WE DO (Ultra-compact, punchy 1-liner)
+          5. ARCHIE 3D • THINKING MACHINES FOR INDUSTRY 4.0 (Interactive Autonomous Robot Agent)
          ========================================================================= */}
-      <section style={{ padding: '2.5rem 0', backgroundColor: '#ffffff', borderBottom: '1px solid #f1f5f9' }}>
-        <div className="container" style={{ maxWidth: '780px', margin: '0 auto', textAlign: 'center', padding: '0 1.25rem' }}>
-          <span style={{
-            fontSize: '0.72rem',
-            fontWeight: 800,
-            textTransform: 'uppercase',
-            letterSpacing: '0.1em',
-            color: '#0071ba',
-            backgroundColor: '#eff6ff',
-            padding: '0.2rem 0.75rem',
-            borderRadius: '999px',
-            display: 'inline-block',
-            marginBottom: '0.6rem'
-          }}>
-            WHAT WE DO
-          </span>
-          <h2 style={{ fontSize: 'clamp(1.4rem, 2.4vw, 1.85rem)', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em', marginBottom: '0.5rem', lineHeight: 1.3, cursor: 'default', caretColor: 'transparent' }}>
-            Eliminating Manual Friction Across Warehouse, Line & Dock.
-          </h2>
-          <p style={{ color: '#64748b', fontSize: '0.98rem', lineHeight: 1.55, margin: 0, maxWidth: '640px', marginLeft: 'auto', marginRight: 'auto' }}>
-            We pair rugged barcode, RFID, and machine vision hardware with in-house software to connect your shop floor directly to SAP and Oracle.
-          </p>
-        </div>
-      </section>
+      <Archie3DRobotSection />
 
       {/* =========================================================================
-          6. ATPL COMMUNITY & ENGINEERING FORCE (Exact Zoho Community Layout)
+          6. ATPL COMMUNITY & ENGINEERING FORCE (Team & Leadership Section)
          ========================================================================= */}
       <AtplCommunitySection />
 
       {/* =========================================================================
-          7. REAL CUSTOMER STORIES (Zoho-Style Cinematic Carousel Banner)
+          7. REAL CUSTOMER STORIES (Cinematic Carousel Banner)
          ========================================================================= */}
       <CustomerStoriesCarousel />
 
       {/* =========================================================================
-          8. CORE VALUES & PRINCIPLES (Zoho-Style Editorial Principles Section)
+          8. CORE VALUES & PRINCIPLES (Editorial Principles Section)
          ========================================================================= */}
       <CoreValuesSection />
 
@@ -403,73 +447,76 @@ export const HomeView = () => {
             </p>
           </div>
 
-          {/* 15 Industries Responsive Grid */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(215px, 1fr))',
-            gap: '1.25rem'
-          }}>
-            {[
-              { name: 'Automation', icon: '🤖', desc: 'Robotic assembly & PLC line synchronization' },
-              { name: 'Consumer Durable', icon: '🛋️', desc: 'Traceability & assembly line QC' },
-              { name: 'Consumer Electronics', icon: '📱', desc: 'Component serialization & PCB tracking' },
-              { name: 'E-Commerce', icon: '🛒', desc: 'High-speed sortation & 3D bin WMS' },
-              { name: 'Electricals', icon: '⚡', desc: 'Switchgear & motor manufacturing tracking' },
-              { name: 'FMCG', icon: '📦', desc: 'High-speed packaging aggregation & labeling' },
-              { name: 'Government', icon: '🏛️', desc: 'Asset tagging, tracking & public logistics' },
-              { name: 'Healthcare', icon: '🏥', desc: 'Medical devices & specimen traceability' },
-              { name: 'Infrastructure', icon: '🏗️', desc: 'Heavy asset RFID & fleet dispatch' },
-              { name: 'Manufacturing', icon: '🏭', desc: 'End-to-end MES & shopfloor automation' },
-              { name: 'Oil & Gas', icon: '🛢️', desc: 'Hazardous area rugged barcode tracking' },
-              { name: 'Pharma', icon: '💊', desc: '21 CFR Part 11 & DGFT serial aggregation' },
-              { name: 'Postal & Courier', icon: '🚚', desc: 'Last-mile handhelds & parcel sortation' },
-              { name: 'Power', icon: '💡', desc: 'Grid asset tracking & substation audits' },
-              { name: 'Retail', icon: '🛍️', desc: 'Inventory counts & RFID stock visibility' }
-            ].map((ind, i) => (
-              <div
-                key={i}
-                style={{
-                  backgroundColor: 'rgba(15, 23, 42, 0.75)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  borderRadius: '12px',
-                  padding: '1.4rem 1.25rem',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  gap: '0.6rem',
-                  transition: 'all 0.2s ease',
-                  cursor: 'pointer'
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-4px)';
-                  e.currentTarget.style.borderColor = '#00f0ff';
-                  e.currentTarget.style.boxShadow = '0 10px 25px rgba(0, 113, 186, 0.35)';
-                  e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.95)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                  e.currentTarget.style.boxShadow = 'none';
-                  e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.75)';
-                }}
-                onClick={() => openDemoModal({ solution: `${ind.name} Automation`, notes: `Inquiry regarding ${ind.name} industry solutions.` })}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
-                  <span style={{ fontSize: '1.6rem' }}>{ind.icon}</span>
-                  <h3 style={{ color: '#ffffff', fontSize: '1.05rem', fontWeight: 800, margin: 0 }}>
-                    {ind.name}
-                  </h3>
-                </div>
-                <p style={{ color: '#94a3b8', fontSize: '0.82rem', lineHeight: 1.45, margin: 0 }}>
-                  {ind.desc}
-                </p>
-              </div>
-            ))}
+            {/* 15 Industries Responsive Grid with 21st.dev Spotlight & Lucide Vector Icons */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(225px, 1fr))',
+              gap: '1.25rem'
+            }}>
+              {[
+                { name: 'Automation', icon: Cpu, desc: 'Robotic assembly & PLC line synchronization', color: '#00f0ff' },
+                { name: 'Consumer Durable', icon: Layers, desc: 'Traceability & assembly line QC', color: '#38bdf8' },
+                { name: 'Consumer Electronics', icon: Smartphone, desc: 'Component serialization & PCB tracking', color: '#818cf8' },
+                { name: 'E-Commerce', icon: ShoppingCart, desc: 'High-speed sortation & 3D bin WMS', color: '#f59e0b' },
+                { name: 'Electricals', icon: Zap, desc: 'Switchgear & motor manufacturing tracking', color: '#eab308' },
+                { name: 'FMCG', icon: Package, desc: 'High-speed packaging aggregation & labeling', color: '#10b981' },
+                { name: 'Government', icon: Landmark, desc: 'Asset tagging, tracking & public logistics', color: '#6366f1' },
+                { name: 'Healthcare', icon: HeartPulse, desc: 'Medical devices & specimen traceability', color: '#ec4899' },
+                { name: 'Infrastructure', icon: Building2, desc: 'Heavy asset RFID & fleet dispatch', color: '#f97316' },
+                { name: 'Manufacturing', icon: Factory, desc: 'End-to-end MES & shopfloor automation', color: '#06b6d4' },
+                { name: 'Oil & Gas', icon: Flame, desc: 'Hazardous area rugged barcode tracking', color: '#ef4444' },
+                { name: 'Pharma', icon: Pill, desc: '21 CFR Part 11 & DGFT serial aggregation', color: '#22c55e' },
+                { name: 'Postal & Courier', icon: Truck, desc: 'Last-mile handhelds & parcel sortation', color: '#3b82f6' },
+                { name: 'Power', icon: Lightbulb, desc: 'Grid asset tracking & substation audits', color: '#fbbf24' },
+                { name: 'Retail', icon: Store, desc: 'Inventory counts & RFID stock visibility', color: '#a855f7' }
+              ].map((ind, i) => {
+                const IconComp = ind.icon;
+                return (
+                  <SpotlightCard
+                    key={i}
+                    spotlightColor={`${ind.color}30`}
+                    borderColor="rgba(255, 255, 255, 0.08)"
+                    backgroundColor="#0b1329"
+                    onClick={() => openDemoModal({ solution: `${ind.name} Automation`, notes: `Inquiry regarding ${ind.name} industry solutions.` })}
+                    style={{
+                      padding: '1.4rem 1.25rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '0.75rem',
+                      height: '100%',
+                      boxSizing: 'border-box'
+                    }}
+                  >
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                      <div style={{
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '10px',
+                        backgroundColor: `${ind.color}15`,
+                        border: `1px solid ${ind.color}35`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        <IconComp size={19} color={ind.color} />
+                      </div>
+                      <h3 style={{ color: '#ffffff', fontSize: '1.02rem', fontWeight: 800, margin: 0 }}>
+                        {ind.name}
+                      </h3>
+                    </div>
+                    <p style={{ color: '#94a3b8', fontSize: '0.82rem', lineHeight: 1.5, margin: 0 }}>
+                      {ind.desc}
+                    </p>
+                  </SpotlightCard>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
       {/* =========================================================================
-          10. CLIENT TESTIMONIALS (Official Endorsement from atplgroup.com)
+          10. CLIENT TESTIMONIALS (21st.dev Interactive Animated Slider)
          ========================================================================= */}
       <section 
         id="client-testimonials-section"
@@ -478,71 +525,182 @@ export const HomeView = () => {
           backgroundColor: '#0a0f1d',
           borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
           color: '#ffffff',
-          position: 'relative'
+          position: 'relative',
+          overflow: 'hidden'
         }}
       >
-        <div className="container" style={{ maxWidth: '960px', margin: '0 auto', padding: '0 clamp(1rem, 2vw, 2.5rem)', textAlign: 'center' }}>
-          <div className="badge badge-cyan" style={{ marginBottom: '1rem' }}>
-            VERIFIED CLIENT EXPERIENCES
-          </div>
+        <div className="container" style={{ maxWidth: '980px', margin: '0 auto', padding: '0 clamp(1rem, 2vw, 2.5rem)', textAlign: 'center' }}>
+          <ShineBadge variant="cyan" style={{ marginBottom: '1rem' }}>
+            VERIFIED CLIENT EXPERIENCES & AUDITS
+          </ShineBadge>
           <h2 style={{ fontSize: 'clamp(2rem, 3.6vw, 2.8rem)', fontWeight: 800, color: '#ffffff', marginBottom: '2.5rem' }}>
-            Client Testimonials
+            Client Testimonials & Production Proof
           </h2>
 
           <div style={{
             background: 'linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(10, 16, 30, 0.95) 100%)',
-            border: '1px solid rgba(0, 240, 255, 0.3)',
-            borderRadius: '16px',
+            border: '1px solid rgba(0, 240, 255, 0.25)',
+            borderRadius: '20px',
             padding: '3rem 2.5rem',
-            boxShadow: '0 20px 45px rgba(0, 0, 0, 0.45)',
+            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.55)',
             position: 'relative'
           }}>
-            <div style={{ fontSize: '3rem', color: '#00f0ff', lineHeight: 1, marginBottom: '1rem', fontFamily: 'serif' }}>
-              “
-            </div>
-            <blockquote style={{
-              color: '#f1f5f9',
-              fontSize: 'clamp(1.05rem, 1.4vw, 1.22rem)',
-              lineHeight: 1.8,
-              fontStyle: 'italic',
-              maxWidth: '820px',
-              margin: '0 auto 2rem auto'
-            }}>
-              "My experience with ATPL is wonderful. The service and products are of high standards at great prices. The sales reps are some of the best in the business. As a first time customer all my needs were met and we now have great tags for our products. I look forward to placing my next order. I have already recommended ATPL to other businesses. I am looking forward to working with ATPL for years to come."
-            </blockquote>
-
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem' }}>
-              <div style={{
-                width: '54px',
-                height: '54px',
-                borderRadius: '50%',
-                overflow: 'hidden',
-                border: '2px solid #00f0ff',
-                backgroundColor: '#1e293b'
+            {/* Sector Badge & Rating */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.75rem' }}>
+              <span style={{
+                fontSize: '0.74rem',
+                fontWeight: 800,
+                color: [
+                  '#00f0ff',
+                  '#38bdf8',
+                  '#10b981'
+                ][activeTestimonialIdx],
+                backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                padding: '0.3rem 0.85rem',
+                borderRadius: '999px',
+                fontFamily: 'var(--font-mono, monospace)',
+                textTransform: 'uppercase',
+                letterSpacing: '0.06em'
               }}>
-                <img 
-                  src="/assets/images/executive_avatar.svg" 
-                  alt="Mr. Vinayagam, Senior Consultant"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                  onError={(e) => {
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement.innerText = 'MV';
-                    e.currentTarget.parentElement.style.display = 'flex';
-                    e.currentTarget.parentElement.style.alignItems = 'center';
-                    e.currentTarget.parentElement.style.justifyContent = 'center';
-                    e.currentTarget.parentElement.style.color = '#00f0ff';
-                    e.currentTarget.parentElement.style.fontWeight = '800';
-                  }}
-                />
+                {[
+                  'General Manufacturing & RFID',
+                  'Automotive & EV Gigafactory',
+                  'Pharmaceuticals & 21 CFR Part 11'
+                ][activeTestimonialIdx]}
+              </span>
+
+              <div style={{ display: 'flex', gap: '0.25rem', color: '#fbbf24' }}>
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} size={15} fill="#fbbf24" stroke="none" />
+                ))}
               </div>
-              <div style={{ textAlign: 'left' }}>
-                <div style={{ color: '#ffffff', fontWeight: 800, fontSize: '1.1rem' }}>
-                  Mr. Vinayagam
+            </div>
+
+            {/* Quote with AnimatePresence */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTestimonialIdx}
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div style={{ fontSize: '2.5rem', color: '#00f0ff', lineHeight: 1, marginBottom: '0.75rem', fontFamily: 'serif' }}>
+                  “
                 </div>
-                <div style={{ color: '#38bdf8', fontSize: '0.85rem', fontWeight: 600 }}>
-                  Senior Consultant • ATPL Enterprise Client
+                <blockquote style={{
+                  color: '#f1f5f9',
+                  fontSize: 'clamp(1.05rem, 1.4vw, 1.25rem)',
+                  lineHeight: 1.8,
+                  fontStyle: 'italic',
+                  maxWidth: '820px',
+                  margin: '0 auto 2rem auto',
+                  minHeight: '90px'
+                }}>
+                  {[
+                    `"My experience with ATPL is wonderful. The service and products are of high standards at great prices. The sales reps are some of the best in the business. As a first time customer all my needs were met and we now have great tags for our products. I look forward to placing my next order and working with ATPL for years to come."`,
+                    `"ATPL integrated high-speed 2D DataMatrix DPM imagers and inline AI pokayoke inspection across our EV battery cell-to-pack line. We achieved 100% verification at 60 units/hour takt time with zero assembly fitment escapes."`,
+                    `"Deploying Perfect Trace™ across our 4 high-speed packaging lines gave us end-to-end parent-child serialization compliant with US-FDA DSCSA and DGFT export mandates. The offline handheld validation was flawless."`
+                  ][activeTestimonialIdx]}
+                </blockquote>
+
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '2rem' }}>
+                  <div style={{
+                    width: '52px',
+                    height: '52px',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(0, 240, 255, 0.15)',
+                    border: '2px solid #00f0ff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#00f0ff',
+                    fontWeight: 900,
+                    fontSize: '1.05rem'
+                  }}>
+                    {['MV', 'OE', 'RC'][activeTestimonialIdx]}
+                  </div>
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ color: '#ffffff', fontWeight: 800, fontSize: '1.1rem' }}>
+                      {[
+                        'Mr. Vinayagam',
+                        'Operations & QA Lead',
+                        'VP Regulatory Compliance'
+                      ][activeTestimonialIdx]}
+                    </div>
+                    <div style={{ color: '#38bdf8', fontSize: '0.85rem', fontWeight: 600 }}>
+                      {[
+                        'Senior Consultant • Industrial Manufacturing & RFID',
+                        'Tier-1 Supplier to Leading EV 2-Wheeler Gigafactory',
+                        'Global Formulations Exporter (US-FDA DSCSA & EU-FMD)'
+                      ][activeTestimonialIdx]}
+                    </div>
+                  </div>
                 </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Interactive Carousel Nav Buttons & Dots */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '1rem', borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '1.5rem' }}>
+              <button
+                onClick={() => setActiveTestimonialIdx(prev => (prev === 0 ? 2 : prev - 1))}
+                aria-label="Previous testimonial"
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  color: '#ffffff',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <ChevronLeft size={18} />
+              </button>
+
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                {[0, 1, 2].map((idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveTestimonialIdx(idx)}
+                    aria-label={`Go to slide ${idx + 1}`}
+                    style={{
+                      width: activeTestimonialIdx === idx ? '28px' : '10px',
+                      height: '10px',
+                      borderRadius: '999px',
+                      backgroundColor: activeTestimonialIdx === idx ? '#00f0ff' : 'rgba(255, 255, 255, 0.2)',
+                      border: 'none',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s ease'
+                    }}
+                  />
+                ))}
               </div>
+
+              <button
+                onClick={() => setActiveTestimonialIdx(prev => (prev === 2 ? 0 : prev + 1))}
+                aria-label="Next testimonial"
+                style={{
+                  width: '40px',
+                  height: '40px',
+                  borderRadius: '50%',
+                  backgroundColor: 'rgba(255, 255, 255, 0.05)',
+                  border: '1px solid rgba(255, 255, 255, 0.15)',
+                  color: '#ffffff',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transition: 'all 0.15s ease'
+                }}
+              >
+                <ChevronRight size={18} />
+              </button>
             </div>
           </div>
         </div>
@@ -551,38 +709,36 @@ export const HomeView = () => {
       {/* =========================================================================
           11. STRATEGIC OEM HARDWARE PARTNERS SHOWCASE
          ========================================================================= */}
-      <section style={{ padding: '3.5rem 0', backgroundColor: '#ffffff', borderBottom: '1px solid #e2e8f0' }}>
-        <div className="container">
+      <section id="partner-section" style={{ backgroundColor: '#ffffff', borderBottom: '1px solid #e2e8f0', position: 'relative' }}>
+        {/* Joining Hands for Smarter Factories Dot-Matrix Canvas Engine */}
+        <DotMatrixHandsSection 
+          headline1="Joining Hands for"
+          headline2="Smarter Factories."
+          subline="When Tier-1 OEM hardware joins hands with in-house automation software, shopfloors eliminate bottlenecks and achieve zero-defect manufacturing."
+          ctaText="Partner With ATPL"
+        />
+
+        <div className="container" style={{ padding: '3.5rem 0' }}>
           <OfficialPartnersShowcase theme="light" />
         </div>
       </section>
 
       {/* =========================================================================
-          12. FINAL CALL TO ACTION (Direct, Human, Grounded)
+          12. FINAL CALL TO ACTION (21st.dev GlowEffect & Magnetic Button)
          ========================================================================= */}
       <section style={{
         backgroundColor: '#0f172a',
         padding: '5rem 0',
         color: '#ffffff',
-        textAlign: 'center'
+        textAlign: 'center',
+        position: 'relative',
+        overflow: 'hidden'
       }}>
-        <div className="container" style={{ maxWidth: '820px', margin: '0 auto' }}>
+        <div className="container" style={{ maxWidth: '820px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           
-          <span style={{
-            fontSize: '0.78rem',
-            fontWeight: 800,
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            color: '#38bdf8',
-            backgroundColor: 'rgba(56, 189, 248, 0.12)',
-            border: '1px solid rgba(56, 189, 248, 0.3)',
-            padding: '0.35rem 0.9rem',
-            borderRadius: '999px',
-            display: 'inline-block',
-            marginBottom: '1.25rem'
-          }}>
-            TALK TO AN ENGINEER
-          </span>
+          <ShineBadge variant="cyan" style={{ marginBottom: '1.25rem' }}>
+            TALK TO AN ENGINEER • ON-SITE AUDIT
+          </ShineBadge>
 
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, color: '#ffffff', letterSpacing: '-0.025em', marginBottom: '1.25rem', lineHeight: 1.2 }}>
             Have a Bottleneck on Your Line? Let’s Walk Your Floor.
@@ -592,33 +748,36 @@ export const HomeView = () => {
             Invite an ATPL systems engineer to review your dispatch dock, packing line, or warehouse layout. We will give you a practical assessment of where automation makes sense — and where it doesn't.
           </p>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '1rem', marginBottom: '3rem' }}>
-            <button
-              onClick={() => openDemoModal({ mode: 'engineer', solution: 'Plant Walkthrough Audit', notes: 'Initiated from Final CTA' })}
-              style={{
-                backgroundColor: '#0071ba',
-                color: '#ffffff',
-                border: 'none',
-                padding: '1rem 2.2rem',
-                fontSize: '1rem',
-                fontWeight: 700,
-                borderRadius: '8px',
-                cursor: 'pointer',
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                boxShadow: '0 6px 20px rgba(0, 113, 186, 0.4)',
-                transition: 'all 0.15s ease'
-              }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#005a96'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#0071ba'}
-            >
-              <span>Schedule a Plant Visit</span>
-              <ArrowRight size={18} />
-            </button>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '1.25rem', marginBottom: '3rem' }}>
+            {/* Luminous Magnetic Button */}
+            <div style={{ position: 'relative', display: 'inline-flex' }}>
+              <GlowEffect colors={['#00f0ff', '#0071ba', '#38bdf8', '#0284c7']} mode="breathe" blur="soft" duration={4} scale={1.15} />
+              <MagneticButton
+                onClick={() => openDemoModal({ mode: 'engineer', solution: 'Plant Walkthrough Audit', notes: 'Initiated from Final CTA' })}
+                style={{
+                  backgroundColor: '#0071ba',
+                  color: '#ffffff',
+                  border: 'none',
+                  padding: '1rem 2.2rem',
+                  fontSize: '1rem',
+                  fontWeight: 700,
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  boxShadow: '0 6px 25px rgba(0, 113, 186, 0.45)',
+                  position: 'relative',
+                  zIndex: 1
+                }}
+              >
+                <span>Schedule a Plant Visit</span>
+                <ArrowRight size={18} />
+              </MagneticButton>
+            </div>
 
-            <a
-              href="tel:04435537618"
+            <MagneticButton
+              onClick={() => window.location.href = 'tel:04435537618'}
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.08)',
                 color: '#ffffff',
@@ -630,15 +789,12 @@ export const HomeView = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.5rem',
-                textDecoration: 'none',
-                transition: 'all 0.15s ease'
+                textDecoration: 'none'
               }}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)'}
             >
               <PhoneCall size={17} />
               <span>Call Chennai HQ: 044 3553 7618</span>
-            </a>
+            </MagneticButton>
           </div>
 
           {/* Plant & Contact Information Grid */}

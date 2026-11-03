@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { 
   Building2, 
@@ -20,6 +21,7 @@ import {
 } from 'lucide-react';
 import { REAL_CLIENTS_DATA } from '../../data/realClientsData';
 import { ProximityScaleGrid } from '../common/ProximityScaleGrid';
+import { ScrollReveal } from '../ui/scroll-reveal';
 
 // Featured Production Case Studies directly from ATPL's official client roster (atplgroup.com)
 const FEATURED_CASE_STUDIES = [
@@ -276,71 +278,73 @@ export const CustomersView = () => {
           {/* =========================================================================
               2. FOUR STAT COUNTERS BAR (Exact Toptal-Style Architectural Layout)
              ========================================================================= */}
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '2rem',
-              padding: '2.2rem 2.5rem',
-              backgroundColor: 'rgba(11, 22, 48, 0.75)',
-              border: '1px solid rgba(255, 255, 255, 0.1)',
-              borderRadius: '16px',
-              backdropFilter: 'blur(16px)',
-              boxShadow: '0 20px 45px rgba(0, 0, 0, 0.5)'
-            }}
-          >
-            {/* Stat 1 */}
-            <div>
-              <div style={{ fontFamily: 'monospace', fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
-                ENTERPRISE CLIENTS
+          <ScrollReveal variant="fade-up" distance={32} duration={0.6}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                gap: '2rem',
+                padding: '2.2rem 2.5rem',
+                backgroundColor: 'rgba(11, 22, 48, 0.75)',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                borderRadius: '16px',
+                backdropFilter: 'blur(16px)',
+                boxShadow: '0 20px 45px rgba(0, 0, 0, 0.5)'
+              }}
+            >
+              {/* Stat 1 */}
+              <div>
+                <div style={{ fontFamily: 'monospace', fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                  ENTERPRISE CLIENTS
+                </div>
+                <div style={{ fontSize: 'clamp(2.3rem, 3.4vw, 3.2rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
+                  200+
+                </div>
+                <div style={{ fontSize: '0.76rem', color: '#38bdf8', marginTop: '0.35rem', fontWeight: 600 }}>
+                  Grown from 40 in 2018 across India
+                </div>
               </div>
-              <div style={{ fontSize: 'clamp(2.3rem, 3.4vw, 3.2rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
-                200+
-              </div>
-              <div style={{ fontSize: '0.76rem', color: '#38bdf8', marginTop: '0.35rem', fontWeight: 600 }}>
-                Grown from 40 in 2018 across India
-              </div>
-            </div>
 
-            {/* Stat 2 */}
-            <div>
-              <div style={{ fontFamily: 'monospace', fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
-                DAILY INDUSTRIAL SCANS
+              {/* Stat 2 */}
+              <div>
+                <div style={{ fontFamily: 'monospace', fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                  DAILY INDUSTRIAL SCANS
+                </div>
+                <div style={{ fontSize: 'clamp(2.3rem, 3.4vw, 3.2rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
+                  5,000,000+
+                </div>
+                <div style={{ fontSize: '0.76rem', color: '#10b981', marginTop: '0.35rem', fontWeight: 600 }}>
+                  Processed on ATPL WMS &amp; Barcode Systems
+                </div>
               </div>
-              <div style={{ fontSize: 'clamp(2.3rem, 3.4vw, 3.2rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
-                5,000,000+
-              </div>
-              <div style={{ fontSize: '0.76rem', color: '#10b981', marginTop: '0.35rem', fontWeight: 600 }}>
-                Processed on ATPL WMS &amp; Barcode Systems
-              </div>
-            </div>
 
-            {/* Stat 3 */}
-            <div>
-              <div style={{ fontFamily: 'monospace', fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
-                AIDC &amp; IT HERITAGE
+              {/* Stat 3 */}
+              <div>
+                <div style={{ fontFamily: 'monospace', fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                  AIDC &amp; IT HERITAGE
+                </div>
+                <div style={{ fontSize: 'clamp(2.3rem, 3.4vw, 3.2rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
+                  35+ Yrs
+                </div>
+                <div style={{ fontSize: '0.76rem', color: '#f59e0b', marginTop: '0.35rem', fontWeight: 600 }}>
+                  Founding Leadership Industry Experience
+                </div>
               </div>
-              <div style={{ fontSize: 'clamp(2.3rem, 3.4vw, 3.2rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
-                35+ Yrs
-              </div>
-              <div style={{ fontSize: '0.76rem', color: '#f59e0b', marginTop: '0.35rem', fontWeight: 600 }}>
-                Founding Leadership Industry Experience
-              </div>
-            </div>
 
-            {/* Stat 4 */}
-            <div>
-              <div style={{ fontFamily: 'monospace', fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
-                ZERO-DEFECT BENCHMARK
-              </div>
-              <div style={{ fontSize: 'clamp(2.3rem, 3.4vw, 3.2rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
-                99.98%
-              </div>
-              <div style={{ fontSize: '0.76rem', color: '#00f0ff', marginTop: '0.35rem', fontWeight: 600 }}>
-                Dispatch &amp; Inline Barcode Accuracy
+              {/* Stat 4 */}
+              <div>
+                <div style={{ fontFamily: 'monospace', fontSize: '0.7rem', fontWeight: 700, color: '#94a3b8', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.4rem' }}>
+                  ZERO-DEFECT BENCHMARK
+                </div>
+                <div style={{ fontSize: 'clamp(2.3rem, 3.4vw, 3.2rem)', fontWeight: 800, color: '#ffffff', lineHeight: 1 }}>
+                  99.98%
+                </div>
+                <div style={{ fontSize: '0.76rem', color: '#00f0ff', marginTop: '0.35rem', fontWeight: 600 }}>
+                  Dispatch &amp; Inline Barcode Accuracy
+                </div>
               </div>
             </div>
-          </div>
+          </ScrollReveal>
 
           {/* Real ATPL Provenance & Strategic Partnerships Strip */}
           <div
@@ -414,8 +418,14 @@ export const CustomersView = () => {
             }}
           >
             {FEATURED_CASE_STUDIES.map((cs) => (
-              <div
+              <motion.div
                 key={cs.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+                whileHover={{ y: -6 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={() => setSelectedCaseStudy(cs)}
                 style={{
                   position: 'relative',
@@ -424,18 +434,15 @@ export const CustomersView = () => {
                   overflow: 'hidden',
                   cursor: 'pointer',
                   border: '1px solid rgba(255, 255, 255, 0.12)',
-                  boxShadow: '0 15px 35px rgba(0, 0, 0, 0.6)',
-                  transition: 'transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease'
+                  boxShadow: '0 15px 35px rgba(0, 0, 0, 0.6)'
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-6px)';
                   e.currentTarget.style.borderColor = '#00f0ff';
                   e.currentTarget.style.boxShadow = '0 20px 40px rgba(0, 113, 186, 0.4)';
                   const img = e.currentTarget.querySelector('img');
                   if (img) img.style.transform = 'scale(1.08)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
                   e.currentTarget.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.6)';
                   const img = e.currentTarget.querySelector('img');
@@ -581,7 +588,7 @@ export const CustomersView = () => {
                     </div>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 
@@ -847,130 +854,140 @@ export const CustomersView = () => {
       {/* =========================================================================
           6. MODAL: FULL CASE STUDY DEEP DIVE POPUP
          ========================================================================= */}
-      {selectedCaseStudy && (
-        <div
-          onClick={() => setSelectedCaseStudy(null)}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.82)',
-            backdropFilter: 'blur(10px)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '1.5rem',
-            zIndex: 99999
-          }}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
+      <AnimatePresence>
+        {selectedCaseStudy && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setSelectedCaseStudy(null)}
             style={{
-              maxWidth: '650px',
-              width: '100%',
-              backgroundColor: '#0c1428',
-              border: '2px solid #00f0ff',
-              borderRadius: '20px',
-              padding: '2.2rem',
-              boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 240, 255, 0.3)',
-              maxHeight: '90vh',
-              overflowY: 'auto'
+              position: 'fixed',
+              inset: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.82)',
+              backdropFilter: 'blur(10px)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              padding: '1.5rem',
+              zIndex: 99999
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                {selectedCaseStudy.logoUrl && (
-                  <div style={{ backgroundColor: '#ffffff', borderRadius: '10px', padding: '6px 12px', height: '42px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.4)', flexShrink: 0 }}>
-                    <img src={selectedCaseStudy.logoUrl} alt={selectedCaseStudy.client} style={{ maxHeight: '30px', maxWidth: '100px', objectFit: 'contain' }} />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ type: 'spring', duration: 0.35, bounce: 0.15 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                maxWidth: '650px',
+                width: '100%',
+                backgroundColor: '#0c1428',
+                border: '2px solid #00f0ff',
+                borderRadius: '20px',
+                padding: '2.2rem',
+                boxShadow: '0 25px 60px rgba(0, 0, 0, 0.9), 0 0 35px rgba(0, 240, 255, 0.3)',
+                maxHeight: '90vh',
+                overflowY: 'auto'
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.25rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  {selectedCaseStudy.logoUrl && (
+                    <div style={{ backgroundColor: '#ffffff', borderRadius: '10px', padding: '6px 12px', height: '42px', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0,0,0,0.4)', flexShrink: 0 }}>
+                      <img src={selectedCaseStudy.logoUrl} alt={selectedCaseStudy.client} style={{ maxHeight: '30px', maxWidth: '100px', objectFit: 'contain' }} />
+                    </div>
+                  )}
+                  <div>
+                    <span style={{ fontFamily: 'monospace', fontSize: '0.7rem', color: '#00f0ff', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                      {selectedCaseStudy.category}
+                    </span>
+                    <h2 style={{ fontSize: '1.8rem', color: '#ffffff', fontWeight: 800, margin: '0.25rem 0' }}>
+                      {selectedCaseStudy.client}
+                    </h2>
+                    <div style={{ fontSize: '0.85rem', color: '#94a3b8' }}>{selectedCaseStudy.sub}</div>
                   </div>
-                )}
-                <div>
-                  <span style={{ fontFamily: 'monospace', fontSize: '0.7rem', color: '#00f0ff', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                    {selectedCaseStudy.category}
-                  </span>
-                  <h2 style={{ fontSize: '1.8rem', color: '#ffffff', fontWeight: 800, margin: '0.25rem 0' }}>
-                    {selectedCaseStudy.client}
-                  </h2>
-                  <div style={{ fontSize: '0.85rem', color: '#94a3b8' }}>{selectedCaseStudy.sub}</div>
                 </div>
+                <button
+                  onClick={() => setSelectedCaseStudy(null)}
+                  style={{ background: 'rgba(255, 255, 255, 0.1)', border: 'none', color: '#ffffff', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', fontSize: '1.1rem' }}
+                >
+                  ✕
+                </button>
               </div>
-              <button
-                onClick={() => setSelectedCaseStudy(null)}
-                style={{ background: 'rgba(255, 255, 255, 0.1)', border: 'none', color: '#ffffff', borderRadius: '50%', width: '32px', height: '32px', cursor: 'pointer', fontSize: '1.1rem' }}
-              >
-                ✕
-              </button>
-            </div>
 
-            <div style={{ backgroundColor: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', borderRadius: '12px', padding: '1rem', marginBottom: '1.25rem' }}>
-              <div style={{ fontSize: '0.74rem', color: '#00f0ff', fontWeight: 800, textTransform: 'uppercase' }}>Audited Outcome</div>
-              <div style={{ fontSize: '1.25rem', color: '#ffffff', fontWeight: 800, marginTop: '2px' }}>{selectedCaseStudy.headline}</div>
-            </div>
-
-            {selectedCaseStudy.software && (
-              <div style={{ marginBottom: '1.25rem', backgroundColor: 'rgba(56, 189, 248, 0.08)', border: '1px solid rgba(56, 189, 248, 0.25)', borderRadius: '10px', padding: '0.65rem 0.95rem', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
-                <span style={{ fontSize: '0.72rem', color: '#38bdf8', fontWeight: 800, textTransform: 'uppercase', fontFamily: 'monospace' }}>Core Software Architecture:</span>
-                <span style={{ fontSize: '0.84rem', color: '#ffffff', fontWeight: 700 }}>{selectedCaseStudy.software}</span>
+              <div style={{ backgroundColor: 'rgba(0, 240, 255, 0.08)', border: '1px solid rgba(0, 240, 255, 0.25)', borderRadius: '12px', padding: '1rem', marginBottom: '1.25rem' }}>
+                <div style={{ fontSize: '0.74rem', color: '#00f0ff', fontWeight: 800, textTransform: 'uppercase' }}>Audited Outcome</div>
+                <div style={{ fontSize: '1.25rem', color: '#ffffff', fontWeight: 800, marginTop: '2px' }}>{selectedCaseStudy.headline}</div>
               </div>
-            )}
 
-            <div style={{ marginBottom: '1.25rem' }}>
-              <h4 style={{ color: '#ffffff', fontSize: '0.92rem', marginBottom: '0.35rem' }}>The Challenge:</h4>
-              <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>{selectedCaseStudy.challenge}</p>
-            </div>
+              {selectedCaseStudy.software && (
+                <div style={{ marginBottom: '1.25rem', backgroundColor: 'rgba(56, 189, 248, 0.08)', border: '1px solid rgba(56, 189, 248, 0.25)', borderRadius: '10px', padding: '0.65rem 0.95rem', display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                  <span style={{ fontSize: '0.72rem', color: '#38bdf8', fontWeight: 800, textTransform: 'uppercase', fontFamily: 'monospace' }}>Core Software Architecture:</span>
+                  <span style={{ fontSize: '0.84rem', color: '#ffffff', fontWeight: 700 }}>{selectedCaseStudy.software}</span>
+                </div>
+              )}
 
-            <div style={{ marginBottom: '1.25rem' }}>
-              <h4 style={{ color: '#ffffff', fontSize: '0.92rem', marginBottom: '0.35rem' }}>ATPL Engineered Solution:</h4>
-              <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>{selectedCaseStudy.solution}</p>
-            </div>
+              <div style={{ marginBottom: '1.25rem' }}>
+                <h4 style={{ color: '#ffffff', fontSize: '0.92rem', marginBottom: '0.35rem' }}>The Challenge:</h4>
+                <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>{selectedCaseStudy.challenge}</p>
+              </div>
 
-            <div style={{ marginBottom: '1.75rem' }}>
-              <h4 style={{ color: '#ffffff', fontSize: '0.92rem', marginBottom: '0.5rem' }}>Verified Results:</h4>
-              <ul style={{ margin: 0, paddingLeft: '1.2rem', color: '#94a3b8', fontSize: '0.86rem', lineHeight: 1.6 }}>
-                {selectedCaseStudy.results.map((r, i) => (
-                  <li key={i} style={{ marginBottom: '0.35rem' }}>{r}</li>
-                ))}
-              </ul>
-            </div>
+              <div style={{ marginBottom: '1.25rem' }}>
+                <h4 style={{ color: '#ffffff', fontSize: '0.92rem', marginBottom: '0.35rem' }}>ATPL Engineered Solution:</h4>
+                <p style={{ color: '#cbd5e1', fontSize: '0.88rem', lineHeight: 1.6, margin: 0 }}>{selectedCaseStudy.solution}</p>
+              </div>
 
-            <div style={{ display: 'flex', gap: '0.75rem' }}>
-              <button
-                onClick={() => {
-                  setSelectedCaseStudy(null);
-                  openDemoModal({ solution: `Case Study Deep Dive: ${selectedCaseStudy.client}`, notes: `Request technical architecture for ${selectedCaseStudy.client}` });
-                }}
-                style={{
-                  flex: 1,
-                  padding: '0.75rem',
-                  borderRadius: '8px',
-                  backgroundColor: '#0071ba',
-                  color: '#ffffff',
-                  border: 'none',
-                  fontWeight: 700,
-                  fontSize: '0.88rem',
-                  cursor: 'pointer'
-                }}
-              >
-                Request Architecture Blueprint
-              </button>
-              <button
-                onClick={() => setSelectedCaseStudy(null)}
-                style={{
-                  padding: '0.75rem 1.25rem',
-                  borderRadius: '8px',
-                  backgroundColor: 'rgba(255, 255, 255, 0.08)',
-                  color: '#ffffff',
-                  border: '1px solid rgba(255, 255, 255, 0.2)',
-                  fontWeight: 600,
-                  fontSize: '0.88rem',
-                  cursor: 'pointer'
-                }}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+              <div style={{ marginBottom: '1.75rem' }}>
+                <h4 style={{ color: '#ffffff', fontSize: '0.92rem', marginBottom: '0.5rem' }}>Verified Results:</h4>
+                <ul style={{ margin: 0, paddingLeft: '1.2rem', color: '#94a3b8', fontSize: '0.86rem', lineHeight: 1.6 }}>
+                  {selectedCaseStudy.results.map((r, i) => (
+                    <li key={i} style={{ marginBottom: '0.35rem' }}>{r}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.75rem' }}>
+                <button
+                  onClick={() => {
+                    setSelectedCaseStudy(null);
+                    openDemoModal({ solution: `Case Study Deep Dive: ${selectedCaseStudy.client}`, notes: `Request technical architecture for ${selectedCaseStudy.client}` });
+                  }}
+                  style={{
+                    flex: 1,
+                    padding: '0.75rem',
+                    borderRadius: '8px',
+                    backgroundColor: '#0071ba',
+                    color: '#ffffff',
+                    border: 'none',
+                    fontWeight: 700,
+                    fontSize: '0.88rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Request Architecture Blueprint
+                </button>
+                <button
+                  onClick={() => setSelectedCaseStudy(null)}
+                  style={{
+                    padding: '0.75rem 1.25rem',
+                    borderRadius: '8px',
+                    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                    color: '#ffffff',
+                    border: '1px solid rgba(255, 255, 255, 0.2)',
+                    fontWeight: 600,
+                    fontSize: '0.88rem',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
     </div>
   );

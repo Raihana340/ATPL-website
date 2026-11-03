@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node --max-old-space-size=4096 node_modules/vite/bin/vite.js build",
     "postbuild": "node scripts/minify-html.js && node scripts/generate-routes.js",
     "preview": "vite preview"
   },
@@ -14,6 +14,8 @@
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
     "canvas-confetti": "^1.9.4",
+    "clsx": "^2.1.1",
+    "framer-motion": "^14.9.0",
     "gsap": "^3.15.0",
     "lucide-react": "^0.475.0",
     "pdfjs-dist": "^6.4.299",
@@ -22,6 +24,7 @@
     "react-dom": "^18.3.1",
     "recharts": "^3.10.1",
     "sonner": "^2.0.8",
+    "tailwind-merge": "^3.7.0",
     "three": "^0.170.0"
   },
   "devDependencies": {

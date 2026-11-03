@@ -34,6 +34,7 @@ export default defineConfig({
           'vendor-react': ['react', 'react-dom'],
           'vendor-icons': ['lucide-react'],
           'vendor-charts': ['recharts'],
+          'vendor-motion': ['framer-motion'],
           'vendor-three': ['three', '@react-three/fiber', '@react-three/drei']
         }
       }

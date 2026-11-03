@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
+import { HeroParallax } from '../ui/hero-parallax';
+import { PARALLAX_PRODUCTS } from '../../data/parallaxProducts';
+import { ShineBadge } from '../ui/shine-badge';
+import { SpotlightCard } from '../ui/spotlight-card';
+import { MagneticButton } from '../ui/magnetic-button';
+import { GlowEffect } from '../ui/glow-effect';
+import { NumberTicker } from '../ui/number-ticker';
 import { 
   Car, 
   Pill, 
@@ -266,35 +274,49 @@ export const SolutionsView = () => {
       
       {/* Hero Header Section */}
       <section style={{
-        padding: '5rem 0 3.5rem 0',
-        background: 'radial-gradient(circle at 50% 20%, rgba(0, 113, 186, 0.25) 0%, rgba(6, 11, 20, 1) 75%)',
+        padding: '5.5rem 0 3.5rem 0',
+        background: 'radial-gradient(circle at 50% 20%, rgba(0, 113, 186, 0.28) 0%, rgba(6, 11, 20, 1) 75%)',
         borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
-        textAlign: 'center'
+        textAlign: 'center',
+        position: 'relative',
+        overflow: 'hidden'
       }}>
-        <div className="container">
-          <div style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.4rem',
-            backgroundColor: 'rgba(0, 113, 186, 0.2)',
-            border: '1px solid rgba(0, 113, 186, 0.5)',
-            color: '#38bdf8',
-            padding: '0.4rem 1rem',
-            borderRadius: '999px',
-            fontSize: '0.82rem',
-            fontWeight: 700,
-            marginBottom: '1.25rem'
-          }}>
-            <Sparkles size={15} />
-            <span>INDUSTRY 4.0 VERTICAL SOLUTIONS</span>
+        {/* Optical aura */}
+        <div 
+          aria-hidden="true"
+          style={{
+            position: 'absolute',
+            top: '10%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: '600px',
+            height: '400px',
+            background: 'radial-gradient(ellipse at center, rgba(0, 240, 255, 0.12) 0%, transparent 70%)',
+            filter: 'blur(50px)',
+            pointerEvents: 'none'
+          }}
+        />
+
+        <motion.div 
+          className="container"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          style={{ position: 'relative', zIndex: 1 }}
+        >
+          <div style={{ marginBottom: '1.25rem' }}>
+            <ShineBadge variant="cyan" icon={<Sparkles size={15} color="#00f0ff" />}>
+              INDUSTRY 4.0 VERTICAL SOLUTIONS
+            </ShineBadge>
           </div>
 
           <h1 style={{
-            fontSize: 'clamp(2.4rem, 5vw, 3.6rem)',
+            fontSize: 'clamp(2.4rem, 5vw, 3.8rem)',
             fontWeight: 900,
             letterSpacing: '-0.03em',
             marginBottom: '1.25rem',
-            lineHeight: 1.15
+            lineHeight: 1.15,
+            fontFamily: 'var(--font-display, Inter, sans-serif)'
           }}>
             Engineered for <span className="gradient-text">Mission-Critical Manufacturing</span>
           </h1>
@@ -303,20 +325,25 @@ export const SolutionsView = () => {
             color: '#94a3b8',
             fontSize: 'clamp(1.05rem, 2vw, 1.25rem)',
             maxWidth: '820px',
-            margin: '0 auto 2.5rem auto',
+            margin: '0 auto 2.75rem auto',
             lineHeight: 1.6
           }}>
             Explore specialized hardware, proprietary software, and automated AIDC systems tailored specifically for your industry vertical.
           </p>
 
-          {/* Industry Selection Tabs */}
+          {/* Industry Selection Tabs with Spring Layout Animation */}
           <div style={{
             display: 'flex',
             flexWrap: 'wrap',
-            gap: '0.75rem',
+            gap: '0.65rem',
             justifyContent: 'center',
             maxWidth: '1050px',
-            margin: '0 auto'
+            margin: '0 auto',
+            padding: '0.35rem',
+            backgroundColor: 'rgba(11, 19, 41, 0.6)',
+            borderRadius: '16px',
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.3)'
           }}>
             {industries.map((ind) => {
               const IconComp = ind.icon;
@@ -326,10 +353,11 @@ export const SolutionsView = () => {
                   key={ind.id}
                   onClick={() => setSelectedIndustry(ind.id)}
                   style={{
-                    backgroundColor: isSelected ? ind.color : 'rgba(255, 255, 255, 0.05)',
-                    border: isSelected ? `2px solid ${ind.color}` : '1px solid rgba(255, 255, 255, 0.15)',
-                    color: '#ffffff',
-                    padding: '0.75rem 1.4rem',
+                    position: 'relative',
+                    backgroundColor: 'transparent',
+                    border: 'none',
+                    color: isSelected ? '#ffffff' : '#94a3b8',
+                    padding: '0.75rem 1.35rem',
                     borderRadius: '12px',
                     fontSize: '0.92rem',
                     fontWeight: isSelected ? 700 : 500,
@@ -337,124 +365,184 @@ export const SolutionsView = () => {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.6rem',
-                    transition: 'all 0.2s ease',
-                    boxShadow: isSelected ? `0 8px 25px ${ind.color}50` : 'none',
-                    transform: isSelected ? 'translateY(-2px)' : 'none'
+                    outline: 'none',
+                    transition: 'color 0.2s ease',
+                    zIndex: 1
                   }}
                 >
+                  {isSelected && (
+                    <motion.div
+                      layoutId="activeIndustryPillBg"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      style={{
+                        position: 'absolute',
+                        inset: 0,
+                        backgroundColor: ind.color,
+                        borderRadius: '12px',
+                        boxShadow: `0 8px 25px ${ind.color}60, inset 0 1px 1px rgba(255, 255, 255, 0.3)`,
+                        zIndex: -1
+                      }}
+                    />
+                  )}
                   <IconComp size={18} color={isSelected ? '#ffffff' : '#94a3b8'} />
                   <span>{ind.name}</span>
                 </button>
               );
             })}
           </div>
-        </div>
+        </motion.div>
       </section>
 
       {/* Selected Industry Deep-Dive Section */}
       <section style={{ padding: '4rem 0' }}>
         <div className="container">
-          
-          <div style={{
-            backgroundColor: '#0a1324',
-            border: `1.5px solid ${activeData.color}40`,
-            borderRadius: '24px',
-            padding: '2.5rem',
-            boxShadow: `0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px ${activeData.color}20`
-          }}>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeData.id}
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <SpotlightCard
+                spotlightColor={`${activeData.color}30`}
+                borderColor={`${activeData.color}50`}
+                backgroundColor="#0a1324"
+                style={{
+                  borderRadius: '24px',
+                  padding: '2.5rem',
+                  boxShadow: `0 20px 50px rgba(0, 0, 0, 0.6), 0 0 35px ${activeData.color}25`
+                }}
+              >
             
-            {/* Header with Title & Badge */}
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              justifyContent: 'space-between',
-              alignItems: 'flex-start',
-              gap: '1.5rem',
-              borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-              paddingBottom: '2rem',
-              marginBottom: '2.5rem'
-            }}>
-              <div>
+                {/* Header with Title & Badge */}
                 <div style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.4rem',
-                  backgroundColor: `${activeData.color}25`,
-                  border: `1px solid ${activeData.color}60`,
-                  color: activeData.color === '#f59e0b' ? '#fbbf24' : activeData.color,
-                  padding: '0.3rem 0.8rem',
-                  borderRadius: '999px',
-                  fontSize: '0.78rem',
-                  fontWeight: 700,
-                  marginBottom: '0.75rem'
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  justifyContent: 'space-between',
+                  alignItems: 'flex-start',
+                  gap: '1.5rem',
+                  borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+                  paddingBottom: '2rem',
+                  marginBottom: '2.5rem'
                 }}>
-                  <ShieldCheck size={14} />
-                  <span>{activeData.badge}</span>
-                </div>
+                  <div>
+                    <div style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      backgroundColor: `${activeData.color}25`,
+                      border: `1px solid ${activeData.color}60`,
+                      color: activeData.color === '#f59e0b' ? '#fbbf24' : activeData.color,
+                      padding: '0.3rem 0.8rem',
+                      borderRadius: '999px',
+                      fontSize: '0.78rem',
+                      fontWeight: 700,
+                      marginBottom: '0.75rem'
+                    }}>
+                      <ShieldCheck size={14} />
+                      <span>{activeData.badge}</span>
+                    </div>
 
-                <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)', fontWeight: 800, color: '#ffffff', marginBottom: '0.5rem' }}>
-                  {activeData.name} Solution Blueprint
-                </h2>
-                <p style={{ color: '#38bdf8', fontSize: '1.1rem', fontWeight: 600 }}>
-                  {activeData.tagline}
-                </p>
-                <p style={{ color: '#94a3b8', fontSize: '1rem', lineHeight: 1.6, maxWidth: '850px', marginTop: '0.75rem' }}>
-                  {activeData.overview}
-                </p>
-              </div>
-
-              {/* Action Button */}
-              <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <button
-                  onClick={() => openDemoModal({ solution: `${activeData.name} Consultation`, notes: `Industry inquiry from Solutions view (${activeData.name})` })}
-                  style={{
-                    backgroundColor: '#E85874',
-                    color: '#ffffff',
-                    border: 'none',
-                    borderRadius: '10px',
-                    padding: '0.85rem 1.8rem',
-                    fontSize: '0.95rem',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    boxShadow: '0 8px 25px rgba(232, 88, 116, 0.4)'
-                  }}
-                >
-                  <span>Request {activeData.name} Blueprint</span>
-                  <ArrowRight size={17} />
-                </button>
-              </div>
-            </div>
-
-            {/* 3 Metric Stat Highlights */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-              gap: '1.25rem',
-              marginBottom: '3rem'
-            }}>
-              {activeData.stats.map((st, sIdx) => (
-                <div 
-                  key={sIdx}
-                  style={{
-                    backgroundColor: 'rgba(255, 255, 255, 0.03)',
-                    border: '1px solid rgba(255, 255, 255, 0.08)',
-                    borderRadius: '16px',
-                    padding: '1.5rem',
-                    textAlign: 'center'
-                  }}
-                >
-                  <div style={{ fontSize: '2rem', fontWeight: 900, color: activeData.color, marginBottom: '0.25rem' }}>
-                    {st.value}
+                    <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)', fontWeight: 800, color: '#ffffff', marginBottom: '0.5rem', fontFamily: 'var(--font-display, Inter, sans-serif)' }}>
+                      {activeData.name} Solution Blueprint
+                    </h2>
+                    <p style={{ color: '#38bdf8', fontSize: '1.1rem', fontWeight: 600 }}>
+                      {activeData.tagline}
+                    </p>
+                    <p style={{ color: '#94a3b8', fontSize: '1rem', lineHeight: 1.6, maxWidth: '850px', marginTop: '0.75rem' }}>
+                      {activeData.overview}
+                    </p>
                   </div>
-                  <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
-                    {st.label}
+
+                  {/* Action Button with Magnetic Pull & Glow Effect */}
+                  <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                    <div style={{ position: 'relative', display: 'inline-flex' }}>
+                      <GlowEffect colors={['#E85874', '#ff7b92', activeData.color, '#00f0ff']} mode="breathe" blur="soft" duration={3.5} scale={1.12} />
+                      <MagneticButton
+                        onClick={() => openDemoModal({ solution: `${activeData.name} Consultation`, notes: `Industry inquiry from Solutions view (${activeData.name})` })}
+                        style={{
+                          backgroundColor: '#E85874',
+                          color: '#ffffff',
+                          border: 'none',
+                          borderRadius: '10px',
+                          padding: '0.85rem 1.8rem',
+                          fontSize: '0.95rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          boxShadow: '0 8px 25px rgba(232, 88, 116, 0.4)',
+                          position: 'relative',
+                          zIndex: 1
+                        }}
+                      >
+                        <span>Request {activeData.name} Blueprint</span>
+                        <ArrowRight size={17} />
+                      </MagneticButton>
+                    </div>
                   </div>
                 </div>
-              ))}
-            </div>
+
+                {/* 3 Metric Stat Highlights with NumberTicker */}
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '1.25rem',
+                  marginBottom: '3rem'
+                }}>
+                  {activeData.stats.map((st, sIdx) => {
+                    const match = st.value.match(/([\d\.,]+)/);
+                    let numVal = null;
+                    let prefix = '';
+                    let suffix = '';
+                    let decimals = 0;
+                    if (match) {
+                      const rawNumStr = match[1].replace(/,/g, '');
+                      const parsed = parseFloat(rawNumStr);
+                      if (!isNaN(parsed)) {
+                        numVal = parsed;
+                        prefix = st.value.slice(0, match.index);
+                        suffix = st.value.slice(match.index + match[0].length);
+                        if (match[1].includes('.')) {
+                          decimals = match[1].split('.')[1].length;
+                        }
+                      }
+                    }
+
+                    return (
+                      <motion.div 
+                        key={`${activeData.id}-${sIdx}`}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.3, delay: sIdx * 0.08 }}
+                        style={{
+                          backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          borderRadius: '16px',
+                          padding: '1.5rem',
+                          textAlign: 'center'
+                        }}
+                      >
+                        <div style={{ fontSize: '2rem', fontWeight: 900, color: activeData.color, marginBottom: '0.25rem' }}>
+                          {numVal !== null ? (
+                            <span>
+                              {prefix}
+                              <NumberTicker value={numVal} decimalPlaces={decimals} />
+                              {suffix}
+                            </span>
+                          ) : (
+                            st.value
+                          )}
+                        </div>
+                        <div style={{ fontSize: '0.85rem', color: '#94a3b8', fontWeight: 600 }}>
+                          {st.label}
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
 
             {/* Grid: Challenges vs Delivered Solution */}
             <div style={{
@@ -556,22 +644,35 @@ export const SolutionsView = () => {
               </button>
             </div>
 
-          </div>
+              </SpotlightCard>
+            </motion.div>
+          </AnimatePresence>
 
         </div>
       </section>
 
+      {/* =========================================================================
+          ENTERPRISE ARCHITECTURE: 3D PARALLAX CONNECTED FACTORY STACK
+         ========================================================================= */}
+      <HeroParallax products={PARALLAX_PRODUCTS} />
+
       {/* Explore Virtual Plant Callout */}
       <section style={{ padding: '2rem 0' }}>
         <div className="container">
-          <div style={{
-            background: 'radial-gradient(circle at center, #0e1e38 0%, #060e1c 100%)',
-            border: '1px solid rgba(0, 240, 255, 0.3)',
-            borderRadius: '20px',
-            padding: '3rem 2rem',
-            textAlign: 'center',
-            boxShadow: '0 15px 45px rgba(0, 0, 0, 0.6)'
-          }}>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+            style={{
+              background: 'radial-gradient(circle at center, #0e1e38 0%, #060e1c 100%)',
+              border: '1px solid rgba(0, 240, 255, 0.3)',
+              borderRadius: '20px',
+              padding: '3rem 2rem',
+              textAlign: 'center',
+              boxShadow: '0 15px 45px rgba(0, 0, 0, 0.6)'
+            }}
+          >
             <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.75rem' }}>
               Want to see these solutions in an interactive 3D virtual plant?
             </h3>
@@ -579,7 +680,9 @@ export const SolutionsView = () => {
               Launch our 3D Digital Twin and travel across all 12 assembly and warehouse stations with live IoT sensor telemetry.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => setCurrentView('factory-3d')}
                 style={{
                   backgroundColor: '#00f0ff',
@@ -598,9 +701,11 @@ export const SolutionsView = () => {
               >
                 <Sparkles size={18} />
                 <span>Launch 3D Digital Twin</span>
-              </button>
+              </motion.button>
 
-              <button
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => openDemoModal({ solution: 'Plant Sizing Feasibility Study', notes: 'Lead requested feasibility from solutions footer' })}
                 style={{
                   backgroundColor: 'rgba(255, 255, 255, 0.08)',
@@ -618,9 +723,9 @@ export const SolutionsView = () => {
               >
                 <span>Book Plant Feasibility Audit</span>
                 <ArrowRight size={16} />
-              </button>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { 
   Handshake, 
@@ -37,6 +38,7 @@ import {
   StartupIndiaLogo
 } from '../common/PartnerLogos';
 import { PageHeroBackdrop, HeroFilterPill } from '../common/PageHeroBackdrop';
+import { DotMatrixHandsSection } from '../common/DotMatrixHandsSection';
 
 export const PartnersView = () => {
   const { openDemoModal, setCurrentView } = useApp();
@@ -261,7 +263,7 @@ export const PartnersView = () => {
     : partnerCategories.filter(c => c.id === activeCategory);
 
   return (
-    <div style={{ backgroundColor: 'transparent', color: '#ffffff', minHeight: '100vh', paddingBottom: '6rem', paddingTop: '4rem' }}>
+    <div style={{ backgroundColor: '#060b14', color: '#ffffff', minHeight: '100vh', paddingBottom: '6rem' }}>
       
       {/* Responsive Styles */}
       <style>{`
@@ -289,85 +291,34 @@ export const PartnersView = () => {
         }
       `}</style>
 
-      {/* Dynamic Radiant Page Hero Backdrop */}
-      <div className="container">
-        <PageHeroBackdrop
-          badgeIcon={Handshake}
-          badgeText="OFFICIAL OEM ALLIANCES & CERTIFIED PARTNERS"
-          badgeColor="#0071ba"
-          accentColor="#0071ba"
-          secondaryGlow="#E85874"
-          systemTag="[ GLOBAL TIER-1 OEMS // GS1 STANDARDS ]"
-          title="Our Global"
-          highlightText="Partner Ecosystem"
-          description="Partnering with world-class industrial hardware OEMs, GS1 international standards bodies, and Tier-1 ERP platforms to deliver certified end-to-end automation."
-        >
-          {categories.map(cat => (
-            <HeroFilterPill
-              key={cat.id}
-              active={activeCategory === cat.id}
-              onClick={() => handleCategorySelect(cat.id)}
-              label={cat.label}
-              accentColor="#0071ba"
-            />
-          ))}
-
-          <div style={{ width: '100%', marginTop: '1.25rem', display: 'flex', justifyContent: 'center' }}>
-            <button
-              onClick={() => openDemoModal({ mode: 'partner', solution: 'Partner Program Application', notes: 'Inquiry from Partners page' })}
-              style={{
-                backgroundColor: '#E85874',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '12px',
-                padding: '0.85rem 1.8rem',
-                fontSize: '0.95rem',
-                fontWeight: 700,
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                boxShadow: '0 8px 25px rgba(232, 88, 116, 0.45)',
-                transition: 'all 0.25s ease'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = '#d44360';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-                e.currentTarget.style.boxShadow = '0 12px 30px rgba(232, 88, 116, 0.6)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = '#E85874';
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 8px 25px rgba(232, 88, 116, 0.45)';
-              }}
-            >
-              <Handshake size={18} />
-              <span>Apply for OEM / Reseller Partnership</span>
-            </button>
-          </div>
-        </PageHeroBackdrop>
-      </div>
+      {/* Signature "Joining Hands for Smarter Factories" Dot-Matrix Canvas Hero */}
+      <DotMatrixHandsSection 
+        headline1="Joining Hands for"
+        headline2="Smarter Factories."
+        subline="When Tier-1 OEM hardware joins hands with in-house automation software, shopfloors eliminate bottlenecks and achieve zero-defect manufacturing."
+        ctaText="Partner With ATPL"
+      />
 
       {/* Official Partner Logos Showcase & Filtered Catalog */}
       <section id="partner-catalog" style={{ padding: '3.5rem 0 1.5rem 0', scrollMarginTop: '5.5rem' }}>
         <div className="container">
           
-          {/* Quick Category Filter Bar */}
+          {/* Quick Category Filter Bar with Pills */}
           <div style={{
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexWrap: 'wrap',
             gap: '0.65rem',
-            marginBottom: '2rem',
-            padding: '0.85rem 1.25rem',
+            marginBottom: '2.5rem',
+            padding: '1rem 1.5rem',
             backgroundColor: '#0a1324',
             borderRadius: '16px',
             border: '1px solid rgba(255, 255, 255, 0.08)',
             boxShadow: '0 10px 25px rgba(0, 0, 0, 0.4)'
           }}>
-            <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#94a3b8', marginRight: '0.35rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-              Category Filter:
+            <span style={{ fontSize: '0.82rem', fontWeight: 800, color: '#38bdf8', marginRight: '0.5rem', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+              Alliance Categories:
             </span>
             {categories.map(cat => {
               const isActive = activeCategory === cat.id;
@@ -377,52 +328,55 @@ export const PartnersView = () => {
               return (
                 <button
                   key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
+                  onClick={() => handleCategorySelect(cat.id)}
                   style={{
-                    backgroundColor: isActive ? '#0071ba' : 'rgba(255, 255, 255, 0.05)',
-                    color: isActive ? '#ffffff' : '#e2e8f0',
-                    border: isActive ? '1px solid #299fe0' : '1px solid rgba(255, 255, 255, 0.1)',
+                    backgroundColor: isActive ? '#0071ba' : 'rgba(255, 255, 255, 0.04)',
+                    color: isActive ? '#ffffff' : '#94a3b8',
+                    border: isActive ? '1px solid #38bdf8' : '1px solid rgba(255, 255, 255, 0.1)',
+                    padding: '0.45rem 1rem',
                     borderRadius: '999px',
-                    padding: '0.45rem 1.1rem',
                     fontSize: '0.85rem',
-                    fontWeight: 700,
+                    fontWeight: isActive ? 700 : 500,
                     cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '0.45rem',
                     transition: 'all 0.2s ease',
-                    minHeight: '38px',
-                    boxShadow: isActive ? '0 0 15px rgba(0, 113, 186, 0.5)' : 'none'
-                  }}
-                  onMouseEnter={(e) => {
-                    if (!isActive) {
-                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.12)';
-                      e.currentTarget.style.borderColor = 'rgba(0, 113, 186, 0.4)';
-                      e.currentTarget.style.transform = 'translateY(-1px)';
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (!isActive) {
-                      e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.05)';
-                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
-                      e.currentTarget.style.transform = 'translateY(0)';
-                    }
+                    boxShadow: isActive ? '0 4px 15px rgba(0, 113, 186, 0.4)' : 'none'
                   }}
                 >
                   <span>{cat.label}</span>
-                  <span style={{
-                    fontSize: '0.72rem',
-                    backgroundColor: isActive ? 'rgba(0, 0, 0, 0.25)' : 'rgba(255, 255, 255, 0.12)',
-                    color: isActive ? '#000000' : '#94a3b8',
-                    padding: '0.1rem 0.45rem',
-                    borderRadius: '999px',
-                    fontWeight: 800
+                  <span style={{ 
+                    marginLeft: '6px', 
+                    fontSize: '0.72rem', 
+                    backgroundColor: isActive ? 'rgba(255, 255, 255, 0.2)' : 'rgba(255, 255, 255, 0.08)',
+                    padding: '2px 6px',
+                    borderRadius: '999px'
                   }}>
                     {count}
                   </span>
                 </button>
               );
             })}
+
+            <button
+              onClick={() => openDemoModal({ mode: 'partner', solution: 'Partner Program Application', notes: 'Inquiry from Partners category bar' })}
+              style={{
+                marginLeft: 'auto',
+                backgroundColor: '#E85874',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '999px',
+                padding: '0.5rem 1.25rem',
+                fontSize: '0.85rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.4rem',
+                boxShadow: '0 4px 15px rgba(232, 88, 116, 0.4)'
+              }}
+            >
+              <Handshake size={15} />
+              <span>Become a Partner</span>
+            </button>
           </div>
 
           {/* Dynamic Category-Synchronized Logo Showcase */}
@@ -438,9 +392,13 @@ export const PartnersView = () => {
             {filteredCategories.map((cat, cIdx) => {
               const IconComp = cat.icon;
               return (
-                <div 
+                <motion.div 
                   key={cIdx}
                   className="partner-cat-box"
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
                   style={{
                     border: `1.5px solid ${cat.color}35`,
                   }}
@@ -474,8 +432,11 @@ export const PartnersView = () => {
                     {cat.partners.map((partner, pIdx) => {
                       const LogoComp = partner.logoComp;
                       return (
-                        <div 
+                        <motion.div 
                           key={pIdx}
+                          whileHover={{ y: -4 }}
+                          whileTap={{ scale: 0.98 }}
+                          transition={{ duration: 0.2 }}
                           style={{
                             backgroundColor: 'rgba(255, 255, 255, 0.03)',
                             border: '1px solid rgba(255, 255, 255, 0.08)',
@@ -483,18 +444,7 @@ export const PartnersView = () => {
                             padding: '1.75rem',
                             display: 'flex',
                             flexDirection: 'column',
-                            justifyContent: 'space-between',
-                            transition: 'transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease'
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = 'translateY(-3px)';
-                            e.currentTarget.style.borderColor = cat.color;
-                            e.currentTarget.style.boxShadow = `0 12px 25px ${cat.color}20`;
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = 'translateY(0)';
-                            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
-                            e.currentTarget.style.boxShadow = 'none';
+                            justifyContent: 'space-between'
                           }}
                         >
                           <div>
@@ -587,11 +537,11 @@ export const PartnersView = () => {
                               <span>Consult Integration Engineer</span>
                             </button>
                           </div>
-                        </div>
+                        </motion.div>
                       );
                     })}
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -602,14 +552,20 @@ export const PartnersView = () => {
       {/* Become a Partner Callout */}
       <section style={{ padding: '2rem 0' }}>
         <div className="container">
-          <div style={{
-            background: 'radial-gradient(circle at center, #0e1e38 0%, #060e1c 100%)',
-            border: '1px solid rgba(0, 240, 255, 0.3)',
-            borderRadius: '20px',
-            padding: '3rem 2rem',
-            textAlign: 'center',
-            boxShadow: '0 15px 45px rgba(0, 0, 0, 0.6)'
-          }}>
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+            style={{
+              background: 'radial-gradient(circle at center, #0e1e38 0%, #060e1c 100%)',
+              border: '1px solid rgba(0, 240, 255, 0.3)',
+              borderRadius: '20px',
+              padding: '3rem 2rem',
+              textAlign: 'center',
+              boxShadow: '0 15px 45px rgba(0, 0, 0, 0.6)'
+            }}
+          >
             <h3 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#ffffff', marginBottom: '0.75rem' }}>
               Want to partner with Archery Technocrats?
             </h3>
@@ -617,7 +573,9 @@ export const PartnersView = () => {
               Whether you are an industrial hardware OEM, ERP systems integrator, or regional automation distributor, our partner ecosystem delivers lucrative margins and dedicated application engineering support.
             </p>
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-              <button
+              <motion.button
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
                 onClick={() => openDemoModal({ mode: 'partner', solution: 'Partner Onboarding', notes: 'Lead initiated partner program request' })}
                 style={{
                   backgroundColor: '#E85874',
@@ -636,9 +594,9 @@ export const PartnersView = () => {
               >
                 <Sparkles size={18} />
                 <span>Join Our Global Partner Network</span>
-              </button>
+              </motion.button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { Mail, Phone, MapPin, Send, MessageSquare, CheckCircle, Sparkles, Building, User } from 'lucide-react';
 import confetti from 'canvas-confetti';
@@ -177,8 +178,11 @@ export const ContactView = () => {
             margin: '0 auto 2.5rem auto'
           }}>
             {topics.map(t => (
-              <button
+              <motion.button
                 key={t.id}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}
                 onClick={() => handleTopicClick(t)}
                 style={{
                   backgroundColor: activeTopic === t.id ? '#0071ba' : 'rgba(255, 255, 255, 0.05)',
@@ -189,12 +193,11 @@ export const ContactView = () => {
                   fontSize: '0.88rem',
                   fontWeight: activeTopic === t.id ? 700 : 500,
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
                   boxShadow: activeTopic === t.id ? '0 4px 15px rgba(0, 113, 186, 0.4)' : 'none'
                 }}
               >
                 {t.label}
-              </button>
+              </motion.button>
             ))}
           </div>
 
@@ -332,7 +335,15 @@ export const ContactView = () => {
         <div className="grid-2" style={{ gap: '2.5rem', alignItems: 'flex-start', marginTop: '2.5rem' }}>
           
           {/* Left: Contact Coordinates */}
-          <div id="contact-offices" className="glass-card" style={{ padding: '2.5rem', scrollMarginTop: '6rem' }}>
+          <motion.div 
+            id="contact-offices" 
+            className="glass-card" 
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+            style={{ padding: '2.5rem', scrollMarginTop: '6rem' }}
+          >
             <h3 style={{ fontSize: '1.45rem', color: '#ffffff', marginBottom: '1.5rem' }}>Corporate Offices & Network</h3>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem', marginBottom: '1.75rem' }}>
@@ -435,10 +446,18 @@ export const ContactView = () => {
                 Launch 3D Virtual Tour ➔
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right: Inquiry Form */}
-          <div id="contact-form" className="glass-card" style={{ padding: '2.5rem', scrollMarginTop: '6rem' }}>
+          <motion.div 
+            id="contact-form" 
+            className="glass-card" 
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.35, delay: 0.1, ease: [0.23, 1, 0.32, 1] }}
+            style={{ padding: '2.5rem', scrollMarginTop: '6rem' }}
+          >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '0.5rem' }}>
               <h3 style={{ fontSize: '1.45rem', color: '#ffffff', margin: 0 }}>Send Inquiry / Request PoC</h3>
               <span style={{
@@ -635,18 +654,20 @@ export const ContactView = () => {
                   ></textarea>
                 </div>
 
-                <button
+                <motion.button
                   type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   className="btn btn-primary btn-lg"
-                  style={{ width: '100%', marginTop: '0.75rem' }}
+                  style={{ width: '100%', marginTop: '0.75rem', cursor: 'pointer' }}
                   disabled={isSubmitting}
                 >
                   <Send size={18} />
                   <span>{isSubmitting ? 'Transmitting Data...' : 'Submit Inquiry to Engineering Desk ➔'}</span>
-                </button>
+                </motion.button>
               </form>
             )}
-          </div>
+          </motion.div>
 
         </div>
 

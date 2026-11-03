@@ -6,8 +6,13 @@ import { ToastContainer } from './components/common/ToastContainer';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 import { HomeView } from './components/pages/HomeView';
 import { DynamicMovingBackground } from './components/common/DynamicMovingBackground';
+import { ThreeSpatialBackground } from './components/common/ThreeSpatialBackground';
+import { GenjutsuCursorAura } from './components/ui/genjutsu-cursor-aura';
 import { CookieConsent } from './components/common/CookieConsent';
-import {Toaster} from 'sonner';
+import { GlobalScrollProgress } from './components/ui/global-scroll-progress';
+import { ScrollTelemetryHUD } from './components/ui/scroll-telemetry-hud';
+import { Toaster } from 'sonner';
+import { motion, AnimatePresence } from 'framer-motion';
 // Code-split interactive modals and CoPilot to keep initial mobile bundle ultra-lean
 const LeadModal = lazy(() => import('./components/common/LeadModal').then(m => ({ default: m.LeadModal })));
 const SearchModal = lazy(() => import('./components/common/SearchModal').then(m => ({ default: m.SearchModal })));
@@ -163,7 +168,16 @@ const MainAppContent = () => {
         position: 'relative'
       }}>
         
-        {/* Dynamic moving background with interactive sensor nodes & aurora orbs for all pages */}
+        {/* Global Hardware-Accelerated Scroll Progress Laser Line */}
+        <GlobalScrollProgress />
+
+        {/* 1. Three.js 3D Spatial Particle Constellation Layer */}
+        <ThreeSpatialBackground currentView={currentView} />
+
+        {/* 2. Genjutsu Holographic Interactive Cursor Aura */}
+        <GenjutsuCursorAura />
+
+        {/* Dynamic ambient moving background */}
         <DynamicMovingBackground currentView={currentView} />
 
         {/* Hide React top navbar when full-screen 3D factory tour is active (it has its own integrated header) */}
@@ -174,17 +188,28 @@ const MainAppContent = () => {
         )}
 
         <main id="main-content" style={{ flex: 1, width: '100%', maxWidth: '100%', margin: 0, padding: 0 }}>
-          <ErrorBoundary 
-            key={currentView}
-            title={`${currentView.toUpperCase()} View Reload Needed`}
-            description="This specific view encountered a temporary rendering issue. Click below to return to Homepage or switch views."
-            onReset={() => setCurrentView('home')}
-            compact
-          >
-            <Suspense fallback={<ViewLoadingFallback />}>
-              {renderCurrentView()}
-            </Suspense>
-          </ErrorBoundary>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentView}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              style={{ width: '100%' }}
+            >
+              <ErrorBoundary 
+                key={currentView}
+                title={`${currentView.toUpperCase()} View Reload Needed`}
+                description="This specific view encountered a temporary rendering issue. Click below to return to Homepage or switch views."
+                onReset={() => setCurrentView('home')}
+                compact
+              >
+                <Suspense fallback={<ViewLoadingFallback />}>
+                  {renderCurrentView()}
+                </Suspense>
+              </ErrorBoundary>
+            </motion.div>
+          </AnimatePresence>
         </main>
 
         {/* Hide footer on full-screen 3D factory tour */}
@@ -215,6 +240,9 @@ const MainAppContent = () => {
         <ErrorBoundary title="Cookie Consent">
           <CookieConsent />
         </ErrorBoundary>
+
+        {/* Global Floating Scroll Telemetry & 1-Click Jump to Top */}
+        <ScrollTelemetryHUD />
       </div>
     </ErrorBoundary>
   );

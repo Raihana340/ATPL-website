@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import { 
   FileText, 
@@ -142,8 +143,11 @@ export const ResourcesView = () => {
             margin: '0 auto'
           }}>
             {categories.map(cat => (
-              <button
+              <motion.button
                 key={cat.id}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.15 }}
                 onClick={() => {
                   setActiveCategory(cat.id);
                   setTimeout(() => {
@@ -160,12 +164,11 @@ export const ResourcesView = () => {
                   fontSize: '0.88rem',
                   fontWeight: activeCategory === cat.id ? 700 : 500,
                   cursor: 'pointer',
-                  transition: 'all 0.2s ease',
                   boxShadow: activeCategory === cat.id ? '0 4px 15px rgba(0, 113, 186, 0.4)' : 'none'
                 }}
               >
                 {cat.label}
-              </button>
+              </motion.button>
             ))}
           </div>
         </div>
@@ -210,8 +213,13 @@ export const ResourcesView = () => {
             gap: '1.75rem'
           }}>
             {filteredDownloads.map((item, idx) => (
-              <div 
+              <motion.div 
                 key={idx}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -4 }}
+                transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
                 style={{
                   backgroundColor: '#0a1324',
                   border: '1px solid rgba(255, 255, 255, 0.1)',
@@ -220,8 +228,7 @@ export const ResourcesView = () => {
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  boxShadow: '0 15px 35px rgba(0, 0, 0, 0.5)',
-                  transition: 'transform 0.2s ease, border-color 0.2s ease'
+                  boxShadow: '0 15px 35px rgba(0, 0, 0, 0.5)'
                 }}
               >
                 <div>
@@ -273,7 +280,9 @@ export const ResourcesView = () => {
                     File size: {item.size}
                   </span>
 
-                  <button
+                  <motion.button
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.97 }}
                     onClick={() => handleDownload(item)}
                     style={{
                       backgroundColor: 'rgba(0, 113, 186, 0.2)',
@@ -286,15 +295,14 @@ export const ResourcesView = () => {
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
-                      gap: '0.4rem',
-                      transition: 'all 0.15s ease'
+                      gap: '0.4rem'
                     }}
                   >
                     <Download size={14} />
                     <span>Download PDF</span>
-                  </button>
+                  </motion.button>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
 

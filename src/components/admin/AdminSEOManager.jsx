@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../../context/AppContext';
 import {
   Globe,
@@ -197,40 +198,40 @@ export const AdminSEOManager = () => {
     let score = 0;
     const checks = [];
 
-    // Title Check (ideal 30-60 chars)
+    // Title Check
     const titleLen = (activePage.title || '').length;
     if (titleLen >= 30 && titleLen <= 60) {
       score += 25;
-      checks.push({ label: 'Title length is optimal (30-60 chars)', pass: true, detail: `${titleLen} characters` });
+      checks.push({ label: 'Title length is optimal', pass: true, detail: 'Optimal' });
     } else if (titleLen > 0) {
       score += 15;
-      checks.push({ label: 'Title length needs adjustment', pass: false, detail: `${titleLen} characters (aim for 30-60)` });
+      checks.push({ label: 'Title length needs adjustment', pass: false, detail: 'Review length' });
     } else {
-      checks.push({ label: 'Title is missing', pass: false, detail: '0 characters' });
+      checks.push({ label: 'Title is missing', pass: false, detail: 'Required' });
     }
 
-    // Description Check (ideal 110-160 chars)
+    // Description Check
     const descLen = (activePage.description || '').length;
     if (descLen >= 110 && descLen <= 165) {
       score += 25;
-      checks.push({ label: 'Meta description is optimal (110-165 chars)', pass: true, detail: `${descLen} characters` });
+      checks.push({ label: 'Meta description is optimal', pass: true, detail: 'Optimal' });
     } else if (descLen > 0) {
       score += 15;
-      checks.push({ label: 'Meta description length could improve', pass: false, detail: `${descLen} characters (aim for 110-165)` });
+      checks.push({ label: 'Meta description length could improve', pass: false, detail: 'Review length' });
     } else {
-      checks.push({ label: 'Meta description is missing', pass: false, detail: '0 characters' });
+      checks.push({ label: 'Meta description is missing', pass: false, detail: 'Required' });
     }
 
-    // Keywords Check (>= 4 keywords)
+    // Keywords Check
     const kwCount = (activePage.keywords || []).length;
     if (kwCount >= 5) {
       score += 25;
-      checks.push({ label: 'Target keyword cluster is robust', pass: true, detail: `${kwCount} keywords` });
+      checks.push({ label: 'Target keyword cluster is robust', pass: true, detail: 'Active' });
     } else if (kwCount >= 1) {
       score += 15;
-      checks.push({ label: 'Consider adding more keywords', pass: false, detail: `${kwCount} keywords (aim for 5+)` });
+      checks.push({ label: 'Consider adding more keywords', pass: false, detail: 'Add more' });
     } else {
-      checks.push({ label: 'No keywords defined', pass: false, detail: '0 keywords' });
+      checks.push({ label: 'No keywords defined', pass: false, detail: 'Missing' });
     }
 
     // Canonical & OG Check
@@ -238,25 +239,16 @@ export const AdminSEOManager = () => {
     const hasOG = !!activePage.ogTitle && !!activePage.ogDescription;
     if (hasCanonical && hasOG) {
       score += 25;
-      checks.push({ label: 'Canonical URL and Open Graph cards ready', pass: true, detail: '100% configured' });
+      checks.push({ label: 'Canonical URL and Open Graph cards ready', pass: true, detail: 'Configured' });
     } else if (hasCanonical || hasOG) {
       score += 15;
-      checks.push({ label: 'Incomplete social/canonical tags', pass: false, detail: 'Add OG tags and canonical' });
+      checks.push({ label: 'Incomplete social or canonical tags', pass: false, detail: 'Incomplete' });
     } else {
-      checks.push({ label: 'Missing canonical and social tags', pass: false, detail: 'Not configured' });
+      checks.push({ label: 'Missing canonical and social tags', pass: false, detail: 'Not set' });
     }
 
     return { score, checks };
   }, [activePage]);
-
-  // Aggregate Stats
-  const totalKeywordsAcrossSite = useMemo(() => {
-    return Object.values(pagesMap).reduce((acc, p) => acc + (p.keywords?.length || 0), 0);
-  }, [pagesMap]);
-
-  const indexedPagesCount = useMemo(() => {
-    return Object.values(pagesMap).filter(p => !p.robots || p.robots.includes('index')).length;
-  }, [pagesMap]);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', color: '#f8fafc' }}>
@@ -308,7 +300,7 @@ export const AdminSEOManager = () => {
               </span>
             </div>
             <p style={{ margin: 0, color: '#94a3b8', fontSize: '0.86rem', maxWidth: '680px', lineHeight: 1.5 }}>
-              Edit and live-preview meta titles, descriptions, keyword tags, canonical URLs, and Open Graph social cards for all 13 pages on the ATPL website. Updates apply instantly across the live application.
+              Edit and live-preview meta titles, descriptions, keyword tags, canonical URLs, and Open Graph social cards for all pages on the ATPL website. Updates apply instantly across the live application.
             </p>
           </div>
 
@@ -360,72 +352,6 @@ export const AdminSEOManager = () => {
             </button>
           </div>
         </div>
-
-        {/* Global Overview KPI Strip */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-          gap: '0.85rem',
-          paddingTop: '0.5rem',
-          borderTop: '1px solid rgba(255, 255, 255, 0.06)'
-        }}>
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.02)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '10px',
-            padding: '0.75rem 1rem'
-          }}>
-            <div style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-              Total Pages Managed
-            </div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 700, color: '#ffffff', marginTop: '0.2rem' }}>
-              {Object.keys(pagesMap).length} Public Pages
-            </div>
-          </div>
-
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.02)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '10px',
-            padding: '0.75rem 1rem'
-          }}>
-            <div style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-              Search Index Status
-            </div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 700, color: '#34d399', marginTop: '0.2rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-              <span className="pulse-dot" style={{ width: '8px', height: '8px', background: '#34d399' }}></span>
-              {indexedPagesCount} / {Object.keys(pagesMap).length} Indexed
-            </div>
-          </div>
-
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.02)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '10px',
-            padding: '0.75rem 1rem'
-          }}>
-            <div style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-              Keyword Tags Cluster
-            </div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 700, color: 'var(--cyan-primary)', marginTop: '0.2rem' }}>
-              {totalKeywordsAcrossSite} Targeted Keywords
-            </div>
-          </div>
-
-          <div style={{
-            background: 'rgba(255, 255, 255, 0.02)',
-            border: '1px solid rgba(255, 255, 255, 0.05)',
-            borderRadius: '10px',
-            padding: '0.75rem 1rem'
-          }}>
-            <div style={{ fontSize: '0.7rem', color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.05em', fontWeight: 600 }}>
-              Current Page Score
-            </div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: '1.25rem', fontWeight: 700, color: seoHealth.score >= 80 ? '#34d399' : '#f59e0b', marginTop: '0.2rem' }}>
-              {seoHealth.score} / 100%
-            </div>
-          </div>
-        </div>
       </div>
 
       {/* Page Selector Strip */}
@@ -442,9 +368,6 @@ export const AdminSEOManager = () => {
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <span style={{ fontSize: '0.78rem', textTransform: 'uppercase', letterSpacing: '0.06em', color: '#64748b', fontWeight: 700 }}>
               Select Page to Configure:
-            </span>
-            <span className="badge badge-secondary" style={{ fontSize: '0.7rem' }}>
-              {filteredPageIds.length} available
             </span>
           </div>
 
@@ -521,18 +444,6 @@ export const AdminSEOManager = () => {
                 }}>
                   {page.route}
                 </span>
-
-                {page.keywords?.length > 0 && (
-                  <span style={{
-                    fontSize: '0.65rem',
-                    background: 'rgba(255, 255, 255, 0.08)',
-                    padding: '0.1rem 0.4rem',
-                    borderRadius: '10px',
-                    color: '#94a3b8'
-                  }}>
-                    {page.keywords.length} kw
-                  </span>
-                )}
               </button>
             );
           })}
@@ -692,10 +603,9 @@ export const AdminSEOManager = () => {
                   </label>
                   <span style={{
                     fontSize: '0.72rem',
-                    fontFamily: 'var(--font-mono)',
                     color: (activePage.title?.length || 0) > 60 ? '#f59e0b' : '#34d399'
                   }}>
-                    {activePage.title?.length || 0} / 60 recommended
+                    {(activePage.title?.length || 0) > 60 ? 'Too long' : 'Optimal'}
                   </span>
                 </div>
                 <input
@@ -719,10 +629,9 @@ export const AdminSEOManager = () => {
                   </label>
                   <span style={{
                     fontSize: '0.72rem',
-                    fontFamily: 'var(--font-mono)',
                     color: (activePage.description?.length || 0) > 165 ? '#f59e0b' : '#34d399'
                   }}>
-                    {activePage.description?.length || 0} / 160 recommended
+                    {(activePage.description?.length || 0) > 165 ? 'Too long' : 'Optimal'}
                   </span>
                 </div>
                 <textarea
@@ -749,7 +658,7 @@ export const AdminSEOManager = () => {
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
                     <Tag size={15} color="var(--cyan-primary)" />
                     <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#ffffff' }}>
-                      Target Keyword Tags & Phrases ({activePage.keywords?.length || 0})
+                      Target Keyword Tags & Phrases
                     </span>
                   </div>
 
@@ -821,39 +730,46 @@ export const AdminSEOManager = () => {
 
                 {/* Active Keyword Pills */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.45rem', minHeight: '40px' }}>
-                  {(activePage.keywords || []).map((kw, idx) => (
-                    <div
-                      key={idx}
-                      style={{
-                        background: 'rgba(0, 240, 255, 0.08)',
-                        border: '1px solid rgba(0, 240, 255, 0.25)',
-                        borderRadius: '20px',
-                        padding: '0.25rem 0.65rem',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.4rem',
-                        fontSize: '0.78rem',
-                        color: '#e0f2fe'
-                      }}
-                    >
-                      <span>{kw}</span>
-                      <button
-                        onClick={() => handleRemoveKeyword(kw)}
+                  <AnimatePresence>
+                    {(activePage.keywords || []).map((kw) => (
+                      <motion.div
+                        key={kw}
+                        layout
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.15 } }}
+                        transition={{ type: 'spring', damping: 25, stiffness: 350 }}
                         style={{
-                          background: 'transparent',
-                          border: 'none',
-                          color: '#94a3b8',
-                          cursor: 'pointer',
+                          background: 'rgba(0, 240, 255, 0.08)',
+                          border: '1px solid rgba(0, 240, 255, 0.25)',
+                          borderRadius: '20px',
+                          padding: '0.25rem 0.65rem',
                           display: 'flex',
                           alignItems: 'center',
-                          padding: 0
+                          gap: '0.4rem',
+                          fontSize: '0.78rem',
+                          color: '#e0f2fe'
                         }}
-                        title={`Remove "${kw}"`}
                       >
-                        <X size={12} />
-                      </button>
-                    </div>
-                  ))}
+                        <span>{kw}</span>
+                        <button
+                          onClick={() => handleRemoveKeyword(kw)}
+                          style={{
+                            background: 'transparent',
+                            border: 'none',
+                            color: '#94a3b8',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            padding: 0
+                          }}
+                          title={`Remove "${kw}"`}
+                        >
+                          <X size={12} />
+                        </button>
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
 
                   {(!activePage.keywords || activePage.keywords.length === 0) && (
                     <span style={{ fontSize: '0.78rem', color: '#64748b', fontStyle: 'italic', padding: '0.25rem 0' }}>
@@ -1355,7 +1271,7 @@ export const AdminSEOManager = () => {
                 </span>
               </div>
               <span className={`badge ${seoHealth.score >= 80 ? 'badge-emerald' : 'badge-amber'}`} style={{ fontSize: '0.72rem' }}>
-                Score: {seoHealth.score}%
+                {seoHealth.score >= 80 ? 'Status: Optimal' : 'Needs Review'}
               </span>
             </div>
 
